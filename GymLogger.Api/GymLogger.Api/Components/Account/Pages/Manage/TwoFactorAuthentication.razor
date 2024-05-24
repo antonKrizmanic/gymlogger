@@ -1,11 +1,11 @@
 ﻿@page "/Account/Manage/TwoFactorAuthentication"
 
+@using GymLogger.Infrastructure.Database.Models.Identity
 @using Microsoft.AspNetCore.Http.Features
 @using Microsoft.AspNetCore.Identity
-@using GymLogger.Api.Data
 
-@inject UserManager<ApplicationUser> UserManager
-@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<DbApplicationUser> UserManager
+@inject SignInManager<DbApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 

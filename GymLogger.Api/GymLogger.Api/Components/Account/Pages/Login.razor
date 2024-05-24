@@ -1,11 +1,11 @@
 ﻿@page "/Account/Login"
 
 @using System.ComponentModel.DataAnnotations
+@using GymLogger.Infrastructure.Database.Models.Identity
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
-@using GymLogger.Api.Data
 
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<DbApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager

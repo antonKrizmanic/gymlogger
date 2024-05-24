@@ -2,10 +2,10 @@
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
-@using GymLogger.Api.Data
+@using GymLogger.Infrastructure.Database.Models.Identity
 
-@inject UserManager<ApplicationUser> UserManager
-@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<DbApplicationUser> UserManager
+@inject SignInManager<DbApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<DeletePersonalData> Logger
@@ -37,7 +37,7 @@
 </FluentGrid>
 @code {
     private string? message;
-    private ApplicationUser user = default!;
+    private DbApplicationUser user = default!;
     private bool requirePassword;
 
     [CascadingParameter]

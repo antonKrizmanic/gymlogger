@@ -1,7 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using GymLogger.Api.Data
+﻿@using GymLogger.Infrastructure.Database.Models.Identity
+@using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<DbApplicationUser> SignInManager
 
 <FluentNavMenu Collapse="false">
     <FluentNavLink Href="Account/Manage" Match="NavLinkMatch.All">Profile</FluentNavLink>

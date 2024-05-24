@@ -1,10 +1,10 @@
-using GymLogger.Api.Data;
+using GymLogger.Infrastructure.Database.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace GymLogger.Api.Components.Account;
-internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
+internal sealed class IdentityUserAccessor(UserManager<DbApplicationUser> userManager, IdentityRedirectManager redirectManager)
 {
-    public async Task<ApplicationUser> GetRequiredUserAsync(HttpContext context)
+    public async Task<DbApplicationUser> GetRequiredUserAsync(HttpContext context)
     {
         var user = await userManager.GetUserAsync(context.User);
 
