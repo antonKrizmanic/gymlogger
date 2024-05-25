@@ -1,14 +1,16 @@
-using GymLogger.Api.Client.Pages;
+using GymLogger.Api;
 using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
 using GymLogger.Application;
+using GymLogger.Exceptions;
+using GymLogger.Exceptions.Web;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Http;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,14 @@ builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Enviro
     .AddInfrastructureHttp()
     .AddApplication();
 
+builder.Services.AddSerilog((services, lc) => lc
+    .ReadFrom.Configuration(builder.Configuration));
+
+builder.Services.AddAutoMapper(
+    typeof(ApiMapperProfile).Assembly,
+    typeof(ApplicationMapperProfile).Assembly,
+    typeof(InfrastructureDatabaseMapperProfile).Assembly);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -54,6 +64,18 @@ else
     app.UseHsts();
 }
 
+app.UseSerilogRequestLogging(options =>
+{
+    // Attach additional properties to the request completion event
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+    };
+});
+
+app.UseGymLoggerHttpExceptionMiddleware();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -69,5 +91,7 @@ app.MapAdditionalIdentityEndpoints();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapGet("/test", () => { throw new GymLoggerEntityNotFoundException("Not found"); });
 
 app.Run();

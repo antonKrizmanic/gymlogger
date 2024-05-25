@@ -115,3 +115,4 @@ ServiceFabricBackup/
 *.bim_*.settings
 *.rptproj.rsuser
 *- [Bb]ackup.rdl
+/GymLogger.Api/GymLogger.Api/Logs
