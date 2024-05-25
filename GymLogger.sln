@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34814.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Api", "GymLogger.Api\GymLogger.Api\GymLogger.Api.csproj", "{98519375-D247-437D-93DB-213FDDDD14EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Api", "GymLogger.Api\GymLogger.Api\GymLogger.Api.csproj", "{98519375-D247-437D-93DB-213FDDDD14EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Api.Client", "GymLogger.Api\GymLogger.Api.Client\GymLogger.Api.Client.csproj", "{A257012C-3041-4D40-8314-6F3B61D2F8B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Api.Client", "GymLogger.Api\GymLogger.Api.Client\GymLogger.Api.Client.csproj", "{A257012C-3041-4D40-8314-6F3B61D2F8B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Application", "GymLogger.Application\GymLogger.Application.csproj", "{66C43D9D-1090-49FE-93CD-0585B27829C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Application", "GymLogger.Application\GymLogger.Application.csproj", "{66C43D9D-1090-49FE-93CD-0585B27829C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Infrastructure.Database", "GymLogger.Infrastructure.Database\GymLogger.Infrastructure.Database.csproj", "{C1BF871D-31C0-4C43-AC2F-4B88A01F56F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Infrastructure.Database", "GymLogger.Infrastructure.Database\GymLogger.Infrastructure.Database.csproj", "{C1BF871D-31C0-4C43-AC2F-4B88A01F56F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Core", "GymLogger.Core\GymLogger.Core.csproj", "{B38E790C-F6DE-4A04-A1B8-40A6CBEB71BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Core", "GymLogger.Core\GymLogger.Core.csproj", "{B38E790C-F6DE-4A04-A1B8-40A6CBEB71BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Tests", "GymLogger.Tests\GymLogger.Tests.csproj", "{E4CA145E-2FDC-46D8-BA11-8CDF2B5ED044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Tests", "GymLogger.Tests\GymLogger.Tests.csproj", "{E4CA145E-2FDC-46D8-BA11-8CDF2B5ED044}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Shared", "GymLogger.Shared\GymLogger.Shared.csproj", "{BE0B9BDF-5039-4DC3-BE53-6A6A084E2F22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Shared", "GymLogger.Shared\GymLogger.Shared.csproj", "{BE0B9BDF-5039-4DC3-BE53-6A6A084E2F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Infrastructure.Http", "GymLogger.Infrastructure.Http\GymLogger.Infrastructure.Http.csproj", "{ACAF7749-691E-40E3-B856-B6DCB843EAEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{BE0B9BDF-5039-4DC3-BE53-6A6A084E2F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE0B9BDF-5039-4DC3-BE53-6A6A084E2F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE0B9BDF-5039-4DC3-BE53-6A6A084E2F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACAF7749-691E-40E3-B856-B6DCB843EAEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACAF7749-691E-40E3-B856-B6DCB843EAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACAF7749-691E-40E3-B856-B6DCB843EAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACAF7749-691E-40E3-B856-B6DCB843EAEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

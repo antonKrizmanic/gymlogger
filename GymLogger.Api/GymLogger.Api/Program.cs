@@ -1,8 +1,10 @@
 using GymLogger.Api.Client.Pages;
 using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
+using GymLogger.Application;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
+using GymLogger.Infrastructure.Http;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +30,9 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
-builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction());
+builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
+    .AddInfrastructureHttp()
+    .AddApplication();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

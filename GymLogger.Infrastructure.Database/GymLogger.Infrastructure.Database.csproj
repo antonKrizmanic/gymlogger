@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GymLogger.Application\GymLogger.Application.csproj" />
     <ProjectReference Include="..\GymLogger.Core\GymLogger.Core.csproj" />
   </ItemGroup>
 

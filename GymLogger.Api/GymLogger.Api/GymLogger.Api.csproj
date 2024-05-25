@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\GymLogger.Application\GymLogger.Application.csproj" />
     <ProjectReference Include="..\..\GymLogger.Core\GymLogger.Core.csproj" />
     <ProjectReference Include="..\..\GymLogger.Infrastructure.Database\GymLogger.Infrastructure.Database.csproj" />
+    <ProjectReference Include="..\..\GymLogger.Infrastructure.Http\GymLogger.Infrastructure.Http.csproj" />
     <ProjectReference Include="..\..\GymLogger.Shared\GymLogger.Shared.csproj" />
     <ProjectReference Include="..\GymLogger.Api.Client\GymLogger.Api.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />

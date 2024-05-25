@@ -33,8 +33,7 @@ public static class InfrastructureDatabaseServicesExtensions
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-            })
-            .AddRoles<DbApplicationRole>()
+            })            
             .AddEntityFrameworkStores<GymLoggerDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
