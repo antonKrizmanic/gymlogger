@@ -1,27 +1,30 @@
 name: .NET Build
 
-    on:
-      push:
-        branches: [main]
-pull_request:
-        branches: [main, stage]
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+      - stage
 
 jobs:
-      build:
+  build:
 
-        runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout code
-          uses: actions/checkout @v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-        - name: Setup.NET
-          uses: actions/setup-dotnet @v1
-          with:
-            dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'  # adjust this to your .NET version
 
-        - name: Restore dependencies
-          run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore
 
-        - name: Build
-          run: dotnet build --no-restore
+    - name: Build
+      run: dotnet build --no-restore
