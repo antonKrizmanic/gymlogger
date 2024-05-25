@@ -1,13 +1,16 @@
+using GymLogger.Api;
 using GymLogger.Api.Client.Pages;
 using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
 using GymLogger.Application;
+using GymLogger.Core.User.Interfaces;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Http;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +36,11 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
     .AddInfrastructureHttp()
     .AddApplication();
+
+builder.Services.AddAutoMapper(
+    typeof(ApiMapperProfile).Assembly,
+    typeof(ApplicationMapperProfile).Assembly,
+    typeof(InfrastructureDatabaseMapperProfile).Assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
