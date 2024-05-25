@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\GymLogger.Infrastructure.Http\GymLogger.Infrastructure.Http.csproj" />
     <ProjectReference Include="..\..\GymLogger.Shared\GymLogger.Shared.csproj" />
     <ProjectReference Include="..\GymLogger.Api.Client\GymLogger.Api.Client.csproj" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <PrivateAssets>all</PrivateAssets>
