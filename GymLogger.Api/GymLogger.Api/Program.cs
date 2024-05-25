@@ -1,19 +1,16 @@
 using GymLogger.Api;
-using GymLogger.Api.Client.Pages;
 using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
 using GymLogger.Application;
-using GymLogger.Core.User.Interfaces;
+using GymLogger.Exceptions;
+using GymLogger.Exceptions.Web;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Http;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +74,8 @@ app.UseSerilogRequestLogging(options =>
     };
 });
 
+app.UseGymLoggerHttpExceptionMiddleware();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -92,5 +91,7 @@ app.MapAdditionalIdentityEndpoints();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapGet("/test", () => { throw new GymLoggerEntityNotFoundException("Not found"); });
 
 app.Run();
