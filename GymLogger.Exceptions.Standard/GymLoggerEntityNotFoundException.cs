@@ -19,7 +19,7 @@ namespace GymLogger.Exceptions
         {
         }
 
-        public GymLoggerEntityNotFoundException(string message, string key = null, Exception innerException = null)
+        public GymLoggerEntityNotFoundException(string message, string? key = null, Exception? innerException = null)
             : base(message, key, innerException)
         {
         }

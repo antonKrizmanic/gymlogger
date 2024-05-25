@@ -40,7 +40,7 @@ namespace GymLogger.Exceptions.Web
 
             // Log result
             var factory = context.HttpContext.RequestServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-            factory.CreateLogger<GymLoggerHttpException>().Log(
+            factory?.CreateLogger<GymLoggerHttpException>().Log(
                 LogLevel.Information,
                 new EventId(1, "GymLoggerHttpException"),
                 "Executing GymLoggerHttpException, setting HTTP status code {StatusCode}",

@@ -24,7 +24,7 @@ namespace GymLogger.Exceptions
             this.Key = this.GetDefaultKey();
         }
 
-        public GymLoggerException(string message, string key = null, Exception innerException = null)
+        public GymLoggerException(string message, string? key = null, Exception? innerException = null)
             : base(message, innerException)
         {
             this.Key = key == null ? this.GetDefaultKey() : GenerateKey(this.GetDefaultKey(), key);

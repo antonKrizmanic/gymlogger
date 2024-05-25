@@ -17,7 +17,7 @@ namespace GymLogger.Exceptions
         {
         }
 
-        public GymLoggerUnauthorizedException(string message, string key = null, Exception innerException = null)
+        public GymLoggerUnauthorizedException(string message, string? key = null, Exception? innerException = null)
             : base(message, key, innerException)
         {
         }

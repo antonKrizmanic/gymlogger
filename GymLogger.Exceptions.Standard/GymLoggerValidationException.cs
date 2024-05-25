@@ -15,7 +15,7 @@ namespace GymLogger.Exceptions
         {
         }
 
-        public GymLoggerValidationException(string message, Exception innerException, Dictionary<string, string> fieldErrors = null)
+        public GymLoggerValidationException(string message, Exception innerException, Dictionary<string, string>? fieldErrors = null)
             : base(message, innerException)
         {
             if (fieldErrors != null)
@@ -24,7 +24,7 @@ namespace GymLogger.Exceptions
             }
         }
 
-        public GymLoggerValidationException(string message, Dictionary<string, string> fieldErrors = null, string key = null, Exception innerException = null)
+        public GymLoggerValidationException(string message, Dictionary<string, string>? fieldErrors = null, string? key = null, Exception? innerException = null)
             : base(message, key, innerException)
         {
             if (fieldErrors != null)

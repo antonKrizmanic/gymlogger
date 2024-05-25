@@ -19,7 +19,7 @@ namespace GymLogger.Exceptions
         {
         }
 
-        public GymLoggerForbiddenException(string message, string key = null, Exception innerException = null)
+        public GymLoggerForbiddenException(string message, string? key = null, Exception? innerException = null)
             : base(message, key, innerException)
         {
         }
