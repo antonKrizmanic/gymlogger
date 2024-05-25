@@ -15,7 +15,7 @@ namespace GymLogger.Infrastructure.Database
 
             builder.UseSqlServer(connectionString);
 
-            return new GymLoggerDbContext(builder.Options);
+            return new GymLoggerDbContext(builder.Options, null);
         }
     }
 }
