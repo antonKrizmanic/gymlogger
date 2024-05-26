@@ -13,16 +13,15 @@ GymLogger is a web application for tracking workouts, primarily focused on gym e
 + 🪪 [License](#-license)
 
 ## 🚀 Technologies
-
-- **Blazor WebAssembly**: Used for building the client-side of the application. [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0) allows for building interactive web UIs using C# instead of JavaScript.
-
-- **Fluent UI**: Used for building the user interface in the Blazor WebAssembly project. [Fluent UI](https://www.fluentui-blazor.net/) provides a set of accessible, reusable, and high-quality components for creating web applications.
-
-- **ASP.NET Core Web API**: Used for building the server-side API of the application.
-
-- **Entity Framework Core**: Used as the Object-Relational Mapper (ORM) for data access. You can learn more about [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) here.
-
-- **SQL Server**: Used as the database for the application.
++ [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-8.0) - Cross-platform, high-performance, open-source framework for building modern, cloud-enabled, Internet-connected applications
++ [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio) - membership system that allows login functionality
++ [Entity Framework Core 7](https://learn.microsoft.com/en-us/ef/core/) - lightweight, extensible, open source, and cross-platform object-relational mapper (O/RM)
++ [AutoMapper](https://automapper.org/) - convention-based object-object mapper
++ [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - powerful, object-relational database system
++ [Serilog](https://serilog.net/) - simple .NET logging with fully-structured events
++ [xUnit](https://xunit.net/), [FluentAssertions](https://fluentassertions.com/) and [Moq](https://github.com/moq)
++ [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0) - allows for building interactive web UIs using C# instead of JavaScript.
++ [Fluent UI](https://www.fluentui-blazor.net/) provides a set of accessible, reusable, and high-quality components for creating web applications.
   
 ## 🏛️ Architecture
 
