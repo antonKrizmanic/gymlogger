@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Infrastructure.Ht
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptions", "Exceptions", "{07AB7456-2162-48A2-AA81-F07EE977F274}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Exceptions.Standard", "GymLogger.Exceptions.Standard\GymLogger.Exceptions.Standard.csproj", "{4585FC90-2A7C-4B1F-AB7A-7E0E28EF6A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Exceptions.Standard", "GymLogger.Exceptions.Standard\GymLogger.Exceptions.Standard.csproj", "{4585FC90-2A7C-4B1F-AB7A-7E0E28EF6A28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Exceptions.Web.Standard", "GymLogger.Exceptions.Web.Standard\GymLogger.Exceptions.Web.Standard.csproj", "{8DD77A90-A4C6-407A-8667-3A42682C8C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Exceptions.Web.Standard", "GymLogger.Exceptions.Web.Standard\GymLogger.Exceptions.Web.Standard.csproj", "{8DD77A90-A4C6-407A-8667-3A42682C8C29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@layout GymLogger.Api.Components.Layout.MainLayout
 @inject NavigationManager NavigationManager
 
 @if (HttpContext is null)
@@ -7,8 +6,14 @@
     <p>Loading...</p>
 }
 else
-{
-    @Body
+{    
+    <FluentGrid Justify="JustifyContent.Center" Style="margin-top:10rem;">
+        <FluentGridItem xs="12" sm="10" md="4" lg="4">
+            <FluentCard>
+                @Body
+            </FluentCard>
+        </FluentGridItem>
+    </FluentGrid>    
 }
 
 @code {
