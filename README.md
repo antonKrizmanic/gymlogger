@@ -1,5 +1,10 @@
 # GymLogger
 
+  [![CI](https://github.comantonKrizmanic/gymlogge/actions/workflows/CI.yml/badge.svg)](https://github.com/Enterwell/dotnet-starter/actions/workflows/buildAction.yml)  
+  [![GitHub issues](https://img.shields.io/github/issues/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogge/issues)
+  [![GitHub contributors](https://img.shields.io/github/contributors/antonKrizmanic/gymlogge)](https://github.com/antonKrizmanic/gymlogge/graphs/contributors)
+  [![GitHub pull requests](https://img.shields.io/github/issues-pr/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogge/pulls)
+
 GymLogger is a web application for tracking workouts, primarily focused on gym exercises. The application is built using a Clean Architecture approach, ensuring separation of concerns, maintainability, and testability.
 
 ## Architecture
