@@ -1,6 +1,6 @@
 # GymLogger
 
-  [![CI](https://github.comantonKrizmanic/gymlogge/actions/workflows/CI.yml/badge.svg)](https://github.com/Enterwell/dotnet-starter/actions/workflows/buildAction.yml)  
+  [![CI](https://github.com/antonKrizmanic/gymlogge/actions/workflows/CI.yml/badge.svg)](https://github.com/Enterwell/dotnet-starter/actions/workflows/buildAction.yml)  
   [![GitHub issues](https://img.shields.io/github/issues/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogge/issues)
   [![GitHub contributors](https://img.shields.io/github/contributors/antonKrizmanic/gymlogge)](https://github.com/antonKrizmanic/gymlogge/graphs/contributors)
   [![GitHub pull requests](https://img.shields.io/github/issues-pr/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogge/pulls)
