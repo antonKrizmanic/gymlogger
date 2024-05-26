@@ -51,10 +51,10 @@ Once you have these prerequisites, you can clone the repository and start the ap
 - MS SQL Server
 - IDE (Visual Studio or JetBrains Rider), or Text editor (Visual Studio Code)
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a pull request.
 
-## License
+## 🪪 License
 
 GymLogger is licensed under the MIT license. See the LICENSE file for more details.
