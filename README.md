@@ -50,6 +50,9 @@ To get started with the GymLogger application, you will need to have .NET 8 or l
 Once you have these prerequisites, you can clone the repository and start the application.
 
 ## 🛠️ Prerequisites
+- .NET 8
+- MS SQL Server
+- IDE (Visual Studio or JetBrains Rider), or Text editor (Visual Studio Code)
 
 ## Contributing
 
