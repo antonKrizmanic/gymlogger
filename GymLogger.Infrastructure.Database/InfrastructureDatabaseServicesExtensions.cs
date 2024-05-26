@@ -1,22 +1,32 @@
-﻿using GymLogger.Infrastructure.Database.Models.Identity;
+﻿using GymLogger.Core.Management.Interfaces;
+using GymLogger.Core.MuscleGroups.Interfaces;
+using GymLogger.Infrastructure.Database.Management;
+using GymLogger.Infrastructure.Database.Models.Identity;
+using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymLogger.Infrastructure.Database;
 public static class InfrastructureDatabaseServicesExtensions
 {
+    public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services)
+    {
+        services.AddTransient<IDatabaseSeedService, DatabaseSeedService>();
+        return services;
+    }
+
+    public static IServiceCollection RegisterInfrastructureRepositories(this IServiceCollection services)
+    {
+        services
+            .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>();
+        return services;
+    }
+
     public static IServiceCollection AddInfrastructureDatabase(this IServiceCollection services,
         IConfiguration configuration, bool isProduction, bool isTestEnv = false)
     {
-        //TODO: Add registration of repositories here
-
         var connectionStringKey = isProduction ? "ProductionConnection" : "DefaultConnection";
         var connectionString = configuration.GetConnectionString(connectionStringKey);
         services.AddDbContext<GymLoggerDbContext>(

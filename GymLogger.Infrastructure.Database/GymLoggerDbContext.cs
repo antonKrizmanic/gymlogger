@@ -2,6 +2,7 @@
 using GymLogger.Core.User.Interfaces;
 using GymLogger.Infrastructure.Database.CodeExtensions;
 using GymLogger.Infrastructure.Database.Models.Identity;
+using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -20,6 +21,8 @@ public class GymLoggerDbContext :
             CurrentUserId = currentUserProvider.GetCurrentUserId();
         }
     }
+
+    public virtual DbSet<DbMuscleGroup> MuscleGroups { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -33,6 +33,8 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
+    .RegisterInfrastructureRepositories()
+    .RegisterInfrastructureServices()
     .AddInfrastructureHttp()
     .AddApplication();
 
