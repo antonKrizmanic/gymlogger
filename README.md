@@ -7,7 +7,27 @@
 
 GymLogger is a web application for tracking workouts, primarily focused on gym exercises. The application is built using a Clean Architecture approach, ensuring separation of concerns, maintainability, and testability.
 
-## Architecture
+## 📖 Table of contents
++ 🚀 [Technologies](#-technologies)
++ 🏛️ [Architecture](#-architecture)
++ 🔰 [Getting started](#-getting-started)
++ 🛠️ [Prerequisites](#-prerequisites)
++ 🤝 [Contributing](#-contributing)
++ 🪪 [License](#-license)
+
+## 🚀 Technologies
+
+- **Blazor WebAssembly**: Used for building the client-side of the application. [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0) allows for building interactive web UIs using C# instead of JavaScript.
+
+- **Fluent UI**: Used for building the user interface in the Blazor WebAssembly project. [Fluent UI](https://www.fluentui-blazor.net/) provides a set of accessible, reusable, and high-quality components for creating web applications.
+
+- **ASP.NET Core Web API**: Used for building the server-side API of the application.
+
+- **Entity Framework Core**: Used as the Object-Relational Mapper (ORM) for data access. You can learn more about [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) here.
+
+- **SQL Server**: Used as the database for the application.
+  
+## 🏛️ Architecture
 
 The solution is structured into several projects:
 
@@ -23,23 +43,13 @@ The solution is structured into several projects:
 
 - **GymLogger.Shared**: This project contains models and DTOs that are shared between the client and server.
 
-## Technologies
-
-- **Blazor WebAssembly**: Used for building the client-side of the application. [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0) allows for building interactive web UIs using C# instead of JavaScript.
-
-- **Fluent UI**: Used for building the user interface in the Blazor WebAssembly project. [Fluent UI](https://www.fluentui-blazor.net/) provides a set of accessible, reusable, and high-quality components for creating web applications.
-
-- **ASP.NET Core Web API**: Used for building the server-side API of the application.
-
-- **Entity Framework Core**: Used as the Object-Relational Mapper (ORM) for data access. You can learn more about [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) here.
-
-- **SQL Server**: Used as the database for the application.
-
-## Getting Started
+## 🔰 Getting Started
 
 To get started with the GymLogger application, you will need to have .NET 8 or later installed. You will also need a SQL Server database.
 
 Once you have these prerequisites, you can clone the repository and start the application.
+
+## 🛠️ Prerequisites
 
 ## Contributing
 
