@@ -1,7 +1,7 @@
 # GymLogger
 
   [![CI](https://github.com/antonKrizmanic/gymlogger/actions/workflows/buildAction.yaml/badge.svg)](https://github.com/antonKrizmanic/gymlogger/actions/workflows/buildAction.yaml)  
-  [![GitHub issues](https://img.shields.io/github/issues/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogger/issues)
+  [![GitHub issues](https://img.shields.io/github/issues/antonKrizmanic/gymlogger?color=0088ff)](https://github.com/antonKrizmanic/gymlogger/issues)
   [![GitHub contributors](https://img.shields.io/github/contributors/antonKrizmanic/gymlogge)](https://github.com/antonKrizmanic/gymlogge/graphs/contributors)
   [![GitHub pull requests](https://img.shields.io/github/issues-pr/antonKrizmanic/gymlogge?color=0088ff)](https://github.com/antonKrizmanic/gymlogge/pulls)
 
