@@ -16,7 +16,7 @@ internal class DatabaseSeedService(GymLoggerDbContext dbContext) : IDatabaseSeed
 
     private async Task SeedMuscleGroupsAsync()
     {
-        if(!dbContext.MuscleGroups.Any())
+        if (!dbContext.MuscleGroups.Any())
         {
             var muscleGroups = new List<DbMuscleGroup>
             {
@@ -31,4 +31,5 @@ internal class DatabaseSeedService(GymLoggerDbContext dbContext) : IDatabaseSeed
             await dbContext.MuscleGroups.AddRangeAsync(muscleGroups);
             await dbContext.SaveChangesAsync();
         }
+    }
 }

@@ -11,13 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace GymLogger.Infrastructure.Database;
 public static class InfrastructureDatabaseServicesExtensions
 {
-    public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services)
+    public static IServiceCollection RegisterInfrastructureDbServices(this IServiceCollection services)
     {
         services.AddTransient<IDatabaseSeedService, DatabaseSeedService>();
         return services;
     }
 
-    public static IServiceCollection RegisterInfrastructureRepositories(this IServiceCollection services)
+    public static IServiceCollection RegisterInfrastructureDbRepositories(this IServiceCollection services)
     {
         services
             .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>();
