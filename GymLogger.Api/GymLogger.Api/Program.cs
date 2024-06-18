@@ -63,6 +63,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseMinimalApi();
 
 app.UseCustomComponents();
 

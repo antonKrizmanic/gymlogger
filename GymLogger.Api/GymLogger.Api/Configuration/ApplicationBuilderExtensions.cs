@@ -1,9 +1,13 @@
-﻿namespace GymLogger.Api.Configuration;
+﻿using GymLogger.Api.Endpoints.Common;
+
+namespace GymLogger.Api.Configuration;
 
 public static class ApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder UseMinimalApi(this WebApplication app)
+    public static WebApplication UseMinimalApi(this WebApplication app)
     {
+        app.UseApplicationManagerApi();
 
+        return app;
     }
 }

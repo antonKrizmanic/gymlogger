@@ -8,9 +8,8 @@ public static class EndpointHelper
         ? Results.Ok(model)
         : Results.NotFound();
 
-    // TODO: Uncomment when Internet is on
-    public static RouteGroupBuilder AddAuthOpenApiAndTag(this RouteGroupBuilder builder, string tag) =>
-        builder.RequireAuthorization();
-        //.WithOpenApi()
-        //.WithTags(tag);
+    public static RouteGroupBuilder AddAuthOpenApiAndTag(this RouteGroupBuilder group, string tag) =>
+        group.RequireAuthorization()
+            .WithOpenApi()
+            .WithTags(tag);
 }
