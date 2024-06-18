@@ -1,6 +1,7 @@
 ﻿using GymLogger.Application.User.Interfaces;
 using GymLogger.Core.User.Interfaces;
 using GymLogger.Infrastructure.Database.CodeExtensions;
+using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -23,6 +24,7 @@ public class GymLoggerDbContext :
     }
 
     public virtual DbSet<DbMuscleGroup> MuscleGroups { get; set; }
+    public virtual DbSet<DbExercise> Exercises { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -6,6 +6,7 @@ public static class CommonAreaRegistration
     {
         return app
             .MapApplicationManagerApiEndpoints("/api/ApplicationManagement", "ApplicationManagement")
-            .MapMuscleGroupApiEndpoints("/api/MuscleGroup", "MuscleGroup");
+            .MapMuscleGroupApiEndpoints("/api/MuscleGroup", "MuscleGroup")
+            .MapExerciseApiEndpoints("/api/Exercise", "Exercise");
     }
 }
