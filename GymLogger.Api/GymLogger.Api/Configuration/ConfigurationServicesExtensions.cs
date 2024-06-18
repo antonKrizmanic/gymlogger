@@ -5,7 +5,6 @@ using GymLogger.Infrastructure.Database;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.FluentUI.AspNetCore.Components;
-using Microsoft.AspNetCore.Builder;
 using Serilog;
 
 namespace GymLogger.Api.Configuration;

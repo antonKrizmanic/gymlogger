@@ -13,7 +13,8 @@ public static class InfrastructureDatabaseServicesExtensions
 {
     public static IServiceCollection RegisterInfrastructureDbServices(this IServiceCollection services)
     {
-        services.AddTransient<IDatabaseSeedService, DatabaseSeedService>();
+        services.AddTransient<IDatabaseSeedService, DatabaseSeedService>()
+            .AddTransient<IDatabaseManagementService, DatabaseManagementService>();
         return services;
     }
 

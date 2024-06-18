@@ -6,11 +6,6 @@ using GymLogger.Core.Paging.Enums;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Infrastructure.Database.Models.Paging;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymLogger.Infrastructure.Database.Models.MuscleGroups;
 internal class MuscleGroupsRepository(GymLoggerDbContext dbContext, IMapper mapper) : IMuscleGroupsRepository

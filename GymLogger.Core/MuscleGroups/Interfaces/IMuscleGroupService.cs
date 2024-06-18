@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GymLogger.Core.Paging.Interfaces;
 
 namespace GymLogger.Core.MuscleGroups.Interfaces;
 public interface IMuscleGroupService
 {
+    IPagedResult<IMuscleGroup> GetPagedAsync(IPagedRequest request);
+    Task<IMuscleGroup?> GetByIdAsync(Guid id);
+
 }

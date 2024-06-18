@@ -1,5 +1,3 @@
-using GymLogger.Api;
-using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
 using GymLogger.Api.Configuration;
 using GymLogger.Application;
@@ -9,14 +7,11 @@ using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
 builder.Services
     .AddCustomRazorComponents()
     .AddCustomAuthentication()
@@ -27,7 +22,8 @@ builder.Services
     .RegisterInfrastructureHttpServices()
     .AddApplication()
     .AddCustomSerilog(builder.Configuration)
-    .AddCustomSwagger();
+    .AddCustomSwagger()
+    .AddApiServices();
 
 // TODO: Move to a separate extension method and IdentityNoOpEmailSender to a separate project
 builder.Services.AddSingleton<IEmailSender<DbApplicationUser>, IdentityNoOpEmailSender>();

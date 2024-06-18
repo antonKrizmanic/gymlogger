@@ -1,14 +1,9 @@
 ﻿using GymLogger.Core.Management.Interfaces;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymLogger.Infrastructure.Database.Management;
-internal class DatabaseSeedService(GymLoggerDbContext dbContext, ILogger logger) : IDatabaseSeedService
+internal class DatabaseSeedService(GymLoggerDbContext dbContext, ILogger<DatabaseSeedService> logger) : IDatabaseSeedService
 {
     public async Task SeedDatabaseAsync()
     {

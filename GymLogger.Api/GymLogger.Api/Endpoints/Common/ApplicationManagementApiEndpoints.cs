@@ -1,4 +1,7 @@
-﻿namespace GymLogger.Api.Endpoints.Common;
+﻿using GymLogger.Api.Services.Management;
+using Microsoft.AspNetCore.Mvc;
+
+namespace GymLogger.Api.Endpoints.Common;
 
 public static class ApplicationManagementApiEndpoints
 {
@@ -6,24 +9,24 @@ public static class ApplicationManagementApiEndpoints
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/assert-migrations", async () =>
-        {
+        //group.MapGet("/assert-migrations", async (IManagementApiService apiService) =>
+        //{
+        //    return await apiService.AssertMigrationsAsync();
+        //});
 
+        //group.MapGet("/execute-migrations", async ([FromQuery]string? targetMigrations, IManagementApiService apiService) =>
+        //{
+        //    return await apiService.ExecuteMigrationsAsync(targetMigrations);
+        //});
+
+        group.MapGet("/execute-seed", async (IManagementApiService apiService) =>
+        {
+            return await apiService.ExecuteSeedAsync();
         });
 
-        group.MapGet("/execute-migrations", async () =>
-        {
-
-        });
-
-        group.MapGet("/execute-seed", async () =>
-        {
-
-        });
-
-        //group
-        //    .WithOpenApi()
-        //    .WithTags(tag);
+        group
+            .WithOpenApi()
+            .WithTags(tag);
 
         return app;
     }

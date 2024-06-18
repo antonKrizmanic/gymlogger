@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GymLogger.Infrastructure.Database.Management;
 
-public class DatabaseManagementService(GymLoggerDbContext context, IDatabaseSeedService databaseSeedService, ILogger logger) : IDatabaseManagementService
+public class DatabaseManagementService(GymLoggerDbContext context, IDatabaseSeedService databaseSeedService, ILogger<DatabaseManagementService> logger) : IDatabaseManagementService
 {
     public async Task AssertMigrationsAsync(CancellationToken cancellationToken = default)
     {

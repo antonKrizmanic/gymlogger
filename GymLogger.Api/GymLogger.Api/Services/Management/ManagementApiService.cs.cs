@@ -1,5 +1,4 @@
 ﻿using GymLogger.Core.Management.Interfaces;
-using Serilog;
 
 namespace GymLogger.Api.Services.Management;
 
