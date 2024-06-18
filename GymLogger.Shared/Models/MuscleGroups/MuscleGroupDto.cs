@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GymLogger.Shared.Models.MuscleGroups;
+﻿namespace GymLogger.Shared.Models.MuscleGroups;
 public class MuscleGroupDto
 {
     public Guid Id { get; set; }

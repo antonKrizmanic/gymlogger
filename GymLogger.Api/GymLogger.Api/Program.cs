@@ -67,6 +67,6 @@ app.UseCustomComponents();
 app.MapAdditionalIdentityEndpoints();
 app.UseCustomSwagger();
 
-app.MapGet("/test", () => { throw new GymLoggerEntityNotFoundException("Not found"); });
+
 
 app.Run();

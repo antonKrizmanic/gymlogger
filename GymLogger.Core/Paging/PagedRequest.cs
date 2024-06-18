@@ -2,7 +2,7 @@
 using GymLogger.Core.Paging.Interfaces;
 
 namespace GymLogger.Core.Paging;
-internal class PagedRequest : IPagedRequest
+public class PagedRequest : IPagedRequest
 {
     public int Page { get; set; }
     public int PageSize { get; set; }
