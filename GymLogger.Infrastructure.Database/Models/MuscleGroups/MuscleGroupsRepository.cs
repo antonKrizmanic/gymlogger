@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using GymLogger.Common.Enums;
 using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.MuscleGroups.Interfaces;
-using GymLogger.Core.Paging.Enums;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Infrastructure.Database.Models.Paging;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿using GymLogger.Core.Paging.Enums;
+﻿using GymLogger.Common.Enums;
 
 namespace GymLogger.Core.Paging.Interfaces;
 public interface IPagedRequest

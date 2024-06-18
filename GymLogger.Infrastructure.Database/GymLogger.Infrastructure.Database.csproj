@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GymLogger.Application\GymLogger.Application.csproj" />
+    <ProjectReference Include="..\GymLogger.Common\GymLogger.Common.csproj" />
     <ProjectReference Include="..\GymLogger.Core\GymLogger.Core.csproj" />
     <ProjectReference Include="..\GymLogger.Exceptions.Standard\GymLogger.Exceptions.Standard.csproj" />
   </ItemGroup>

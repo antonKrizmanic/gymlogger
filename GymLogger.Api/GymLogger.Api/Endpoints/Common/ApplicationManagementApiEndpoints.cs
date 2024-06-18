@@ -1,5 +1,4 @@
 ﻿using GymLogger.Api.Services.Management;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GymLogger.Api.Endpoints.Common;
 

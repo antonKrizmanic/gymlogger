@@ -1,4 +1,4 @@
-﻿using GymLogger.Core.Paging.Enums;
+﻿using GymLogger.Common.Enums;
 using GymLogger.Core.Paging.Interfaces;
 
 namespace GymLogger.Core.Paging;
