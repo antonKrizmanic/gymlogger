@@ -40,7 +40,7 @@ public class ExerciseApiService(IExerciseService service, IMapper mapper) : IExe
                 SortDirection = pagedRequestDto.SortDirection,
                 TotalItems = totalItems
             },
-            Items = pagedItems.MapTo<IEnumerable<ExerciseDto>>(mapper),
+            Items = pagedItems.MapTo<ICollection<ExerciseDto>>(mapper),
         };
     }
 

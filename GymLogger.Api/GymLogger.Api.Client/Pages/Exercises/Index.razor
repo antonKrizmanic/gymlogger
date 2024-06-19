@@ -1,7 +1,46 @@
 ﻿@page "/Exercises"
+@inherits BaseComponent
 @attribute [Authorize]
-<h3>Index</h3>
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
-@code {
+<FluentStack Orientation="Orientation.Vertical">
+    <PageHeading>
+        <ChildContent>
+            Vježbe
+        </ChildContent>
+        <PageHeadingButtons>
+            <FluentAnchor Href="/Exercises/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
+                Dodaj novu vježbu
+            </FluentAnchor>
+        </PageHeadingButtons>
+    </PageHeading>
+    <FluentSearch @bind-Value="_searchValue"
+                  @bind-Value:after="OnSearchAsync"
+                  Immediate="true"
+                  ImmediateDelay="300"
+                  Placeholder="Pretraži vježbe" />
 
-}
+    <FluentGrid Style="width:100%;">
+        @foreach (var item in items)
+        {
+            <FluentGridItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="2">
+                <FluentCard MinimalStyle="false">
+                    <FluentStack Orientation="Orientation.Vertical">
+                        <FluentLabel Typo="Typography.PaneHeader">@item.Name</FluentLabel>
+                        <FluentLabel Typo="Typography.Body"><b>Mišićna grupa:</b> @item.MuscleGroupName</FluentLabel>
+                        <FluentLabel Typo="Typography.Body"><b>Opis:</b> @item.Description</FluentLabel>
+                        @{
+                            var editHref = $"/Exercises/Edit/{item.Id}";
+                            var detailHref = $"/Exercises/{item.Id}";
+                        }
+                        <FluentStack HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentAnchor Href="@detailHref" IconEnd="@(new Icons.Regular.Size16.Search())" />
+                            <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Edit())" />
+                            <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                        </FluentStack>
+                    </FluentStack>
+                </FluentCard>
+            </FluentGridItem>            
+        }
+    </FluentGrid>
+</FluentStack>

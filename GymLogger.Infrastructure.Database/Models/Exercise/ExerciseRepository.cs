@@ -25,6 +25,11 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, IMapper mapper, 
             .AsNoTracking()
             .AsQueryable();
 
+        if (request.Search != null)
+        {
+            query = query.Where(b => b.Name.Contains(request.Search));
+        }
+
         var isSortDescending = request.SortDirection == SortDirection.Descending;
 
         // Sort the results based on the sort column

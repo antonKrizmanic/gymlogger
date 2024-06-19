@@ -14,7 +14,7 @@ internal class MuscleGroupsApiService(IMuscleGroupService muscleGroupService, IM
     {
         var entity = await muscleGroupService.GetByIdAsync(id);
 
-        if(entity == null)
+        if (entity == null)
         {
             throw new GymLoggerEntityNotFoundException($"No muscle group was found for id {id}");
         }
@@ -40,7 +40,7 @@ internal class MuscleGroupsApiService(IMuscleGroupService muscleGroupService, IM
                 SortDirection = pagedRequestDto.SortDirection,
                 TotalItems = totalItems
             },
-            Items = pagedItems.MapTo<IEnumerable<MuscleGroupDto>>(mapper),            
+            Items = pagedItems.MapTo<ICollection<MuscleGroupDto>>(mapper),
         };
     }
 }

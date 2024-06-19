@@ -1,7 +1,6 @@
 using GymLogger.Api.Components.Account;
 using GymLogger.Api.Configuration;
 using GymLogger.Application;
-using GymLogger.Exceptions;
 using GymLogger.Exceptions.Web;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
