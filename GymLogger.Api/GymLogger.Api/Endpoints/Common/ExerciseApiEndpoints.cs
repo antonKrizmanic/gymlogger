@@ -28,6 +28,36 @@ public static class ExerciseApiEndpoints
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError);
 
+        group.MapPost("", async ([FromBody] ExerciseCreateDto exerciseCreateDto, IExerciseApiService apiService) =>
+        {
+            return await apiService.CreateAsync(exerciseCreateDto);
+        })
+            .Produces<ExerciseDto>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/{id:guid}", async ([FromRoute] Guid id, [FromBody] ExerciseUpdateDto exerciseUpdateDto, IExerciseApiService apiService) =>
+        {
+            if (id != exerciseUpdateDto.Id)
+                return Results.BadRequest("Id mismatch");
+
+            await apiService.UpdateAsync(exerciseUpdateDto);
+            return Results.NoContent();
+        })
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError);
+
+        group.MapDelete("/{id:guid}", async ([FromRoute] Guid id, IExerciseApiService apiService) =>
+        {
+            await apiService.DeleteAsync(id);
+
+            return Results.NoContent();
+        })
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError);
+
         group
             .WithOpenApi()
             .WithTags(tag);

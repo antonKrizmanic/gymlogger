@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Paging;
@@ -34,5 +35,11 @@ public class ApiMapperProfile : Profile
     private void MapExerciseModels()
     {
         this.CreateMap<IExercise, ExerciseDto>();
+
+        this.CreateMap<ExerciseCreateDto, ExerciseCreate>();
+        this.CreateMap<ExerciseCreateDto, IExerciseCreate>().As<ExerciseCreate>();
+
+        this.CreateMap<ExerciseUpdateDto, ExerciseUpdate>();
+        this.CreateMap<ExerciseUpdateDto, IExerciseUpdate>().As<ExerciseUpdate>();
     }
 }

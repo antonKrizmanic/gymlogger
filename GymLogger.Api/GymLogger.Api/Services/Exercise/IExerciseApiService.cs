@@ -9,4 +9,7 @@ public interface IExerciseApiService
 
     Task<ExerciseDto> GetById(Guid id);
 
+    Task<ExerciseDto> CreateAsync(ExerciseCreateDto exerciseCreateDto);
+    Task UpdateAsync(ExerciseUpdateDto exerciseUpdateDto);
+    Task DeleteAsync(Guid id);
 }

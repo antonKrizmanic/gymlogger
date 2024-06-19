@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.Exercise.Interfaces;
-using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Exceptions;
 using GymLogger.Shared.Models.Exercise;
-using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
 
 namespace GymLogger.Api.Services.Exercise;
@@ -45,4 +43,20 @@ public class ExerciseApiService(IExerciseService service, IMapper mapper) : IExe
             Items = pagedItems.MapTo<IEnumerable<ExerciseDto>>(mapper),
         };
     }
+
+    public async Task<ExerciseDto> CreateAsync(ExerciseCreateDto exerciseCreateDto)
+    {
+        var exerciseCreate = exerciseCreateDto.MapTo<IExerciseCreate>(mapper);
+        var entity = await service.CreateAsync(exerciseCreate);
+        return entity.MapTo<ExerciseDto>(mapper);
+    }
+
+    public async Task UpdateAsync(ExerciseUpdateDto exerciseUpdateDto)
+    {
+        var exerciseUpdate = exerciseUpdateDto.MapTo<IExerciseUpdate>(mapper);
+        await service.UpdateAsync(exerciseUpdate);
+    }
+
+    public Task DeleteAsync(Guid id) =>
+        service.DeleteAsync(id);
 }
