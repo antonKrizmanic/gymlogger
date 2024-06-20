@@ -45,19 +45,20 @@
                     </FluentStack>
                 </FluentCard>
             </FluentGridItem>            
-        }
+        }        
     </FluentGrid>
-    <FluentSelect 
-        TOption="string"
-        Value="10" 
-        @onchange="HandlePageSizeChangeAsync">
-            <FluentOption Value="10">10</FluentOption>
-            <FluentOption Value="20">20</FluentOption>
-            <FluentOption Value="50">50</FluentOption>
-            <FluentOption Value="100">100</FluentOption>
-    </FluentSelect>
+    <FluentGrid>
+        <FluentSelect Style="margin-top: 0.5rem; padding: 0.25rem 0 0.25rem 012px;"
+                          TOption="string"
+                          Value="10"
+                          @onchange="HandlePageSizeChangeAsync">
+                <FluentOption Value="10">10</FluentOption>
+                <FluentOption Value="20">20</FluentOption>
+                <FluentOption Value="50">50</FluentOption>
+                <FluentOption Value="100">100</FluentOption>
+            </FluentSelect>
 
-    <FluentPaginator 
-        State="_paginationState"    
-        CurrentPageIndexChanged="@HandlePageChangedAsync" />
+            <FluentPaginator State="_paginationState"
+                             CurrentPageIndexChanged="@HandlePageChangedAsync" />
+    </FluentGrid>    
 </FluentStack>
