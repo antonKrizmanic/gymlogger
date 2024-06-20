@@ -1,11 +1,12 @@
 ﻿using GymLogger.Shared.Constants;
 using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.Paging;
+using GymLogger.Shared.Services;
 using System.Net.Http.Json;
 
 namespace GymLogger.Api.Client.HttpServices.Exercise;
 
-public class ExerciseHttpService(IHttpClientFactory httpClientFactory) : BaseHttpService(httpClientFactory, ApiRoutes.Exercise), IExerciseHttpService
+public class ExerciseHttpService(IHttpClientFactory httpClientFactory) : BaseHttpService(httpClientFactory, ApiRoutes.Exercise), IExerciseApiService
 {
     public async Task<PagedResponseDto<ExerciseDto>> GetPagedListAsync(PagedRequestDto request)
     {
@@ -22,10 +23,17 @@ public class ExerciseHttpService(IHttpClientFactory httpClientFactory) : BaseHtt
         await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/{id}", Context.ExerciseUpdateDto) ??
         throw new Exception("Exercise update dto is null");
 
-    public async Task<HttpResponseMessage> CreateAsync(ExerciseCreateDto dto) =>
-        await base.HttpClient.PostAsJsonAsync(base.ApiRoute, dto, Context.ExerciseCreateDto);
+    public async Task<ExerciseDto> CreateAsync(ExerciseCreateDto dto)
+    {
+        var response = await base.HttpClient.PostAsJsonAsync(base.ApiRoute, dto, Context.ExerciseCreateDto);
 
-    public async Task<HttpResponseMessage> UpdateAsync(ExerciseUpdateDto dto) =>
+        if (!response.IsSuccessStatusCode)
+            throw new Exception($"Failed to create exercise. Status code: {response.StatusCode}");
+
+        return await response.Content.ReadFromJsonAsync<ExerciseDto>();
+    }
+
+    public async Task UpdateAsync(ExerciseUpdateDto dto) =>
         await base.HttpClient.PutAsJsonAsync($"{base.ApiRoute}/{dto.Id}", dto, Context.ExerciseUpdateDto);
 
     public async Task DeleteAsync(Guid id) =>

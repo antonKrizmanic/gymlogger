@@ -1,6 +1,6 @@
-﻿using GymLogger.Api.Services.Exercise;
-using GymLogger.Shared.Models.Exercise;
+﻿using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.Paging;
+using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymLogger.Api.Endpoints.Common;
@@ -13,7 +13,7 @@ public static class ExerciseApiEndpoints
 
         group.MapGet("/", async ([AsParameters] PagedRequestDto pagedRequestDto, IExerciseApiService apiService) =>
         {
-            return await apiService.GetPagedAsync(pagedRequestDto);
+            return await apiService.GetPagedListAsync(pagedRequestDto);
         })
             .Produces<PagedResponseDto<ExerciseDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
@@ -21,7 +21,7 @@ public static class ExerciseApiEndpoints
 
         group.MapGet("/{id}", async ([FromRoute] Guid id, IExerciseApiService apiService) =>
         {
-            return await apiService.GetById(id);
+            return await apiService.GetAsync(id);
         })
             .Produces<ExerciseDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)

@@ -1,4 +1,4 @@
-﻿namespace GymLogger.Api.Client.HttpServices;
+﻿namespace GymLogger.Shared.Services.Generics;
 
 public interface IGetHttpService<TDto>
 {

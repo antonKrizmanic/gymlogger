@@ -1,6 +1,6 @@
 ﻿using GymLogger.Shared.Models.Paging;
 
-namespace GymLogger.Api.Client.HttpServices;
+namespace GymLogger.Shared.Services.Generics;
 
 public interface IPagedHttpService<TDto, TRequest>
     where TDto : class

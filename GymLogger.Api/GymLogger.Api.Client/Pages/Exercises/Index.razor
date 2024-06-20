@@ -1,7 +1,7 @@
 ﻿@page "/Exercises"
 @inherits BaseComponent
 @attribute [Authorize]
-@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+@rendermode @(new InteractiveAutoRenderMode())
 
 <FluentStack Orientation="Orientation.Vertical">
     <PageHeading>
@@ -9,9 +9,9 @@
             Vježbe
         </ChildContent>
         <PageHeadingButtons>
-            <FluentAnchor Href="/Exercises/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
+            <FluentButton OnClick="@(() => CreateAsync())" IconEnd="@(new Icons.Regular.Size16.Add())">
                 Dodaj novu vježbu
-            </FluentAnchor>
+            </FluentButton>
         </PageHeadingButtons>
     </PageHeading>
     <FluentSearch @bind-Value="_searchValue"
@@ -28,6 +28,10 @@
                     <FluentStack Orientation="Orientation.Vertical">
                         <FluentLabel Typo="Typography.PaneHeader">@item.Name</FluentLabel>
                         <FluentLabel Typo="Typography.Body"><b>Mišićna grupa:</b> @item.MuscleGroupName</FluentLabel>
+                        @{
+                            var desc = EnumHelper<ExerciseLogType>.GetDisplayValue(item.ExerciseLogType);
+                        }
+                        <FluentLabel Typo="Typography.Body"><b>Način zapisivanja:</b> @desc</FluentLabel>
                         <FluentLabel Typo="Typography.Body"><b>Opis:</b> @item.Description</FluentLabel>
                         @{
                             var editHref = $"/Exercises/Edit/{item.Id}";
@@ -35,12 +39,25 @@
                         }
                         <FluentStack HorizontalAlignment="HorizontalAlignment.End">
                             <FluentAnchor Href="@detailHref" IconEnd="@(new Icons.Regular.Size16.Search())" />
-                            <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Edit())" />
-                            <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(item))"/>
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(item.Id))" />
                         </FluentStack>
                     </FluentStack>
                 </FluentCard>
             </FluentGridItem>            
         }
     </FluentGrid>
+    <FluentSelect 
+        TOption="string"
+        Value="10" 
+        @onchange="HandlePageSizeChangeAsync">
+            <FluentOption Value="10">10</FluentOption>
+            <FluentOption Value="20">20</FluentOption>
+            <FluentOption Value="50">50</FluentOption>
+            <FluentOption Value="100">100</FluentOption>
+    </FluentSelect>
+
+    <FluentPaginator 
+        State="_paginationState"    
+        CurrentPageIndexChanged="@HandlePageChangedAsync" />
 </FluentStack>

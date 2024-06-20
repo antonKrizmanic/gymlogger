@@ -1,14 +1,14 @@
-﻿using GymLogger.Api.Client.HttpServices;
+﻿using GymLogger.Shared.Services.Generics;
 using Microsoft.AspNetCore.Components;
 
 namespace GymLogger.Api.Client.Components;
 
-public abstract class BaseCreatePage<TDto, THttpService> : BaseComponent
-    where THttpService : ICreateHttpService<TDto>
-    where TDto : new()
+public abstract class BaseCreatePage<TCreateDto, TDto, THttpService> : BaseComponent
+    where THttpService : ICreateHttpService<TCreateDto, TDto>
+    where TCreateDto : new()
 {
     [Inject] protected THttpService HttpService { get; set; }
-    protected TDto Model { get; set; } = new TDto();
+    protected TCreateDto Model { get; set; } = new TCreateDto();
     protected abstract string SuccessCreateMessage { get; }
     protected abstract string RedirectPath { get; }
 
@@ -17,13 +17,12 @@ public abstract class BaseCreatePage<TDto, THttpService> : BaseComponent
     protected virtual async Task HandleValidSubmit()
     {
         //this.ShowSpinner = true;
-        var response = await this.HttpService.CreateAsync(this.Model);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            //this.Snackbar.Add(this.SuccessCreateMessage, Severity.Success);
+            var response = await this.HttpService.CreateAsync(this.Model);
             this.NavigationManager.NavigateTo(this.RedirectPath);
         }
-        else
+        catch (Exception)
         {
             //this.ShowSpinner = false;
             //this.ErrorMessage = "Dogodila se greška prilikom stvaranja zapisa!";
