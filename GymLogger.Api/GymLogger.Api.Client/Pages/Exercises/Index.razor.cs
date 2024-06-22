@@ -15,7 +15,6 @@ public partial class Index : BaseComponent
 {
     [Inject] public required IExerciseApiService ExerciseHttpService { get; set; }
     [Inject] public required IMuscleGroupApiService MuscleGroupHttpService { get; set; }
-    [Inject] public required IDialogService DialogService { get; set; }
 
     private ICollection<MuscleGroupDto> MuscleGroups { get; set; } = [];
     private PagedResponseDto<ExerciseDto> _pagedResponseDto = new();
@@ -65,8 +64,16 @@ public partial class Index : BaseComponent
         var result = await dialog.Result;
         if (!result.Cancelled && result.Data != null)
         {
-            await ExerciseHttpService.CreateAsync((ExerciseCreateDto)result.Data);
-            await this.LoadDataAsync();
+            try
+            {
+                await ExerciseHttpService.CreateAsync((ExerciseCreateDto)result.Data);
+                await this.LoadDataAsync();
+                this.ToastService.ShowSuccess("Vježba uspješno dodana.");
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Dodavanje vježbe nije uspjelo.");
+            }
         }
     }
 
@@ -105,8 +112,16 @@ public partial class Index : BaseComponent
                 ExerciseLogType = ((ExerciseCreateDto)result.Data).ExerciseLogType,
                 IsPublic = ((ExerciseCreateDto)result.Data).IsPublic
             };
-            await ExerciseHttpService.UpdateAsync(editDto);
-            await this.LoadDataAsync();
+            try
+            {
+                await ExerciseHttpService.UpdateAsync(editDto);
+                await this.LoadDataAsync();
+                this.ToastService.ShowSuccess("Vježba uspješno izmjenjena.");
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Izmjena vježbe nije uspjela.");
+            }
         }
     }
 
@@ -122,8 +137,16 @@ public partial class Index : BaseComponent
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            await ExerciseHttpService.DeleteAsync(item.Id);
-            await this.LoadDataAsync();
+            try
+            {
+                await ExerciseHttpService.DeleteAsync(item.Id);
+                await this.LoadDataAsync();
+                this.ToastService.ShowSuccess("Vježba uspješno obrisana.");
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Brisanje vježbe nije uspjelo.");
+            }
         }
     }
 
