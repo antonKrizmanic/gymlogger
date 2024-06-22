@@ -1,0 +1,125 @@
+﻿@typeparam TItem
+@using System.Linq.Expressions
+@using GymLogger.Shared.Models
+@using GymLogger.Shared.Models.Paging
+
+<FluentStack Orientation="Orientation.Vertical">
+    @if (ShowSearch)
+    {
+        <GlCardGridSearchInput OnSearchCallback="OnSearchAsync" />        
+    }
+
+    <FluentGrid Style="width:100%;">
+        @if(PagedResponse != null && PagedResponse.Items != null)
+        {
+            @foreach (var item in PagedResponse.Items)
+            {
+                <FluentGridItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="2">
+                    <FluentCard MinimalStyle="false">
+                        @ItemTemplate(item)
+
+                        @if(ShowActionButtons)
+                        {
+                            <FluentStack HorizontalAlignment="HorizontalAlignment.End">
+                                @if(ShowDetailsButton)
+                                {
+                                    <FluentButton 
+                                        OnClick="@(() => OnDetailsClicked.InvokeAsync(item))" 
+                                        IconEnd="@(new Icons.Regular.Size16.Search())"/>
+                                }
+                                @if(ShowEditButton)
+                                {
+                                    <FluentButton 
+                                        OnClick="@(() => OnEditClicked.InvokeAsync(item))"
+                                        IconEnd="@(new Icons.Regular.Size16.Edit())"/>
+                                }
+                                @if(ShowDeleteButton)
+                                {
+                                    <FluentButton 
+                                        OnClick="@(() => OnDeleteClicked.InvokeAsync(item))"
+                                        IconEnd="@(new Icons.Regular.Size16.Delete())"/>
+                                }
+                            </FluentStack>
+                        }
+                    </FluentCard>
+                </FluentGridItem>
+            }
+        }
+        else
+        {
+            <FluentGridItem Style="width:100%;">
+                <p>Nothing to show</p>
+            </FluentGridItem>
+        }
+    </FluentGrid>
+
+    @if (ShowPagination)
+    {
+        <GlCardGridPagination 
+            PaginationState="@PaginationState" 
+            OnPageChanged="@OnPageChangedAsync" 
+            OnPageSizeChanged="@HandlePageSizeChangeAsync" />
+    }
+</FluentStack>
+
+@code {
+    [Parameter] public required RenderFragment<TItem> ItemTemplate { get; set; }
+    [Parameter] public required PagedRequestDto PagedRequest { get; set; }
+    [Parameter] public required PagedResponseDto<TItem> PagedResponse { get; set; }
+    [Parameter] public EventCallback<PagedRequestDto> PagedRequestChanged { get; set; }
+
+    [Parameter] public bool ShowSearch { get; set; } = true;
+    [Parameter] public bool ShowPagination { get; set; } = true;
+
+    [Parameter] public bool ShowActionButtons { get; set; } = true;
+    [Parameter] public bool ShowDetailsButton { get; set; } = true;
+    [Parameter] public bool ShowEditButton { get; set; } = true;
+    [Parameter] public bool ShowDeleteButton { get; set; } = true;
+
+    [Parameter] public EventCallback<TItem> OnDetailsClicked { get; set; }
+    [Parameter] public EventCallback<TItem> OnEditClicked { get; set; }
+    [Parameter] public EventCallback<TItem> OnDeleteClicked { get; set; }
+
+    public PaginationState PaginationState = new() { ItemsPerPage = 12 };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(PagedResponse == null || PagedResponse.PagingData == null)
+        {
+            return;
+        }
+        await PaginationState.SetTotalItemCountAsync(PagedResponse.PagingData.TotalItems);
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task OnSearchAsync(string searchValue)
+    {
+        if (PagedRequestChanged.HasDelegate)
+        {
+            PagedRequest.Search = searchValue;
+            PagedRequest.Page = 0;
+            await PagedRequestChanged.InvokeAsync(PagedRequest);
+        }
+    }
+
+    private async Task OnPageChangedAsync(int newPage)
+    {
+        if(PagedRequestChanged.HasDelegate)
+        {
+            PagedRequest.Page = newPage;
+            await PaginationState.SetCurrentPageIndexAsync(newPage);
+            await PagedRequestChanged.InvokeAsync(PagedRequest);
+        }
+    }
+
+    private async Task HandlePageSizeChangeAsync(int pageSize)
+    {        
+        this.PagedRequest.Page = 0;
+        this.PagedRequest.PageSize = pageSize;
+
+        this.PaginationState.ItemsPerPage = pageSize;
+        await PaginationState.SetCurrentPageIndexAsync(0);
+
+        await PagedRequestChanged.InvokeAsync(PagedRequest);
+    }
+}

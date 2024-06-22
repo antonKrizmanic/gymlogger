@@ -12,15 +12,15 @@
             <FluentButton OnClick="@(() => CreateAsync())" IconEnd="@(new Icons.Regular.Size16.Add())">
                 Dodaj novu vježbu
             </FluentButton>
-            @*Add button that will open filter.*@            
+            
             <FluentButton IconEnd="@(new Icons.Regular.Size16.Filter())" OnClick="@(() => filterOpen = !filterOpen)">
                 Filtriraj
             </FluentButton>
-            @*Add button that will open dropdown with sort options*@
+            
             <FluentButton IconEnd="@(new Icons.Regular.Size16.ArrowSort())" id="sortMenu" @onclick="@(() => sortMenuOpen = !sortMenuOpen)">
                 Sortiranje
             </FluentButton>
-            <FluentMenu Anchor="sortMenu" @bind-Open="sortMenuOpen" @onmenuchange=OnMenuChange VerticalThreshold="170">
+            <FluentMenu Anchor="sortMenu" @bind-Open="sortMenuOpen" VerticalThreshold="170">
                 <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("name", Common.Enums.SortDirection.Ascending))">
                     Nazivu (uzlazno)
                 </FluentMenuItem>
@@ -72,56 +72,27 @@
             </FluentStack>
             <FluentStack HorizontalAlignment="HorizontalAlignment.Start" Style="margin-top: 1rem;">
                 <FluentButton Appearance="Appearance.Accent" OnClick="@(() => FilterAsync())">Filtriraj</FluentButton>
-                <FluentButton OnClick="@(() => ClearFilterAsync())">Očisti</FluentButton>
+                <FluentButton OnClick="@ClearFilter">Očisti</FluentButton>
             </FluentStack>
         </FluentCard>
-    }
-    <FluentStack HorizontalAlignment="HorizontalAlignment.End">
-    <FluentSearch @bind-Value="_searchValue"
-                  @bind-Value:after="OnSearchAsync"
-                  Immediate="true"
-                  ImmediateDelay="300"
-                  Placeholder="Pretraga" />
-                  </FluentStack>
+    }    
 
-    <FluentGrid Style="width:100%;">
-        @foreach (var item in Items)
-        {
-            <FluentGridItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="2">
-                <FluentCard MinimalStyle="false">
-                    <FluentStack Orientation="Orientation.Vertical">
-                        <FluentLabel Typo="Typography.PaneHeader">@item.Name</FluentLabel>
-                        <FluentLabel Typo="Typography.Body"><b>Mišićna grupa:</b> @item.MuscleGroupName</FluentLabel>
-                        @{
-                            var desc = EnumHelper<ExerciseLogType>.GetDisplayValue(item.ExerciseLogType);
-                        }
-                        <FluentLabel Typo="Typography.Body"><b>Način zapisivanja:</b> @desc</FluentLabel>
-                        <FluentLabel Typo="Typography.Body"><b>Opis:</b> @item.Description</FluentLabel>
-                        @{                            
-                            var detailHref = $"/Exercises/{item.Id}";
-                        }
-                        <FluentStack HorizontalAlignment="HorizontalAlignment.End">
-                            <FluentAnchor Href="@detailHref" IconEnd="@(new Icons.Regular.Size16.Search())" />
-                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(item))" />
-                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(item.Id))" />
-                        </FluentStack>
-                    </FluentStack>
-                </FluentCard>
-            </FluentGridItem>
-        }
-    </FluentGrid>
-    <FluentGrid>
-        <FluentSelect Style="margin-top: 0.5rem; padding: 0.25rem 0 0.25rem 012px;"
-                      TOption="string"
-                      Value="10"
-                      @onchange="HandlePageSizeChangeAsync">
-            <FluentOption Value="12">12</FluentOption>
-            <FluentOption Value="24">24</FluentOption>
-            <FluentOption Value="48">48</FluentOption>
-            <FluentOption Value="96">96</FluentOption>
-        </FluentSelect>
-
-        <FluentPaginator State="_paginationState"
-                         CurrentPageIndexChanged="@HandlePageChangedAsync" />
-    </FluentGrid>
+    <GlCardGrid 
+        TItem="ExerciseDto"
+        PagedResponse="_pagedResponseDto"
+        PagedRequest="_pagedRequestDto"
+        PagedRequestChanged="LoadDataAsync"
+        OnDetailsClicked="Details"
+        OnEditClicked="EditAsync"
+        OnDeleteClicked="DeleteAsync">
+        <ItemTemplate>                
+            <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Mišićna grupa:</b> @context.MuscleGroupName</FluentLabel>
+            @{
+                var desc = EnumHelper<ExerciseLogType>.GetDisplayValue(context.ExerciseLogType);
+            }
+            <FluentLabel Typo="Typography.Body"><b>Način zapisivanja:</b> @desc</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>                           
+        </ItemTemplate>
+    </GlCardGrid>
 </FluentStack>

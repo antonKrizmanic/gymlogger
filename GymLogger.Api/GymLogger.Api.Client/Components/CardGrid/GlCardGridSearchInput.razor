@@ -1,0 +1,19 @@
+﻿<FluentStack HorizontalAlignment="HorizontalAlignment.End">
+    <FluentSearch @bind-Value="_searchValue"
+                  @bind-Value:after="@OnSearchAsync"
+                  Immediate="true"
+                  ImmediateDelay="300"
+                  Placeholder="Pretraga" />
+</FluentStack>
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnSearchCallback { get; set; }
+
+    private string? _searchValue;
+
+    private async Task OnSearchAsync()
+    {
+        await OnSearchCallback.InvokeAsync(_searchValue);
+    }
+}

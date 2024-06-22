@@ -17,12 +17,10 @@ public partial class Index : BaseComponent
     [Inject] public required IMuscleGroupApiService MuscleGroupHttpService { get; set; }
     [Inject] public required IDialogService DialogService { get; set; }
 
-    private ICollection<ExerciseDto> Items { get; set; } = [];
     private ICollection<MuscleGroupDto> MuscleGroups { get; set; } = [];
-    private string? _searchValue;
+    private PagedResponseDto<ExerciseDto> _pagedResponseDto = new();
     private ExercisePagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
-    private PaginationState _paginationState = new() { ItemsPerPage = 12 };
-    private PagingDataResponseDto _pagingDataResponseDto = new();
+
     private bool sortMenuOpen = false;
     private bool filterOpen = false;
 
@@ -46,45 +44,12 @@ public partial class Index : BaseComponent
         {
             this.MuscleGroups.Add(muscleGroup);
         }
-        Console.WriteLine("MuscleGroups: " + this.MuscleGroups.Count());
         await this.LoadDataAsync();
-        await _paginationState.SetCurrentPageIndexAsync(0);
-    }
-
-    private async Task OnSearchAsync()
-    {
-        this._pagedRequestDto.Search = _searchValue;
-        this._pagedRequestDto.Page = 0;
-        await this.LoadDataAsync();
-    }
-
-    private async Task HandlePageChangedAsync(int newPage)
-    {
-        await this._paginationState.SetCurrentPageIndexAsync(newPage);
-        this._pagedRequestDto.Page = newPage;
-        await this.LoadDataAsync();
-    }
-
-    private async Task HandlePageSizeChangeAsync(ChangeEventArgs e)
-    {
-        if (int.TryParse(e.Value?.ToString(), out var newPageSize))
-        {
-            this._pagedRequestDto.Page = 0;
-            this._pagedRequestDto.PageSize = newPageSize;
-
-            this._paginationState.ItemsPerPage = newPageSize;
-            await _paginationState.SetCurrentPageIndexAsync(0);
-
-            await this.LoadDataAsync();
-        }
     }
 
     private async Task LoadDataAsync()
     {
-        var results = await ExerciseHttpService.GetPagedListAsync(this._pagedRequestDto);
-        this._pagingDataResponseDto = results.PagingData;
-        this.Items = results.Items;
-        await _paginationState.SetTotalItemCountAsync(this._pagingDataResponseDto.TotalItems);
+        this._pagedResponseDto = await ExerciseHttpService.GetPagedListAsync(this._pagedRequestDto);
     }
 
     private async Task CreateAsync()
@@ -105,6 +70,11 @@ public partial class Index : BaseComponent
         }
     }
 
+    private void Details(ExerciseDto dto)
+    {
+        NavigationManager.NavigateTo($"/exercises/{dto.Id}");
+    }
+
     private async Task EditAsync(ExerciseDto dto)
     {
         var createDto = new ExerciseCreateDto()
@@ -118,7 +88,7 @@ public partial class Index : BaseComponent
 
         var dialog = await DialogService.ShowDialogAsync<ExerciseFormDialog>(createDto, new DialogParameters()
         {
-            Title = $"Nova vježba",
+            Title = $"Izmjena vježbe",
             PreventDismissOnOverlayClick = true,
             PreventScroll = true,
         });
@@ -140,7 +110,7 @@ public partial class Index : BaseComponent
         }
     }
 
-    private async Task DeleteAsync(Guid id)
+    private async Task DeleteAsync(ExerciseDto item)
     {
         var dialog = await DialogService.ShowDialogAsync<DeleteDialog>("Želite li stvarno obrisati ovu vježbu?", new DialogParameters()
         {
@@ -152,16 +122,8 @@ public partial class Index : BaseComponent
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            await ExerciseHttpService.DeleteAsync(id);
+            await ExerciseHttpService.DeleteAsync(item.Id);
             await this.LoadDataAsync();
-        }
-    }
-
-    private void OnMenuChange(MenuChangeEventArgs args)
-    {
-        if (args.Value != null)
-        {
-            Console.WriteLine(args.Id);
         }
     }
 
@@ -178,7 +140,7 @@ public partial class Index : BaseComponent
         await this.LoadDataAsync();
     }
 
-    private async Task ClearFilterAsync()
+    private void ClearFilter()
     {
         this.SelectedExerciseLogType = ExerciseLogType.Unknown.ToString();
         this.SelectedMuscleGroupId = Guid.Empty.ToString();

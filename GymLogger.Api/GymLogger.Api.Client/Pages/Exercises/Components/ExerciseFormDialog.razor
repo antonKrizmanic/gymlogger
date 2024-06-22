@@ -22,7 +22,7 @@
                 @bind-Value="@SelectedMuscleGroupId" 
                 Label="Grupa mišića" 
                 style="width:100%" 
-                Items="@MuscleGroups" 
+                Items="@MuscleGroups"
                 TOption="MuscleGroupDto"                 
                 OptionValue="@((item) => item.Id.ToString())" 
                 OptionText="@((item) => item.Name)">
