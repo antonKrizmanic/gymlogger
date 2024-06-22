@@ -37,7 +37,7 @@ public static class InfrastructureDatabaseServicesExtensions
             options => options.UseSqlServer(connectionString),
             isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped);
         services.AddDatabaseDeveloperPageExceptionFilter();
-        
+
         services.AddIdentityCore<DbApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
@@ -47,7 +47,7 @@ public static class InfrastructureDatabaseServicesExtensions
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-            })            
+            })
             .AddEntityFrameworkStores<GymLoggerDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();

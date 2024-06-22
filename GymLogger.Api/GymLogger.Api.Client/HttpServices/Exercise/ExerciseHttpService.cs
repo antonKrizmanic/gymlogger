@@ -8,7 +8,7 @@ namespace GymLogger.Api.Client.HttpServices.Exercise;
 
 public class ExerciseHttpService(IHttpClientFactory httpClientFactory) : BaseHttpService(httpClientFactory, ApiRoutes.Exercise), IExerciseApiService
 {
-    public async Task<PagedResponseDto<ExerciseDto>> GetPagedListAsync(PagedRequestDto request)
+    public async Task<PagedResponseDto<ExerciseDto>> GetPagedListAsync(ExercisePagedRequestDto request)
     {
         var url = GetQueryParameterDictionary($"{this.ApiRoute}", request);
         return await base.HttpClient.GetFromJsonAsync(url, Context.PagedResponseDtoExerciseDto) ??

@@ -1,9 +1,4 @@
 ﻿using GymLogger.Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymLogger.Core.Exercise.Interfaces;
 public interface IExercise
@@ -14,4 +9,5 @@ public interface IExercise
     public string MuscleGroupName { get; set; }
     public string? Description { get; set; }
     public ExerciseLogType ExerciseLogType { get; set; }
+    public string? BelongsToUserId { get; set; }
 }

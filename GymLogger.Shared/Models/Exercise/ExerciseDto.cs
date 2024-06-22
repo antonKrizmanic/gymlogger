@@ -7,4 +7,5 @@ public record ExerciseDto(
     Guid MuscleGroupId,
     string MuscleGroupName,
     string? Description,
-    ExerciseLogType ExerciseLogType);
+    ExerciseLogType ExerciseLogType,
+    bool IsPublic);

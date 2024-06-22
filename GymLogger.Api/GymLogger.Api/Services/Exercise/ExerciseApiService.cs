@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.Exercise.Interfaces;
-using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Exceptions;
 using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.Paging;
@@ -23,9 +22,9 @@ public class ExerciseApiService(IExerciseService service, IMapper mapper) : IExe
         return entity.MapTo<ExerciseDto>(mapper);
     }
 
-    public async Task<PagedResponseDto<ExerciseDto>> GetPagedListAsync(PagedRequestDto pagedRequestDto)
+    public async Task<PagedResponseDto<ExerciseDto>> GetPagedListAsync(ExercisePagedRequestDto pagedRequestDto)
     {
-        var pagedRequest = pagedRequestDto.MapTo<IPagedRequest>(mapper);
+        var pagedRequest = pagedRequestDto.MapTo<IExercisePagedRequest>(mapper);
         var pagedMuscleGroups = service.GetPagedAsync(pagedRequest);
 
         var totalItems = await pagedMuscleGroups.TotalCountAsync();

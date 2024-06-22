@@ -1,12 +1,10 @@
 ﻿using GymLogger.Common.Enums;
+using GymLogger.Core.Paging.Interfaces;
 
 namespace GymLogger.Core.Exercise.Interfaces;
 
-public interface IExerciseCreate
+public interface IExercisePagedRequest : IPagedRequest
 {
-    string Name { get; set; }
     Guid MuscleGroupId { get; set; }
-    string? Description { get; set; }
     ExerciseLogType ExerciseLogType { get; set; }
-    bool IsPublic { get; set; }
 }

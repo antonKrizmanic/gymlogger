@@ -6,7 +6,7 @@ public static class ServiceExtensions
 {
     public static IServiceCollection RegisterInfrastructureHttpServices(this IServiceCollection services)
     {
-        services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+        services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
 
         return services;
     }

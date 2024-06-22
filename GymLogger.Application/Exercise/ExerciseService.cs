@@ -8,7 +8,7 @@ internal class ExerciseService(IExerciseRepository repository) : IExerciseServic
         repository.GetByIdAsync(id);
 
 
-    public IPagedResult<IExercise> GetPagedAsync(IPagedRequest request) =>
+    public IPagedResult<IExercise> GetPagedAsync(IExercisePagedRequest request) =>
         repository.GetPagedAsync(request);
 
     public Task<IExercise> CreateAsync(IExerciseCreate exercise) =>

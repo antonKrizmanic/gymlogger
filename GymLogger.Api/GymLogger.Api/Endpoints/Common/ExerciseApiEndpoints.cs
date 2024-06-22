@@ -1,4 +1,5 @@
-﻿using GymLogger.Shared.Models.Exercise;
+﻿using GymLogger.Application.User.Interfaces;
+using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ public static class ExerciseApiEndpoints
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/", async ([AsParameters] PagedRequestDto pagedRequestDto, IExerciseApiService apiService) =>
+        group.MapGet("/", async ([AsParameters] ExercisePagedRequestDto pagedRequestDto, IExerciseApiService apiService, IHttpContextAccessor contextAccessor, ICurrentUserProvider currentUserProvider) =>
         {
             return await apiService.GetPagedListAsync(pagedRequestDto);
         })
@@ -59,6 +60,7 @@ public static class ExerciseApiEndpoints
             .Produces(StatusCodes.Status500InternalServerError);
 
         group
+            .RequireAuthorization()
             .WithOpenApi()
             .WithTags(tag);
 

@@ -10,4 +10,5 @@ public class Exercise : IExercise
     public string MuscleGroupName { get; set; } = string.Empty;
     public string? Description { get; set; }
     public ExerciseLogType ExerciseLogType { get; set; }
+    public string? BelongsToUserId { get; set; }
 }

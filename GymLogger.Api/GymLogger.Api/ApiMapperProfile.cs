@@ -34,12 +34,16 @@ public class ApiMapperProfile : Profile
 
     private void MapExerciseModels()
     {
-        this.CreateMap<IExercise, ExerciseDto>();
+        this.CreateMap<IExercise, ExerciseDto>()
+            .ForCtorParam("IsPublic", opt => opt.MapFrom(src => src.BelongsToUserId == null));
 
         this.CreateMap<ExerciseCreateDto, ExerciseCreate>();
         this.CreateMap<ExerciseCreateDto, IExerciseCreate>().As<ExerciseCreate>();
 
         this.CreateMap<ExerciseUpdateDto, ExerciseUpdate>();
         this.CreateMap<ExerciseUpdateDto, IExerciseUpdate>().As<ExerciseUpdate>();
+
+        this.CreateMap<ExercisePagedRequestDto, ExercisePagedRequest>();
+        this.CreateMap<ExercisePagedRequestDto, IExercisePagedRequest>().As<ExercisePagedRequest>();
     }
 }

@@ -1,7 +1,9 @@
 ﻿using GymLogger.Api.Client.Components;
 using GymLogger.Api.Client.Components.Dialog;
 using GymLogger.Api.Client.Pages.Exercises.Components;
+using GymLogger.Common.Enums;
 using GymLogger.Shared.Models.Exercise;
+using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Components;
@@ -11,17 +13,40 @@ namespace GymLogger.Api.Client.Pages.Exercises;
 
 public partial class Index : BaseComponent
 {
-    [Inject] private IExerciseApiService ExerciseHttpService { get; set; }
-    [Inject] private IDialogService DialogService { get; set; }
+    [Inject] public required IExerciseApiService ExerciseHttpService { get; set; }
+    [Inject] public required IMuscleGroupApiService MuscleGroupHttpService { get; set; }
+    [Inject] public required IDialogService DialogService { get; set; }
 
-    private ICollection<ExerciseDto> items = new List<ExerciseDto>();
+    private ICollection<ExerciseDto> Items { get; set; } = [];
+    private ICollection<MuscleGroupDto> MuscleGroups { get; set; } = [];
     private string? _searchValue;
-    private PagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
-    private PaginationState _paginationState = new() { ItemsPerPage = 10 };
+    private ExercisePagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
+    private PaginationState _paginationState = new() { ItemsPerPage = 12 };
     private PagingDataResponseDto _pagingDataResponseDto = new();
+    private bool sortMenuOpen = false;
+    private bool filterOpen = false;
+
+    private string SelectedExerciseLogType
+    {
+        get => _pagedRequestDto.ExerciseLogType.ToString();
+        set => _pagedRequestDto.ExerciseLogType = Enum.Parse<ExerciseLogType>(value);
+    }
+
+    private string SelectedMuscleGroupId
+    {
+        get => _pagedRequestDto.MuscleGroupId.ToString();
+        set => _pagedRequestDto.MuscleGroupId = string.IsNullOrEmpty(value) ? Guid.Empty : Guid.Parse(value);
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        this.MuscleGroups.Add(new MuscleGroupDto(Guid.Empty, "Select muscle group", ""));
+        var muscleGroups = await MuscleGroupHttpService.GetAllAsync();
+        foreach (var muscleGroup in muscleGroups)
+        {
+            this.MuscleGroups.Add(muscleGroup);
+        }
+        Console.WriteLine("MuscleGroups: " + this.MuscleGroups.Count());
         await this.LoadDataAsync();
         await _paginationState.SetCurrentPageIndexAsync(0);
     }
@@ -58,7 +83,7 @@ public partial class Index : BaseComponent
     {
         var results = await ExerciseHttpService.GetPagedListAsync(this._pagedRequestDto);
         this._pagingDataResponseDto = results.PagingData;
-        this.items = results.Items;
+        this.Items = results.Items;
         await _paginationState.SetTotalItemCountAsync(this._pagingDataResponseDto.TotalItems);
     }
 
@@ -87,7 +112,8 @@ public partial class Index : BaseComponent
             Description = dto.Description,
             Name = dto.Name,
             MuscleGroupId = dto.MuscleGroupId,
-            ExerciseLogType = dto.ExerciseLogType
+            ExerciseLogType = dto.ExerciseLogType,
+            IsPublic = dto.IsPublic
         };
 
         var dialog = await DialogService.ShowDialogAsync<ExerciseFormDialog>(createDto, new DialogParameters()
@@ -106,7 +132,8 @@ public partial class Index : BaseComponent
                 Description = ((ExerciseCreateDto)result.Data).Description,
                 Name = ((ExerciseCreateDto)result.Data).Name,
                 MuscleGroupId = ((ExerciseCreateDto)result.Data).MuscleGroupId,
-                ExerciseLogType = ((ExerciseCreateDto)result.Data).ExerciseLogType
+                ExerciseLogType = ((ExerciseCreateDto)result.Data).ExerciseLogType,
+                IsPublic = ((ExerciseCreateDto)result.Data).IsPublic
             };
             await ExerciseHttpService.UpdateAsync(editDto);
             await this.LoadDataAsync();
@@ -128,5 +155,32 @@ public partial class Index : BaseComponent
             await ExerciseHttpService.DeleteAsync(id);
             await this.LoadDataAsync();
         }
+    }
+
+    private void OnMenuChange(MenuChangeEventArgs args)
+    {
+        if (args.Value != null)
+        {
+            Console.WriteLine(args.Id);
+        }
+    }
+
+    private async Task OnSortMenuItemClicked(string sortColumn, Common.Enums.SortDirection sortDirection)
+    {
+        this._pagedRequestDto.SortColumn = sortColumn;
+        this._pagedRequestDto.SortDirection = sortDirection;
+        this.sortMenuOpen = false;
+        await this.LoadDataAsync();
+    }
+
+    private async Task FilterAsync()
+    {
+        await this.LoadDataAsync();
+    }
+
+    private async Task ClearFilterAsync()
+    {
+        this.SelectedExerciseLogType = ExerciseLogType.Unknown.ToString();
+        this.SelectedMuscleGroupId = Guid.Empty.ToString();
     }
 }

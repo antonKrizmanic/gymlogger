@@ -14,9 +14,9 @@ public partial class ExerciseFormDialog
 
     [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
 
-    private ICollection<MuscleGroupDto> MuscleGroups = new List<MuscleGroupDto>();
+    private ICollection<MuscleGroupDto> MuscleGroups { get; set; } = [];
 
-    private string selectedExerciseLogType
+    private string SelectedExerciseLogType
     {
         get => Content.ExerciseLogType.ToString();
         set => Content.ExerciseLogType = Enum.Parse<ExerciseLogType>(value);
@@ -29,12 +29,10 @@ public partial class ExerciseFormDialog
         {
             if (string.IsNullOrEmpty(value))
             {
-                Console.WriteLine("Empty value");
                 Content.MuscleGroupId = Guid.Empty;
             }
             else
             {
-                Console.WriteLine("Not empty value");
                 Content.MuscleGroupId = Guid.Parse(value);
             }
         }

@@ -3,7 +3,7 @@
 namespace GymLogger.Core.Exercise.Interfaces;
 public interface IExerciseService
 {
-    IPagedResult<IExercise> GetPagedAsync(IPagedRequest request);
+    IPagedResult<IExercise> GetPagedAsync(IExercisePagedRequest request);
     Task<IExercise?> GetByIdAsync(Guid id);
     Task<IExercise> CreateAsync(IExerciseCreate exercise);
     Task UpdateAsync(IExerciseUpdate exercise);

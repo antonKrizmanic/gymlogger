@@ -23,7 +23,9 @@ public class InfrastructureDatabaseMapperProfile : Profile
 
     private void MapExerciseModels()
     {
-         this.CreateMap<DbExercise, Exercise>();
-         this.CreateMap<DbExercise, IExercise>().As<Exercise>();
+        this.CreateMap<DbExercise, Exercise>();
+
+        this.CreateMap<DbExercise, IExercise>()
+            .As<Exercise>();
     }
 }
