@@ -1,0 +1,52 @@
+﻿@rendermode InteractiveAuto
+
+@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+                <Authorized>
+        <FluentProfileMenu Image="@(new Icons.Regular.Size48.Person().ToDataUri(size: "25px", color: "white"))">
+    <StartTemplate>
+                @context.User.Identity?.Name
+    </StartTemplate>
+    <HeaderTemplate>
+                <FluentStack>                    
+                    <FluentAnchor Appearance="@Appearance.Neutral"
+                                  Href="Account/Manage">Manage your profile</FluentAnchor>
+                </FluentStack>
+                <form action="Account/Logout" method="post">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <FluentButton Type="ButtonType.Submit" Style="width: 100%;">Logout</FluentButton>
+                </form>
+    </HeaderTemplate>
+    <ChildContent>
+        
+    </ChildContent>
+    <FooterTemplate>
+        
+    </FooterTemplate>
+</FluentProfileMenu>
+</Authorized>
+</AuthorizeView>
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
