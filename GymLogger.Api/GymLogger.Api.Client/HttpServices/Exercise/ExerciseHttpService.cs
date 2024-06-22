@@ -33,9 +33,19 @@ public class ExerciseHttpService(IHttpClientFactory httpClientFactory) : BaseHtt
         return await response.Content.ReadFromJsonAsync<ExerciseDto>();
     }
 
-    public async Task UpdateAsync(ExerciseUpdateDto dto) =>
-        await base.HttpClient.PutAsJsonAsync($"{base.ApiRoute}/{dto.Id}", dto, Context.ExerciseUpdateDto);
+    public async Task UpdateAsync(ExerciseUpdateDto dto)
+    {
+        var response = await base.HttpClient.PutAsJsonAsync($"{base.ApiRoute}/{dto.Id}", dto, Context.ExerciseUpdateDto);
 
-    public async Task DeleteAsync(Guid id) =>
-        await base.HttpClient.DeleteAsync($"{base.ApiRoute}/{id}");
+        if (!response.IsSuccessStatusCode)
+            throw new Exception($"Failed to update exercise. Status code: {response.StatusCode}");
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var response = await base.HttpClient.DeleteAsync($"{base.ApiRoute}/{id}");
+
+        if (!response.IsSuccessStatusCode)
+            throw new Exception($"Failed to delete exercise. Status code: {response.StatusCode}");
+    }
 }
