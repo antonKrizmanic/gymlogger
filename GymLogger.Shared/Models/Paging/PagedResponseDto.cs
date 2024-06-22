@@ -1,7 +1,7 @@
 ﻿namespace GymLogger.Shared.Models.Paging;
 public class PagedResponseDto<T>
 {
-    public PagingDataResponseDto PagingData { get; set; }
+    public PagingDataResponseDto? PagingData { get; set; }
 
-    public IEnumerable<T> Items { get; set; }
+    public ICollection<T>? Items { get; set; }
 }

@@ -1,6 +1,8 @@
-﻿using GymLogger.Core.Management.Interfaces;
+﻿using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.Management.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Infrastructure.Database.Management;
+using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +23,8 @@ public static class InfrastructureDatabaseServicesExtensions
     public static IServiceCollection RegisterInfrastructureDbRepositories(this IServiceCollection services)
     {
         services
-            .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>();
+            .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>()
+            .AddTransient<IExerciseRepository, ExerciseRepository>();
         return services;
     }
 
@@ -34,7 +37,7 @@ public static class InfrastructureDatabaseServicesExtensions
             options => options.UseSqlServer(connectionString),
             isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped);
         services.AddDatabaseDeveloperPageExceptionFilter();
-        
+
         services.AddIdentityCore<DbApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
@@ -44,7 +47,7 @@ public static class InfrastructureDatabaseServicesExtensions
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-            })            
+            })
             .AddEntityFrameworkStores<GymLoggerDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();

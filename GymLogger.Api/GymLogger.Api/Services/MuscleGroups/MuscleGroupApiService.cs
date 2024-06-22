@@ -1,25 +1,43 @@
 ﻿using AutoMapper;
+using GymLogger.Common.Enums;
 using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.MuscleGroups.Interfaces;
+using GymLogger.Core.Paging;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Exceptions;
 using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
+using GymLogger.Shared.Services;
 
 namespace GymLogger.Api.Services.MuscleGroups;
 
-internal class MuscleGroupsApiService(IMuscleGroupService muscleGroupService, IMapper mapper) : IMuscleGroupsApiService
+internal class MuscleGroupApiService(IMuscleGroupService muscleGroupService, IMapper mapper) : IMuscleGroupApiService
 {
+    public async Task<IEnumerable<MuscleGroupDto>> GetAllAsync()
+    {
+        var pagedRequest = new PagedRequest
+        {
+            Page = 0,
+            PageSize = int.MaxValue,
+            SortColumn = "Name",
+            SortDirection = SortDirection.Ascending
+        };
+        var pagedMuscleGroups = muscleGroupService.GetPagedAsync(pagedRequest);
+        var pagedItems = await pagedMuscleGroups.GetPageAsync(pagedRequest.Page, pagedRequest.PageSize);
+
+        return pagedItems.MapTo<ICollection<MuscleGroupDto>>(mapper);
+    }
+
     public async Task<MuscleGroupDto> GetById(Guid id)
     {
-        var book = await muscleGroupService.GetByIdAsync(id);
+        var entity = await muscleGroupService.GetByIdAsync(id);
 
-        if(book == null)
+        if (entity == null)
         {
             throw new GymLoggerEntityNotFoundException($"No muscle group was found for id {id}");
         }
 
-        return book.MapTo<MuscleGroupDto>(mapper);
+        return entity.MapTo<MuscleGroupDto>(mapper);
     }
 
     public async Task<PagedResponseDto<MuscleGroupDto>> GetPagedAsync(PagedRequestDto pagedRequestDto)
@@ -40,7 +58,7 @@ internal class MuscleGroupsApiService(IMuscleGroupService muscleGroupService, IM
                 SortDirection = pagedRequestDto.SortDirection,
                 TotalItems = totalItems
             },
-            Items = pagedItems.MapTo<IEnumerable<MuscleGroupDto>>(mapper),            
+            Items = pagedItems.MapTo<ICollection<MuscleGroupDto>>(mapper),
         };
     }
 }

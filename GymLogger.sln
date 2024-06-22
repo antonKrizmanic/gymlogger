@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Exceptions.Standa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Exceptions.Web.Standard", "GymLogger.Exceptions.Web.Standard\GymLogger.Exceptions.Web.Standard.csproj", "{8DD77A90-A4C6-407A-8667-3A42682C8C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymLogger.Common", "GymLogger.Common\GymLogger.Common.csproj", "{0B8C745A-1EBE-45F8-8F26-69F30EBB3C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymLogger.Common", "GymLogger.Common\GymLogger.Common.csproj", "{0B8C745A-1EBE-45F8-8F26-69F30EBB3C4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

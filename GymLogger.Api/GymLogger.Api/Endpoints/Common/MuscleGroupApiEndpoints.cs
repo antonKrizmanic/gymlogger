@@ -1,6 +1,6 @@
-﻿using GymLogger.Api.Services.MuscleGroups;
-using GymLogger.Shared.Models.MuscleGroups;
+﻿using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
+using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymLogger.Api.Endpoints.Common;
@@ -11,7 +11,7 @@ public static class MuscleGroupApiEndpoints
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/", async ([AsParameters] PagedRequestDto pagedRequestDto, IMuscleGroupsApiService apiService) =>
+        group.MapGet("/", async ([AsParameters] PagedRequestDto pagedRequestDto, IMuscleGroupApiService apiService) =>
         {
             return await apiService.GetPagedAsync(pagedRequestDto);
         })
@@ -19,7 +19,7 @@ public static class MuscleGroupApiEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/{id}", async ([FromRoute] Guid id, IMuscleGroupsApiService apiService) =>
+        group.MapGet("/{id}", async ([FromRoute] Guid id, IMuscleGroupApiService apiService) =>
         { 
             return await apiService.GetById(id);
         })
