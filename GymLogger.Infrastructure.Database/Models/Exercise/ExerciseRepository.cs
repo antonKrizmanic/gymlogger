@@ -15,10 +15,15 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
 {
     public Task<IExercise?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var dbEntity = dbContext.Exercises
+            .AsNoTracking()
+            .ProjectTo<IExercise>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(b => b.Id == id);
+
+        return dbEntity;
     }
 
-    public IPagedResult<IExercise> GetPagedAsync(IExercisePagedRequest request)
+    public IPagedResult<IExercise> GetPaged(IExercisePagedRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -56,8 +61,8 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
                 ? query.OrderByDescending(b => b.ExerciseLogType)
                 : query.OrderBy(b => b.ExerciseLogType),
             _ => isSortDescending
-                ? query.OrderByDescending(b => b.Id)
-            : query.OrderBy(b => b.Id)
+                ? query.OrderByDescending(b => b.CreatedAt)
+            : query.OrderBy(b => b.CreatedAt)
         };
 
         var projectQuery = query.ProjectTo<IExercise>(mapper.ConfigurationProvider);

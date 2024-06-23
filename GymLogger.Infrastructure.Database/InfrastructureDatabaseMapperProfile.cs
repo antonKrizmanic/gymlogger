@@ -3,8 +3,11 @@ using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.MuscleGroups;
 using GymLogger.Core.MuscleGroups.Interfaces;
+using GymLogger.Core.Workout;
+using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
+using GymLogger.Infrastructure.Database.Models.Workout;
 
 namespace GymLogger.Infrastructure.Database;
 public class InfrastructureDatabaseMapperProfile : Profile
@@ -13,6 +16,7 @@ public class InfrastructureDatabaseMapperProfile : Profile
     {
         MapMuscleGroupModels();
         MapExerciseModels();
+        MapWorkoutModels();
     }
 
     private void MapMuscleGroupModels()
@@ -27,5 +31,11 @@ public class InfrastructureDatabaseMapperProfile : Profile
 
         this.CreateMap<DbExercise, IExercise>()
             .As<Exercise>();
+    }
+
+    private void MapWorkoutModels()
+    {
+        this.CreateMap<DbWorkout, Workout>();
+        this.CreateMap<DbWorkout, IWorkout>().As<Workout>();
     }
 }

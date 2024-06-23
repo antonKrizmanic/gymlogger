@@ -4,6 +4,7 @@ using GymLogger.Infrastructure.Database.CodeExtensions;
 using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
+using GymLogger.Infrastructure.Database.Models.Workout;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,7 @@ public class GymLoggerDbContext :
 
     public virtual DbSet<DbMuscleGroup> MuscleGroups { get; set; }
     public virtual DbSet<DbExercise> Exercises { get; set; }
+    public virtual DbSet<DbWorkout> Workouts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
