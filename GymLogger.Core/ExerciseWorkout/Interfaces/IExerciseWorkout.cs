@@ -1,4 +1,5 @@
 ﻿namespace GymLogger.Core.ExerciseWorkout.Interfaces;
+
 public interface IExerciseWorkout
 {
     Guid ExerciseId { get; set; }
