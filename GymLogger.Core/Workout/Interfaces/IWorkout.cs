@@ -1,4 +1,6 @@
-﻿namespace GymLogger.Core.Workout.Interfaces;
+﻿using GymLogger.Core.ExerciseWorkout.Interfaces;
+
+namespace GymLogger.Core.Workout.Interfaces;
 public interface IWorkout
 {
     Guid Id { get; set; }
@@ -10,5 +12,5 @@ public interface IWorkout
     decimal? TotalWeight { get; set; }
     decimal? TotalReps { get; set; }
     decimal? TotalSets { get; set; }
-    // TODO: List of exercises
+    ICollection<IExerciseWorkout> Exercises { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace GymLogger.Core.Workout.Interfaces;
+﻿using GymLogger.Core.ExerciseWorkout.Interfaces;
+
+namespace GymLogger.Core.Workout.Interfaces;
 public interface IWorkoutCreate
 {
     string Name { get; set; }
@@ -8,5 +10,5 @@ public interface IWorkoutCreate
     decimal? TotalWeight { get; set; }
     decimal? TotalReps { get; set; }
     decimal? TotalSets { get; set; }
-    // TODO: List of exercises (optional, workout can be updated with them)
+    ICollection<IExerciseWorkoutCreate> Exercises { get; set; }
 }

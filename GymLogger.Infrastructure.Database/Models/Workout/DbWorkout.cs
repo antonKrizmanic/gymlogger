@@ -1,4 +1,5 @@
 ﻿using GymLogger.Core.User.Interfaces;
+using GymLogger.Infrastructure.Database.Models.ExerciseWorkout;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 
 namespace GymLogger.Infrastructure.Database.Models.Workout;
@@ -16,4 +17,5 @@ public class DbWorkout : IBelongsToUser
     public string? BelongsToUserId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public virtual ICollection<DbExerciseWorkout>? Exercises { get; set; }
 }

@@ -1,42 +1,42 @@
-﻿using GymLogger.Shared.Models.Exercise;
-using GymLogger.Shared.Models.Paging;
+﻿using GymLogger.Shared.Models.Paging;
+using GymLogger.Shared.Models.Workout;
 using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymLogger.Api.Endpoints.Common;
 
-public static class ExerciseApiEndpoints
+public static class WorkoutApiEndpoints
 {
-    public static WebApplication MapExerciseApiEndpoints(this WebApplication app, string apiUrl, string tag)
+    public static WebApplication MapWorkoutApiEndpoints(this WebApplication app, string apiUrl, string tag)
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/", async ([AsParameters] ExercisePagedRequestDto pagedRequestDto, IExerciseApiService apiService) =>
+        group.MapGet("/", async ([AsParameters] WorkoutPagedRequestDto pagedRequestDto, IWorkoutApiService apiService) =>
         {
             return await apiService.GetPagedListAsync(pagedRequestDto);
         })
-            .Produces<PagedResponseDto<ExerciseDto>>(StatusCodes.Status200OK)
+            .Produces<PagedResponseDto<WorkoutDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/{id}", async ([FromRoute] Guid id, IExerciseApiService apiService) =>
+        group.MapGet("/{id}", async ([FromRoute] Guid id, IWorkoutApiService apiService) =>
         {
             return await apiService.GetAsync(id);
         })
-            .Produces<ExerciseDto>(StatusCodes.Status200OK)
+            .Produces<WorkoutDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapPost("", async ([FromBody] ExerciseCreateDto exerciseCreateDto, IExerciseApiService apiService) =>
+        group.MapPost("", async ([FromBody] WorkoutCreateDto workoutCreateDto, IWorkoutApiService apiService) =>
         {
-            return await apiService.CreateAsync(exerciseCreateDto);
+            return await apiService.CreateAsync(workoutCreateDto);
         })
-            .Produces<ExerciseDto>(StatusCodes.Status201Created)
+            .Produces<WorkoutDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapPut("/{id:guid}", async ([FromRoute] Guid id, [FromBody] ExerciseUpdateDto exerciseUpdateDto, IExerciseApiService apiService) =>
+        group.MapPut("/{id:guid}", async ([FromRoute] Guid id, [FromBody] WorkoutUpdateDto exerciseUpdateDto, IWorkoutApiService apiService) =>
         {
             if (id != exerciseUpdateDto.Id)
                 return Results.BadRequest("Id mismatch");
@@ -48,7 +48,7 @@ public static class ExerciseApiEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapDelete("/{id:guid}", async ([FromRoute] Guid id, IExerciseApiService apiService) =>
+        group.MapDelete("/{id:guid}", async ([FromRoute] Guid id, IWorkoutApiService apiService) =>
         {
             await apiService.DeleteAsync(id);
 

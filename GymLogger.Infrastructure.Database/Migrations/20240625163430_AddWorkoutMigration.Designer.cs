@@ -4,6 +4,7 @@ using GymLogger.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymLogger.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(GymLoggerDbContext))]
-    partial class GymLoggerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625163430_AddWorkoutMigration")]
+    partial class AddWorkoutMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
