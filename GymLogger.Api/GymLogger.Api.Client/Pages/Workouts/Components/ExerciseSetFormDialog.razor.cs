@@ -1,5 +1,4 @@
-﻿using GymLogger.Shared.Models.Exercise;
-using GymLogger.Shared.Models.ExerciseSet;
+﻿using GymLogger.Api.Client.Models.Workout;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -20,10 +19,4 @@ public partial class ExerciseSetFormDialog
     {
         await Dialog.CancelAsync();
     }
-}
-
-public class ExerciseSetFormViewModel
-{
-    public ExerciseSetCreateDto CreateDto { get; set; }
-    public ExerciseDto Exercise { get; set; }
 }

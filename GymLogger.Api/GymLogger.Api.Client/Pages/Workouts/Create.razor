@@ -12,8 +12,8 @@
 
         <FluentGrid Style="width:100%;">
             <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
-                <FluentTextField @bind-Value="Model.Name" Required Label="Naziv treninga" Style="width:100%;"/>
-                <FluentValidationMessage For="@(() => Model.Name)"/>
+                <FluentTextField @bind-Value="Model.Name" Required Label="Naziv treninga" Style="width:100%;" />
+                <FluentValidationMessage For="@(() => Model.Name)" />
             </FluentGridItem>
 
             <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
@@ -26,63 +26,93 @@
                 <FluentValidationMessage For="@(() => Model.Name)" />
             </FluentGridItem>
         </FluentGrid>
-        @if(Model.Exercises.Any() && AddedExercises.Any())
+        @if (Model.Exercises.Any() && AddedExercises.Any())
         {
             <FluentGrid Style="width:100%;">
-            @foreach (var item in AddedExercises)
-            {
-                <FluentGridItem xs="12" sm="12" md ="6" lg="4" xl="3">
-                    <FluentCard>
-                        <FluentLabel>@item.Exercise.Name</FluentLabel>
-                        @if(item.Sets != null && item.Sets.Any())
-                        {
-                            @foreach(var set in item.Sets)
+                @foreach (var item in AddedExercises)
+                {
+                    <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
+                        <FluentCard>
+                            <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                            @if (item.Sets != null && item.Sets.Any())
                             {
-                                <FluentCard>
-                                        @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight || item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
-                                        {
-                                            <FluentLabel>Broj ponavljanja: @set.Reps</FluentLabel>
-                                            <FluentLabel>Težina: @set.Weight</FluentLabel>
-                                        }
-                                        else if(item.Exercise.ExerciseLogType == ExerciseLogType.Time)
-                                        {
-                                            <FluentLabel>Trajanje: @set.Time</FluentLabel>
-                                        }
-                                        else
-                                        {
-                                            <p>Ups, doslo je do greske</p>
-                                        }
-                                </FluentCard>                                
+                                <table style="width:100%;table-layout:fixed;">
+                                    @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight ||
+                                   item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+                                    {
+                                        <thead>
+                                            <tr>                                                
+                                                <th>Set</th>
+                                                <th>Težina (kg)</th>
+                                                <th>Broj ponavljanja</th>
+                                                <th></th>
+                                            </tr>
+
+                                        </thead>
+                                    }
+                                    else if (item.Exercise.ExerciseLogType == ExerciseLogType.Time)
+                                    {
+                                        <thead>
+                                            <tr>
+                                                <th>Set</th>
+                                                <th>Vrijeme (s)</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    }
+                                    @foreach(var set in item.Sets)
+                                    {
+                                        <tr>
+                                            <td>@set.Index</td>
+                                            @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight || item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+                                            {
+                                                <td>@set.Weight</td>
+                                                <td>@set.Reps</td>
+                                            }
+                                            else if (item.Exercise.ExerciseLogType == ExerciseLogType.Time)
+                                            {
+                                                <td>@set.Time</td>
+                                            }
+                                            <td>
+                                                <FluentButton OnClick="@(() => OnEditSetAsync(item.Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Edit())" />
+                                                <FluentButton OnClick="@(() => OnRemoveSet(item.Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                                            </td>
+                                        </tr>
+                                    }                                    
+                                </table>
                             }
-                        }
-                            <FluentButton OnClick="@(() => OnAddSetClick(item.Exercise.Id))">Dodaj set</FluentButton>
-                        <FluentButton OnClick="@(() => RemoveExercise(item.Exercise.Id))">Obirši vježbu iz treninga</FluentButton>
-                    </FluentCard>
-                </FluentGridItem>            
-            }
+
+
+                            @if(item.Exercise != null)
+                            {
+                                <FluentButton OnClick="@(() => OnAddSetClick(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())"/>
+                                <FluentButton OnClick="@(() => RemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())"/>
+                            }
+                        </FluentCard>
+                    </FluentGridItem>
+                }
             </FluentGrid>
         }
-        @if(!_showAddExerciseForm)
+        @if (!_showAddExerciseForm)
         {
             <FluentButton OnClick="OnAddExerciseClick" IconEnd="@(new Icons.Filled.Size16.Add())">Dodaj vježbu</FluentButton>
         }
         else
         {
-            <ExerciseWorkoutForm 
-                Model="_exerciseWorkoutModel"
-                Exercises="Exercises"
-                OnClose="OnAddExerciseFormClose"
-                OnSave="OnAddExerciseFormSave" />
-        }  
-        
+            <ExerciseWorkoutForm Model="_exerciseWorkoutModel"
+                                 Exercises="Exercises"
+                                 OnClose="OnAddExerciseFormClose"
+                                 OnSave="OnAddExerciseFormSave" />
+        }
+
         @if (!_showAddExerciseForm)
         {
             <FluentStack>
                 <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Spremi trening</FluentButton>
                 <FluentButton OnClick="@Cancel">Odustani</FluentButton>
             </FluentStack>
-        }        
-        
+        }
+
     </FluentStack>
 </EditForm>
 

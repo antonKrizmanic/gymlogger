@@ -1,4 +1,5 @@
 ﻿using GymLogger.Api.Client.Components;
+using GymLogger.Api.Client.Models.Workout;
 using GymLogger.Api.Client.Pages.Workouts.Components;
 using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.ExerciseSet;
@@ -83,7 +84,7 @@ public partial class Create : BaseComponent
     {
         var dto = new ExerciseSetFormViewModel();
         dto.Exercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == exerciseId.ToString());
-        dto.CreateDto = new();
+        dto.CreateDto = new() { Id = Guid.NewGuid() };
         var dialog = await DialogService.ShowDialogAsync<ExerciseSetFormDialog>(dto, new DialogParameters()
         {
             Title = $"Novi set",
@@ -97,15 +98,12 @@ public partial class Create : BaseComponent
             try
             {
                 var addedSet = (ExerciseSetFormViewModel)result.Data;
-                //Update this.AddedExercises
-
 
                 var addedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == exerciseId.ToString());
                 addedExercise.Sets = addedExercise.Sets ?? [];
+                addedSet.CreateDto.Index = addedExercise.Sets.Count + 1;
                 addedExercise.Sets.Add(addedSet.CreateDto);
 
-                //await Https.CreateAsync((ExerciseCreateDto)result.Data);
-                //await this.LoadDataAsync();
                 this.ToastService.ShowSuccess("Set uspješno dodan.");
             }
             catch (Exception)
@@ -117,7 +115,6 @@ public partial class Create : BaseComponent
 
     private void RemoveExercise(Guid exerciseId)
     {
-        Console.WriteLine($"Remove exercise: {exerciseId}");
         var exercise = this.Model.Exercises.FirstOrDefault(x => x.ExerciseId == exerciseId.ToString());
         if (exercise != null)
         {
@@ -129,10 +126,51 @@ public partial class Create : BaseComponent
             this.AddedExercises.Remove(addedExercise);
         }
     }
-}
 
-public class ExerciseSetCreateFormViewModel
-{
-    public ICollection<ExerciseSetCreateDto> Sets { get; set; } = [];
-    public ExerciseDto Exercise { get; set; }
+    private async Task OnEditSetAsync(Guid exerciseId, ExerciseSetCreateDto exerciseSetCreateDto)
+    {
+        var dto = new ExerciseSetFormViewModel();
+        dto.Exercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == exerciseId.ToString());
+        dto.CreateDto = exerciseSetCreateDto;
+        var dialog = await DialogService.ShowDialogAsync<ExerciseSetFormDialog>(dto, new DialogParameters()
+        {
+            Title = $"Izmjeni set",
+            PreventDismissOnOverlayClick = true,
+            PreventScroll = true,
+        });
+
+        var result = await dialog.Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            try
+            {
+                var edditedSet = (ExerciseSetFormViewModel)result.Data;
+
+                var edditedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == exerciseId.ToString());
+                var oldSet = edditedExercise.Sets.FirstOrDefault(x => x.Id == edditedSet.CreateDto.Id);
+                oldSet.Reps = edditedSet.CreateDto.Reps;
+                oldSet.Weight = edditedSet.CreateDto.Weight;
+                oldSet.Time = edditedSet.CreateDto.Time;
+
+                this.ToastService.ShowSuccess("Set uspješno dodan.");
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Dodavanje set nije uspjelo.");
+            }
+        }
+    }
+
+    private void OnRemoveSet(Guid exerciseId, ExerciseSetCreateDto dto)
+    {
+        var exercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id == exerciseId);
+        if (exercise != null)
+        {
+            var set = exercise.Sets.FirstOrDefault(x => x.Id == dto.Id);
+            if (set != null)
+            {
+                exercise.Sets.Remove(set);
+            }
+        }
+    }
 }

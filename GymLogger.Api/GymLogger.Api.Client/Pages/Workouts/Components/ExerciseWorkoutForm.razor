@@ -1,10 +1,11 @@
 ﻿@inherits BaseComponent
 @rendermode @(new InteractiveAutoRenderMode(prerender: false))
 
-<h3>ExerciseWorkoutForm</h3>
+
 <FluentSelect @bind-Value="@Model.ExerciseId"
               Label="Vježba"
               style="width:100%"
+              Height="300px"
               Items="@Exercises"
               TOption="ExerciseDto"
               OptionValue="@((item) => item.Id.ToString())"
