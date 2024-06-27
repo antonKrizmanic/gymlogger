@@ -2,7 +2,7 @@
 
 namespace GymLogger.Core.ExerciseWorkout;
 
-internal class ExerciseWorkout : IExerciseWorkout
+public class ExerciseWorkout : IExerciseWorkout
 {
     public Guid ExerciseId { get; set; }
     public Guid WorkoutId { get; set; }

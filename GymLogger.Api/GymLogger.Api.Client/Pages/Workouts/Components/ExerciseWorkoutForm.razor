@@ -1,0 +1,18 @@
+﻿@inherits BaseComponent
+@rendermode @(new InteractiveAutoRenderMode(prerender: false))
+
+<h3>ExerciseWorkoutForm</h3>
+<FluentSelect @bind-Value="@Model.ExerciseId"
+              Label="Vježba"
+              style="width:100%"
+              Items="@Exercises"
+              TOption="ExerciseDto"
+              OptionValue="@((item) => item.Id.ToString())"
+              OptionText="@((item) => item.Name)">
+</FluentSelect>
+
+<FluentStack Orientation="Orientation.Horizontal" >
+    <FluentButton OnClick="SaveAsync" Appearance="Appearance.Accent">Dodaj vježbu</FluentButton>
+    <FluentButton OnClick="Close">Odustani</FluentButton>
+</FluentStack>
+

@@ -20,6 +20,7 @@ public class ApiMapperProfile : Profile
         MapPagingModels();
         MapMuscleGroupModels();
         MapExerciseModels();
+        MapWorkoutModels();
     }
 
     private void MapPagingModels()

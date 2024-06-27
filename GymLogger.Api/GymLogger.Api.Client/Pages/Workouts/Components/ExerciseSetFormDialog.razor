@@ -1,0 +1,36 @@
+﻿@implements IDialogContentComponent<ExerciseSetFormViewModel>
+
+<FluentDialogHeader ShowDismiss="true">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <FluentStack VerticalAlignment="VerticalAlignment.Center" Orientation="Orientation.Vertical">
+        <p>Podaci o setu</p>
+
+        @if(Content.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight ||
+            Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
+        {
+            <FluentNumberField @bind-Value="@Content.CreateDto.Reps" Required style="width:100%" Label="Broj ponavljanja" />
+            <FluentNumberField @bind-Value="@Content.CreateDto.Weight" Required style="width:100%" Label="Težina" />
+        }
+        else if(Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
+        {
+            <FluentNumberField @bind-Value="@Content.CreateDto.Time" Required style="width:100%" Label="Trajanje (sekunde)" />
+        }
+        else
+        {
+            <p>Ups, nesto je poslo po krivu</p>
+        }
+
+    </FluentStack>
+</FluentDialogBody>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync">Dodaj set</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Odustani</FluentButton>
+</FluentDialogFooter>
