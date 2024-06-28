@@ -8,5 +8,5 @@ public class ExerciseWorkoutDto
     public decimal? TotalWeight { get; set; }
     public decimal? TotalReps { get; set; }
     public decimal? TotalSets { get; set; }
-    public ICollection<ExerciseSetDto> Sets { get; set; }
+    public ICollection<ExerciseSetDto> Sets { get; set; } = [];
 }

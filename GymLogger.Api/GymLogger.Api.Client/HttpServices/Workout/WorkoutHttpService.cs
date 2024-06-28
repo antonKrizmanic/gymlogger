@@ -15,8 +15,8 @@ public class WorkoutHttpService(IHttpClientFactory httpClientFactory) : BaseHttp
             throw new Exception("Paged response dto is null");
     }
 
-    public async Task<WorkoutDto> GetAsync(Guid id) =>
-        await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/{id}", Context.WorkoutDto) ??
+    public async Task<WorkoutDetailsDto> GetAsync(Guid id) =>
+        await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/{id}", Context.WorkoutDetailsDto) ??
         throw new Exception("Workout Dto is null");
 
     public async Task<WorkoutDto> CreateAsync(WorkoutCreateDto dto)

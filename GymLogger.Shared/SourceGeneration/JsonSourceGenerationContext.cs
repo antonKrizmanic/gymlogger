@@ -12,6 +12,7 @@ namespace GymLogger.Shared.SourceGeneration;
 [JsonSerializable(typeof(ExerciseUpdateDto))]
 [JsonSerializable(typeof(PagedResponseDto<ExerciseDto>))]
 
+[JsonSerializable(typeof(WorkoutDetailsDto))]
 [JsonSerializable(typeof(WorkoutCreateDto))]
 [JsonSerializable(typeof(WorkoutDto))]
 [JsonSerializable(typeof(WorkoutUpdateDto))]

@@ -8,7 +8,7 @@ namespace GymLogger.Shared.Services
     IDeleteHttpService,
     IEditHttpService<WorkoutUpdateDto>,
     IPagedHttpService<WorkoutDto, WorkoutPagedRequestDto>,
-    IGetHttpService<WorkoutDto>
+    IGetHttpService<WorkoutDetailsDto>
     {
     }
 }
