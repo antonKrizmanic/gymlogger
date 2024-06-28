@@ -23,6 +23,15 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
         return dbEntity;
     }
 
+    public async Task<ICollection<IExercise>> GetByIdsAsync(ICollection<Guid> ids)
+    {
+        return await dbContext.Exercises
+            .AsNoTracking()
+            .Where(b => ids.Contains(b.Id))
+            .ProjectTo<IExercise>(mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
     public IPagedResult<IExercise> GetPaged(IExercisePagedRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);

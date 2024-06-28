@@ -1,12 +1,18 @@
 ﻿using AutoMapper;
 using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.ExerciseSet;
+using GymLogger.Core.ExerciseSet.Interfaces;
+using GymLogger.Core.ExerciseWorkout;
+using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Paging;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Core.Workout;
 using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Shared.Models.Exercise;
+using GymLogger.Shared.Models.ExerciseSet;
+using GymLogger.Shared.Models.ExerciseWorkout;
 using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Models.Workout;
@@ -52,6 +58,10 @@ public class ApiMapperProfile : Profile
     private void MapWorkoutModels()
     {
         this.CreateMap<IWorkout, WorkoutDto>();
+        this.CreateMap<IWorkoutDetails, WorkoutDetailsDto>();
+        this.CreateMap<IExerciseWorkout, ExerciseWorkoutDto>();
+        this.CreateMap<ExerciseWorkout, ExerciseWorkoutDto>();
+        this.CreateMap<IExerciseSet, ExerciseSetDto>();
 
         this.CreateMap<WorkoutCreateDto, WorkoutCreate>();
         this.CreateMap<WorkoutCreateDto, IWorkoutCreate>().As<WorkoutCreate>();
@@ -61,5 +71,11 @@ public class ApiMapperProfile : Profile
 
         this.CreateMap<WorkoutPagedRequestDto, WorkoutPagedRequest>();
         this.CreateMap<WorkoutPagedRequestDto, IWorkoutPagedRequest>().As<WorkoutPagedRequest>();
+
+        this.CreateMap<ExerciseWorkoutCreateDto, ExerciseWorkoutCreate>();
+        this.CreateMap<ExerciseWorkoutCreateDto, IExerciseWorkoutCreate>().As<ExerciseWorkoutCreate>();
+
+        this.CreateMap<ExerciseSetCreateDto, ExerciseSetCreate>();
+        this.CreateMap<ExerciseSetCreateDto, IExerciseSetCreate>().As<ExerciseSetCreate>();
     }
 }

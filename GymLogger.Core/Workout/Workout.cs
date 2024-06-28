@@ -1,5 +1,4 @@
-﻿using GymLogger.Core.ExerciseWorkout.Interfaces;
-using GymLogger.Core.Workout.Interfaces;
+﻿using GymLogger.Core.Workout.Interfaces;
 
 namespace GymLogger.Core.Workout;
 public class Workout : IWorkout
@@ -10,8 +9,8 @@ public class Workout : IWorkout
     public DateTime Date { get; set; }
     public string? BelongsToUserId { get; set; }
     public Guid MuscleGroupId { get; set; }
+    public string MuscleGroupName { get; set; }
     public decimal? TotalWeight { get; set; }
     public decimal? TotalReps { get; set; }
     public decimal? TotalSets { get; set; }
-    public ICollection<IExerciseWorkout> Exercises { get; set; }
 }

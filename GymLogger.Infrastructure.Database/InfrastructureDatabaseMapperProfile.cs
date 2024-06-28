@@ -41,6 +41,9 @@ public class InfrastructureDatabaseMapperProfile : Profile
         this.CreateMap<DbWorkout, Workout>();
         this.CreateMap<DbWorkout, IWorkout>().As<Workout>();
 
+        this.CreateMap<DbWorkout, WorkoutDetails>();
+        this.CreateMap<DbWorkout, IWorkoutDetails>().As<WorkoutDetails>();
+
         this.CreateMap<DbExerciseWorkout, ExerciseWorkout>();
         this.CreateMap<DbExerciseWorkout, IExerciseWorkout>().As<ExerciseWorkout>();
     }

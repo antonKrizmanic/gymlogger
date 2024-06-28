@@ -1,4 +1,6 @@
-﻿namespace GymLogger.Shared.Models.ExerciseWorkout;
+﻿using GymLogger.Shared.Models.ExerciseSet;
+
+namespace GymLogger.Shared.Models.ExerciseWorkout;
 public class ExerciseWorkoutDto
 {
     public Guid ExerciseId { get; set; }
@@ -6,4 +8,5 @@ public class ExerciseWorkoutDto
     public decimal? TotalWeight { get; set; }
     public decimal? TotalReps { get; set; }
     public decimal? TotalSets { get; set; }
+    public ICollection<ExerciseSetDto> Sets { get; set; }
 }

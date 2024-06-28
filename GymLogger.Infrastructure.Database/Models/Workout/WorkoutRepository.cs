@@ -6,6 +6,8 @@ using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Exceptions;
+using GymLogger.Infrastructure.Database.Models.ExerciseSet;
+using GymLogger.Infrastructure.Database.Models.ExerciseWorkout;
 using GymLogger.Infrastructure.Database.Models.Paging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -50,11 +52,11 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         return new PagedResult<IWorkout>(projectQuery);
     }
 
-    public async Task<IWorkout?> GetByIdAsync(Guid id)
+    public async Task<IWorkoutDetails?> GetByIdAsync(Guid id)
     {
         return await dbContext.Workouts
             .AsNoTracking()
-            .ProjectTo<IWorkout>(mapper.ConfigurationProvider)
+            .ProjectTo<IWorkoutDetails>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(b => b.Id == id);
     }
 
@@ -69,10 +71,41 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
             Description = workout.Description,
             Date = workout.Date,
             MuscleGroupId = workout.MuscleGroupId,
+            TotalWeight = workout.TotalWeight,
+            TotalReps = workout.TotalReps,
+            TotalSets = workout.TotalSets,
             BelongsToUserId = currentUserProvider.GetCurrentUserId(),
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now
         };
+
+        if (workout.Exercises != null)
+        {
+            foreach (var exercise in workout.Exercises)
+            {
+                var dbExercise = new DbExerciseWorkout
+                {
+                    ExerciseId = exercise.ExerciseId,
+                    TotalReps = exercise.TotalReps,
+                    TotalSets = exercise.TotalSets,
+                    TotalWeight = exercise.TotalWeight,
+                    Sets = exercise.Sets.Select(x => new DbExerciseSet
+                    {
+                        Reps = x.Reps,
+                        Weight = x.Weight,
+                        Time = x.Time,
+                        Index = x.Index,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }).ToList(),
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
+                dbEntity.Exercises = dbEntity.Exercises ?? new List<DbExerciseWorkout>();
+                dbEntity.Exercises.Add(dbExercise);
+            }
+        }
 
         try
         {

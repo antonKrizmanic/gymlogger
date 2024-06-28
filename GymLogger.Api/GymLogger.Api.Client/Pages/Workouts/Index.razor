@@ -85,8 +85,11 @@
                 OnDeleteClicked="DeleteAsync">
         <ItemTemplate>
             <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
-            <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @context.Date</FluentLabel>            
-            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @context.Date.ToString("dd.MM.yyyy")</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Broj serija:</b> @context.TotalSets.ToFixedString()</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Broj ponavljanja:</b> @context.TotalReps.ToFixedString()</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Ukupna težina:</b> @context.TotalWeight.ToFixedString()</FluentLabel>
         </ItemTemplate>
     </GlCardGrid>
 </FluentStack>

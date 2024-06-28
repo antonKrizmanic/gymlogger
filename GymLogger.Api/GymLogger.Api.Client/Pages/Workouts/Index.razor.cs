@@ -11,7 +11,7 @@ public partial class Index : BaseComponent
     [Inject] public required IWorkoutApiService WorkoutApiService { get; set; }
 
     private PagedResponseDto<WorkoutDto> _pagedResponseDto = new();
-    private WorkoutPagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
+    private WorkoutPagedRequestDto _pagedRequestDto = new() { SortColumn = "Date" };
 
     private bool sortMenuOpen = false;
     private bool filterOpen = false;
@@ -36,7 +36,16 @@ public partial class Index : BaseComponent
 
     private async Task DeleteAsync(WorkoutDto dto)
     {
-        await WorkoutApiService.DeleteAsync(dto.Id);
-        await this.LoadDataAsync();
+        try
+        {
+            await WorkoutApiService.DeleteAsync(dto.Id);
+            await this.LoadDataAsync();
+            base.ToastService.ShowSuccess("Trening uspješno obrisan.");
+        }
+        catch (Exception)
+        {
+            base.ToastService.ShowError("Trening nije obrisan");
+            throw;
+        }
     }
 }

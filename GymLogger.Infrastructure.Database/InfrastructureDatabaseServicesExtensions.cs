@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace GymLogger.Infrastructure.Database;
 public static class InfrastructureDatabaseServicesExtensions
@@ -37,8 +38,12 @@ public static class InfrastructureDatabaseServicesExtensions
         var connectionStringKey = isProduction ? "ProductionConnection" : "DefaultConnection";
         var connectionString = configuration.GetConnectionString(connectionStringKey);
         services.AddDbContext<GymLoggerDbContext>(
-            options => options.UseSqlServer(connectionString),
-            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped);
+            options => options
+                .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                .EnableSensitiveDataLogging(),
+            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped)
+            ;
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddIdentityCore<DbApplicationUser>(options =>

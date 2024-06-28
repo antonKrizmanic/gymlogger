@@ -42,9 +42,9 @@
                                     {
                                         <thead>
                                             <tr>                                                
-                                                <th>Set</th>
-                                                <th>Težina (kg)</th>
+                                                <th>Set</th>                                                
                                                 <th>Broj ponavljanja</th>
+                                                <th>Težina (kg)</th>
                                                 <th></th>
                                             </tr>
 
@@ -65,9 +65,9 @@
                                         <tr>
                                             <td>@set.Index</td>
                                             @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight || item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
-                                            {
-                                                <td>@set.Weight</td>
+                                            {                                                
                                                 <td>@set.Reps</td>
+                                                <td>@set.Weight</td>
                                             }
                                             else if (item.Exercise.ExerciseLogType == ExerciseLogType.Time)
                                             {

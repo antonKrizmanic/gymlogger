@@ -15,6 +15,7 @@ public partial class Create : BaseComponent
 {
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private IExerciseApiService ExerciseApiService { get; set; } = default!;
+    [Inject] private IWorkoutApiService WorkoutApiService { get; set; } = default!;
 
     public ICollection<ExerciseDto> Exercises = [];
     private ICollection<ExerciseSetCreateFormViewModel> AddedExercises = [];
@@ -49,7 +50,22 @@ public partial class Create : BaseComponent
 
     private async Task SaveAsync()
     {
+        this.Model.Exercises = AddedExercises.Select(x => new ExerciseWorkoutCreateDto()
+        {
+            ExerciseId = x.Exercise.Id.ToString(),
+            Sets = x.Sets
+        }).ToList();
 
+        try
+        {
+            await this.WorkoutApiService.CreateAsync(this.Model);
+            this.ToastService.ShowSuccess("Trening uspješno dodan.");
+            this.NavigationManager.NavigateTo("/workouts");
+        }
+        catch (Exception)
+        {
+            this.ToastService.ShowError("Dodavanje treninga nije uspjelo.");
+        }
     }
 
     private void Cancel()
