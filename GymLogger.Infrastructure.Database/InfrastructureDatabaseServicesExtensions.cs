@@ -39,7 +39,7 @@ public static class InfrastructureDatabaseServicesExtensions
         var connectionString = configuration.GetConnectionString(connectionStringKey);
         services.AddDbContext<GymLoggerDbContext>(
             options => options
-                .UseSqlServer(connectionString)
+                .UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
                 .EnableSensitiveDataLogging(),
             isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped)
