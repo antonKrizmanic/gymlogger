@@ -13,50 +13,57 @@
                 <FluentAnchor Href="/Workouts" IconStart="@(new Icons.Regular.Size16.ArrowLeft())">
                     Natrag
                 </FluentAnchor>
-                @{ var defailHref = $"/Workouts/Edit/{Id.ToString()}";}
+                @{
+                    var defailHref = $"/Workouts/Edit/{Id.ToString()}";
+                }
                 <FluentAnchor Href="@defailHref" IconEnd="@(new Icons.Regular.Size16.Edit())">
                     Uredi
                 </FluentAnchor>
             </PageHeadingButtons>
         </PageHeading>
-        
+
         @if (Workout.Exercises.Any())
         {
-            @foreach (var exercise in Workout.Exercises)
-            {
-                <FluentCard>
-                    <FluentLabel Typo="Typography.PaneHeader">@exercise.ExerciseId</FluentLabel>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var set in exercise.Sets)
-                        {
-                            <tr>
-                                <td>@set.Index</td>
-                                @if (set is { Reps: not null, Weight: not null })
-                                {
-                                    <td>@set.Reps x @set.Weight</td>    
-                                }
-                                else if (set.Time.HasValue)
-                                {
-                                    <td>@set.Time</td>
-                                }
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </FluentCard>
-            }
+            <FluentGrid Style="width:100%;">
+
+                @foreach (var exercise in Workout.Exercises)
+                {
+                    <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
+                        <FluentCard>
+                            <FluentLabel Typo="Typography.PaneHeader">@exercise.ExerciseName</FluentLabel>
+                            <table style="width:100%;table-layout:fixed;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ponavljanja/Vrijeme</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var set in exercise.Sets)
+                                    {
+                                        <tr>
+                                            <td>@set.Index</td>
+                                            @if (set is { Reps: not null, Weight: not null })
+                                            {
+                                                <td>@set.Reps.ToFixedString() x @set.Weight.ToFixedString() (kg)</td>
+                                            }
+                                            else if (set.Time.HasValue)
+                                            {
+                                                <td>@set.Time.ToFixedString() (s)</td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </FluentCard>
+                    </FluentGridItem>
+                }
+            </FluentGrid>
         }
-    </FluentStack>    
+    </FluentStack>
 }
 
 
 @code {
-    
+
 }

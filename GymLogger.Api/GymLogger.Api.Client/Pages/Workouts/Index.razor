@@ -20,7 +20,7 @@
             <FluentButton IconEnd="@(new Icons.Regular.Size16.ArrowSort())" id="sortMenu" @onclick="@(() => sortMenuOpen = !sortMenuOpen)">
                 Sortiranje
             </FluentButton>
-            @* <FluentMenu Anchor="sortMenu" @bind-Open="sortMenuOpen" VerticalThreshold="170">
+            <FluentMenu Anchor="sortMenu" @bind-Open="sortMenuOpen" VerticalThreshold="170">
                 <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("name", Common.Enums.SortDirection.Ascending))">
                     Nazivu (uzlazno)
                 </FluentMenuItem>
@@ -33,13 +33,13 @@
                 <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("muscleGroupName", Common.Enums.SortDirection.Descending))">
                     Mišićnoj grupi (silazno)
                 </FluentMenuItem>
-                <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("exerciseLogType", Common.Enums.SortDirection.Ascending))">
-                    Načinu zapisivanja (uzlazno)
+                <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("date", Common.Enums.SortDirection.Ascending))">
+                    Datum (uzlazno)
                 </FluentMenuItem>
-                <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("exerciseLogType", Common.Enums.SortDirection.Descending))">
-                    Načinu zapisivanja (silazno)
+                <FluentMenuItem OnClick="@((e) => OnSortMenuItemClicked("date", Common.Enums.SortDirection.Descending))">
+                    Datum (silazno)
                 </FluentMenuItem>
-            </FluentMenu> *@
+            </FluentMenu>
         </PageHeadingButtons>
     </PageHeading>
     @if (filterOpen)

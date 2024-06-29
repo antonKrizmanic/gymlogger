@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.ExerciseSet;
+using GymLogger.Core.ExerciseSet.Interfaces;
 using GymLogger.Core.ExerciseWorkout;
 using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Core.MuscleGroups;
@@ -8,6 +10,7 @@ using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Workout;
 using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Infrastructure.Database.Models.Exercise;
+using GymLogger.Infrastructure.Database.Models.ExerciseSet;
 using GymLogger.Infrastructure.Database.Models.ExerciseWorkout;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using GymLogger.Infrastructure.Database.Models.Workout;
@@ -46,5 +49,8 @@ public class InfrastructureDatabaseMapperProfile : Profile
 
         this.CreateMap<DbExerciseWorkout, ExerciseWorkout>();
         this.CreateMap<DbExerciseWorkout, IExerciseWorkout>().As<ExerciseWorkout>();
+
+        this.CreateMap<DbExerciseSet, ExerciseSet>();
+        this.CreateMap<DbExerciseSet, IExerciseSet>().As<ExerciseSet>();
     }
 }

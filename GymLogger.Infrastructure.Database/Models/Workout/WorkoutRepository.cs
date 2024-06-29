@@ -43,8 +43,8 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                 ? query.OrderByDescending(b => b.Date)
                 : query.OrderBy(b => b.Date),
             _ => isSortDescending
-                ? query.OrderByDescending(b => b.CreatedAt)
-            : query.OrderBy(b => b.CreatedAt)
+                ? query.OrderByDescending(b => b.Date)
+            : query.OrderBy(b => b.Date)
         };
 
         var projectQuery = query.ProjectTo<IWorkout>(mapper.ConfigurationProvider);
@@ -153,7 +153,10 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
 
     public async Task DeleteAsync(Guid id)
     {
-        var dbEntity = await dbContext.Workouts.FindAsync(id);
+        var dbEntity = await dbContext.Workouts
+            .Include(x => x.Exercises)
+            .ThenInclude(x => x.Sets)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (dbEntity == null)
         {
@@ -162,7 +165,6 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
 
         try
         {
-            //TODO: Check if workouts and set will be delted (they should be)
             dbContext.Workouts.Remove(dbEntity);
             await dbContext.SaveChangesAsync();
 
