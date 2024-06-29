@@ -41,7 +41,7 @@ internal class DatabaseSeedService(GymLoggerDbContext dbContext, ILogger<Databas
 
     private async Task SeedExercisesAsync()
     {
-        // TODO: Get each muscle group and seed exercises for it
+        // Get each muscle group and seed exercises for it
         var abs = dbContext.MuscleGroups.FirstOrDefault(m => m.Name == "Abs");
         var arms = dbContext.MuscleGroups.FirstOrDefault(m => m.Name == "Arms");
         var back = dbContext.MuscleGroups.FirstOrDefault(m => m.Name == "Back");
@@ -62,14 +62,11 @@ internal class DatabaseSeedService(GymLoggerDbContext dbContext, ILogger<Databas
         await CreateExerciseIfDoesntExistAsync(arms, "Overhead Triceps Extension", "3x10-15");
         await CreateExerciseIfDoesntExistAsync(arms, "Bicep Curls", "3x6-10");
 
-
-
         // Back
         await CreateExerciseIfDoesntExistAsync(back, "Barbell Bent Over Row", "3x6-10");
         await CreateExerciseIfDoesntExistAsync(back, "Pull-Up", "3x6-10");
         await CreateExerciseIfDoesntExistAsync(back, "Lat Pulldown", "3x10-15");
         await CreateExerciseIfDoesntExistAsync(back, "Seated Cable Rows", "3x8-12");
-
 
         // Chest
         await CreateExerciseIfDoesntExistAsync(chest, "Bench Press", "3x5-8");
