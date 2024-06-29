@@ -79,7 +79,7 @@ public partial class Index : BaseComponent
 
     private void Details(ExerciseDto dto)
     {
-        NavigationManager.NavigateTo($"/exercises/{dto.Id}");
+        base.NavigationManager.NavigateTo($"/exercises/{dto.Id}");
     }
 
     private async Task EditAsync(ExerciseDto dto)

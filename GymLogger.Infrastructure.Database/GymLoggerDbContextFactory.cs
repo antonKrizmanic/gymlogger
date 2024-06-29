@@ -9,9 +9,9 @@ namespace GymLogger.Infrastructure.Database
         {
             var builder = new DbContextOptionsBuilder<GymLoggerDbContext>();
 
-            var connectionString = "Server=localhost;Database=GymLoggerDb;Trusted_Connection=True;Encrypt=False;MultipleActiveResultSets=true";
+            var connectionString = "Server=localhost;Database=GymLoggerDb;Port=5432;User Id=postgres;Password=postgres;";
 
-            builder.UseSqlServer(connectionString);
+            builder.UseNpgsql(connectionString);
 
             return new GymLoggerDbContext(builder.Options, null, null);
         }

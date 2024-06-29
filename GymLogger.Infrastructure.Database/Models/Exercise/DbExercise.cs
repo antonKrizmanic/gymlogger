@@ -10,7 +10,7 @@ public class DbExercise : IBelongsToUser
     [Required(AllowEmptyStrings = false)]
     public string Name { get; set; } = string.Empty;
     public Guid MuscleGroupId { get; set; }
-    public virtual DbMuscleGroup MuscleGroup { get; set; }
+    public virtual DbMuscleGroup MuscleGroup { get; set; } = default!;
     public ExerciseLogType ExerciseLogType { get; set; }
     public string? Description { get; set; }
     public string? BelongsToUserId { get; set; }
