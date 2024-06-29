@@ -1,14 +1,17 @@
 ﻿using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.Management.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
+using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Infrastructure.Database.Management;
 using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
+using GymLogger.Infrastructure.Database.Models.Workout;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace GymLogger.Infrastructure.Database;
 public static class InfrastructureDatabaseServicesExtensions
@@ -24,7 +27,8 @@ public static class InfrastructureDatabaseServicesExtensions
     {
         services
             .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>()
-            .AddTransient<IExerciseRepository, ExerciseRepository>();
+            .AddTransient<IExerciseRepository, ExerciseRepository>()
+            .AddTransient<IWorkoutRepository, WorkoutRepository>();
         return services;
     }
 
@@ -34,8 +38,12 @@ public static class InfrastructureDatabaseServicesExtensions
         var connectionStringKey = isProduction ? "ProductionConnection" : "DefaultConnection";
         var connectionString = configuration.GetConnectionString(connectionStringKey);
         services.AddDbContext<GymLoggerDbContext>(
-            options => options.UseSqlServer(connectionString),
-            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped);
+            options => options
+                .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                .EnableSensitiveDataLogging(),
+            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped)
+            ;
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddIdentityCore<DbApplicationUser>(options =>

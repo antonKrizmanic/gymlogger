@@ -1,5 +1,6 @@
 ﻿using GymLogger.Api.Client.HttpServices.Exercise;
 using GymLogger.Api.Client.HttpServices.MuscleGroup;
+using GymLogger.Api.Client.HttpServices.Workout;
 using GymLogger.Shared.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -17,7 +18,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddHttpServices(this IServiceCollection services)
     {
         services.AddScoped<IExerciseApiService, ExerciseHttpService>()
-            .AddScoped<IMuscleGroupApiService, MuscleGroupHttpService>();
+            .AddScoped<IMuscleGroupApiService, MuscleGroupHttpService>()
+            .AddScoped<IWorkoutApiService, WorkoutHttpService>();
         return services;
     }
 }

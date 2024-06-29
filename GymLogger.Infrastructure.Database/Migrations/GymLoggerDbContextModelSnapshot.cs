@@ -57,6 +57,82 @@ namespace GymLogger.Infrastructure.Database.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.ExerciseSet.DbExerciseSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ExerciseWorkoutId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Reps")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal?>("Time")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("Weight")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseWorkoutId");
+
+                    b.ToTable("ExerciseSets");
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.ExerciseWorkout.DbExerciseWorkout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("TotalReps")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal?>("TotalSets")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal?>("TotalWeight")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("WorkoutId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("WorkoutId");
+
+                    b.ToTable("ExerciseWorkouts");
+                });
+
             modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.Identity.DbApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -144,6 +220,53 @@ namespace GymLogger.Infrastructure.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MuscleGroups");
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.Workout.DbWorkout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BelongsToUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("MuscleGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("TotalReps")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal?>("TotalSets")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal?>("TotalWeight")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MuscleGroupId");
+
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -290,6 +413,47 @@ namespace GymLogger.Infrastructure.Database.Migrations
                     b.Navigation("MuscleGroup");
                 });
 
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.ExerciseSet.DbExerciseSet", b =>
+                {
+                    b.HasOne("GymLogger.Infrastructure.Database.Models.ExerciseWorkout.DbExerciseWorkout", "ExerciseWorkout")
+                        .WithMany("Sets")
+                        .HasForeignKey("ExerciseWorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExerciseWorkout");
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.ExerciseWorkout.DbExerciseWorkout", b =>
+                {
+                    b.HasOne("GymLogger.Infrastructure.Database.Models.Exercise.DbExercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GymLogger.Infrastructure.Database.Models.Workout.DbWorkout", "Workout")
+                        .WithMany("Exercises")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Workout");
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.Workout.DbWorkout", b =>
+                {
+                    b.HasOne("GymLogger.Infrastructure.Database.Models.MuscleGroups.DbMuscleGroup", "MuscleGroup")
+                        .WithMany()
+                        .HasForeignKey("MuscleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MuscleGroup");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -339,6 +503,16 @@ namespace GymLogger.Infrastructure.Database.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.ExerciseWorkout.DbExerciseWorkout", b =>
+                {
+                    b.Navigation("Sets");
+                });
+
+            modelBuilder.Entity("GymLogger.Infrastructure.Database.Models.Workout.DbWorkout", b =>
+                {
+                    b.Navigation("Exercises");
                 });
 #pragma warning restore 612, 618
         }
