@@ -64,7 +64,6 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
     {
         ArgumentNullException.ThrowIfNull(workout);
 
-        // TODO: Workouts and sets
         var dbEntity = new DbWorkout
         {
             Name = workout.Name,
@@ -134,7 +133,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
 
         try
         {
-            // TODO: Workouts and sets
+            // TODO: Exercises and sets
             dbEntity.Name = workout.Name;
             dbEntity.Description = workout.Description;
             dbEntity.MuscleGroupId = workout.MuscleGroupId;
