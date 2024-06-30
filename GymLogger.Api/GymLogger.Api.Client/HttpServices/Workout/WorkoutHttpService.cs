@@ -19,6 +19,10 @@ public class WorkoutHttpService(IHttpClientFactory httpClientFactory) : BaseHttp
         await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/{id}", Context.WorkoutDetailsDto) ??
         throw new Exception("Workout Dto is null");
 
+    public async Task<WorkoutUpdateDto> GetForEditAsync(Guid id) =>
+        await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/GetForEdit/{id}", Context.WorkoutUpdateDto) ??
+        throw new Exception("Workout Dto is null");
+
     public async Task<WorkoutDto> CreateAsync(WorkoutCreateDto dto)
     {
         var response = await base.HttpClient.PostAsJsonAsync(base.ApiRoute, dto, Context.WorkoutCreateDto);

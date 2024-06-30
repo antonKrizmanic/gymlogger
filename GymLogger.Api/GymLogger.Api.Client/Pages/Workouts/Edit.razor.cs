@@ -11,15 +11,17 @@ using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace GymLogger.Api.Client.Pages.Workouts;
 
-public partial class Create : BaseComponent
+public partial class Edit : BaseComponent
 {
+    [Parameter] public Guid Id { get; set; }
+    
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private IExerciseApiService ExerciseApiService { get; set; } = default!;
     [Inject] private IWorkoutApiService WorkoutApiService { get; set; } = default!;
 
     public ICollection<ExerciseDto> Exercises = [];
     private ICollection<ExerciseSetCreateFormViewModel> AddedExercises = [];
-    public WorkoutCreateDto Model { get; set; } = new WorkoutCreateDto();
+    public WorkoutUpdateDto Model { get; set; } = new WorkoutUpdateDto();
     private bool _showAddExerciseForm = false;
     private ExerciseWorkoutCreateDto _exerciseWorkoutModel = new ExerciseWorkoutCreateDto();
 
@@ -31,6 +33,7 @@ public partial class Create : BaseComponent
 
     private async Task LoadDataAsync()
     {
+        this.Model = await WorkoutApiService.GetForEditAsync(Id);
         try
         {
             var result = await this.ExerciseApiService.GetPagedListAsync(new ExercisePagedRequestDto() { Page = 0, PageSize = int.MaxValue, SortColumn = "Name", SortDirection = Common.Enums.SortDirection.Ascending });
@@ -39,7 +42,16 @@ public partial class Create : BaseComponent
             {
                 this.Exercises.Add(item);
             }
-            Console.WriteLine($"Exercises count: {this.Exercises.Count}");
+            
+            // Add exercises from model to added exercises
+            foreach (var exercise in this.Model.Exercises)
+            {
+                var addedExercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == exercise.ExerciseId);
+                if (addedExercise != null)
+                {
+                    this.AddedExercises.Add(new() { Exercise = addedExercise, Note = exercise.Note, Sets = exercise.Sets.ToList() });
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -59,7 +71,7 @@ public partial class Create : BaseComponent
 
         try
         {
-            await this.WorkoutApiService.CreateAsync(this.Model);
+            await this.WorkoutApiService.UpdateAsync(this.Model);
             this.ToastService.ShowSuccess("Trening uspješno dodan.");
             this.NavigationManager.NavigateTo("/workouts");
         }
@@ -182,13 +194,10 @@ public partial class Create : BaseComponent
     private void OnRemoveSet(EditSetEventArgs args)
     {
         var exercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id == args.ExerciseId);
-        if (exercise != null)
+        var set = exercise?.Sets.FirstOrDefault(x => x.Id == args.Set.Id);
+        if (set != null)
         {
-            var set = exercise.Sets.FirstOrDefault(x => x.Id == args.Set.Id);
-            if (set != null)
-            {
-                exercise.Sets.Remove(set);
-            }
+            exercise?.Sets.Remove(set);
         }
     }
 }

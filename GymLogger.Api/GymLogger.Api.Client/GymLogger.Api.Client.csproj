@@ -30,6 +30,11 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Workouts\Details.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Workouts\Edit.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Workouts\Edit.razor" />
   </ItemGroup>
 
 </Project>

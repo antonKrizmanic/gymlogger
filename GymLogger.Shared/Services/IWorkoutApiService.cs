@@ -10,5 +10,6 @@ namespace GymLogger.Shared.Services
     IPagedHttpService<WorkoutDto, WorkoutPagedRequestDto>,
     IGetHttpService<WorkoutDetailsDto>
     {
+        Task<WorkoutUpdateDto> GetForEditAsync(Guid id);
     }
 }

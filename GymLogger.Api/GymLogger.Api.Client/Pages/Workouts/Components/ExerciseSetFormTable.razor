@@ -1,0 +1,62 @@
+﻿<table style="width:100%;table-layout:auto;">
+    @if (Exercise.ExerciseLogType == ExerciseLogType.Weight ||
+    Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+    {
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Broj ponavljanja</th>
+        <th>Težina (kg)</th>
+        <th></th>
+    </tr>
+
+    </thead>
+    }
+    else if (Exercise.ExerciseLogType == ExerciseLogType.Time)
+    {
+    <thead>
+    <tr>
+        <th>Set</th>
+        <th>Vrijeme (s)</th>
+        <th></th>
+    </tr>
+    </thead>
+    }
+    @foreach (var set in Sets)
+    {
+    <tr>
+        <td>@set.Index</td>
+        @if (Exercise.ExerciseLogType == ExerciseLogType.Weight || Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+        {
+        <td>@set.Reps.ToFixedString()</td>
+        <td>@set.Weight.ToFixedString()</td>
+        }
+        else if (Exercise.ExerciseLogType == ExerciseLogType.Time)
+        {
+        <td>@set.Time.ToFixedString()</td>
+        }
+        <td>
+            <FluentButton OnClick="@(() => OnEditSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Edit())" />
+            <FluentButton OnClick="@(() => OnRemoveSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+        </td>
+    </tr>
+    }
+</table>
+
+@code {
+    [Parameter] public List<ExerciseSetCreateDto> Sets { get; set; }
+    [Parameter] public ExerciseDto Exercise { get; set; }
+    
+    [Parameter] public EventCallback<EditSetEventArgs> OnEditSet { get; set; }
+    [Parameter] public EventCallback<EditSetEventArgs> OnRemoveSet { get; set; }
+    
+    private async Task OnEditSetAsync(Guid exerciseId, ExerciseSetCreateDto set)
+    {
+        await OnEditSet.InvokeAsync(new(exerciseId, set));
+    }
+    
+    private async Task OnRemoveSetAsync(Guid exerciseId, ExerciseSetCreateDto set)
+    {
+        await OnRemoveSet.InvokeAsync(new(exerciseId, set));
+    }
+}

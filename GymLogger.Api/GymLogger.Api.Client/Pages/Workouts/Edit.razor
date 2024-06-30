@@ -1,9 +1,10 @@
-﻿@page "/Workouts/Create"
+﻿@page "/Workouts/Edit/{id:guid}"
 @inherits BaseComponent
 @attribute [Authorize]
-@rendermode @(new InteractiveAutoRenderMode(prerender: false))
 
-<FluentLabel Typo="Typography.PageTitle">Novi trening</FluentLabel>
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender:false))
+
+<FluentLabel Typo="Typography.PageTitle">Izmjena treninga</FluentLabel>
 
 <EditForm OnValidSubmit="SaveAsync" Model="Model">
     <FluentStack Orientation="Orientation.Vertical">

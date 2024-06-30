@@ -1,0 +1,38 @@
+﻿<FluentGrid Style="width:100%;">
+    @foreach (var item in AddedExercises)
+    {
+    <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
+                <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                @if (item.Exercise != null)
+                {
+                <div>
+                    <FluentButton OnClick="@(() => OnAddSetClick.InvokeAsync(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())" />
+                    <FluentButton OnClick="@(() => RemoveExercise.InvokeAsync(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())" />
+                </div>
+                }
+            </FluentStack>
+            @if (item.Sets != null && item.Sets.Any())
+            {
+            <ExerciseSetFormTable
+                Sets="@item.Sets"
+                Exercise="@item.Exercise"
+                OnEditSet="@OnEditSet"
+                OnRemoveSet="@OnRemoveSet"/>
+            }
+
+
+
+        </FluentCard>
+    </FluentGridItem>
+    }
+</FluentGrid>
+
+@code {
+    [Parameter] public ICollection<ExerciseSetCreateFormViewModel> AddedExercises { get; set; }
+    [Parameter] public EventCallback<EditSetEventArgs> OnEditSet { get; set; }
+    [Parameter] public EventCallback<EditSetEventArgs> OnRemoveSet { get; set; }
+    [Parameter] public EventCallback<Guid> OnAddSetClick { get; set; }
+    [Parameter] public EventCallback<Guid> RemoveExercise { get; set; }
+}

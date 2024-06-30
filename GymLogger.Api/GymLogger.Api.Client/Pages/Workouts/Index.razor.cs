@@ -34,7 +34,9 @@ public partial class Index : BaseComponent
     }
 
     private void EditAsync(WorkoutDto dto)
-    { }
+    {
+        base.NavigationManager.NavigateTo($"/workouts/edit/{dto.Id}");
+    }
 
     private async Task DeleteAsync(WorkoutDto dto)
     {

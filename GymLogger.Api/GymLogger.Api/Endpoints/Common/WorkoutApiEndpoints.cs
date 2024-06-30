@@ -11,27 +11,28 @@ public static class WorkoutApiEndpoints
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/", async ([AsParameters] WorkoutPagedRequestDto pagedRequestDto, IWorkoutApiService apiService) =>
-        {
-            return await apiService.GetPagedListAsync(pagedRequestDto);
-        })
+        group.MapGet("/", async ([AsParameters] WorkoutPagedRequestDto pagedRequestDto, IWorkoutApiService apiService) => 
+            await apiService.GetPagedListAsync(pagedRequestDto))
             .Produces<PagedResponseDto<WorkoutDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/{id}", async ([FromRoute] Guid id, IWorkoutApiService apiService) =>
-        {
-            return await apiService.GetAsync(id);
-        })
+        group.MapGet("/{id}", async ([FromRoute] Guid id, IWorkoutApiService apiService) => 
+            await apiService.GetAsync(id))
             .Produces<WorkoutDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError);
 
-        group.MapPost("", async ([FromBody] WorkoutCreateDto workoutCreateDto, IWorkoutApiService apiService) =>
-        {
-            return await apiService.CreateAsync(workoutCreateDto);
-        })
+        group.MapGet("/GetForEdit/{id}", async ([FromRoute] Guid id, IWorkoutApiService apiService) => 
+            await apiService.GetForEditAsync(id))
+            .Produces<WorkoutUpdateDto>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status500InternalServerError);
+        
+        group.MapPost("", async ([FromBody] WorkoutCreateDto workoutCreateDto, IWorkoutApiService apiService) => 
+            await apiService.CreateAsync(workoutCreateDto))
             .Produces<WorkoutDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
