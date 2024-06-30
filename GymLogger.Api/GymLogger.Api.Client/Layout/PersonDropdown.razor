@@ -1,76 +1,47 @@
-﻿@rendermode InteractiveAuto
+﻿@rendermode InteractiveWebAssembly
 
-@implements IDisposable
+@using GymLogger.Api.Client.Components.Dialog
 
-@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
 <FluentDesignTheme StorageName="theme" @bind-Mode="@Mode" />
 
 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" VerticalAlignment="VerticalAlignment.Center" HorizontalGap="16">
-@if (Mode == DesignThemeModes.Dark)
-{
-    <FluentIcon Value="@(new Icons.Regular.Size24.Lightbulb())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
-}
-else
-{
-    <FluentIcon Value="@(new Icons.Regular.Size24.DarkTheme())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
-}
+    @if (Mode == DesignThemeModes.Dark)
+    {
+        <FluentIcon Value="@(new Icons.Regular.Size24.Lightbulb())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+    }
+    else
+    {
+        <FluentIcon Value="@(new Icons.Regular.Size24.DarkTheme())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+    }
 
-<AuthorizeView>
-                <Authorized>
-        <FluentProfileMenu Image="@(new Icons.Regular.Size48.Person().ToDataUri(size: "25px", color: "white"))">
-    <StartTemplate>
-                @context.User.Identity?.Name
-    </StartTemplate>
-    <HeaderTemplate>
-                <FluentStack>                    
-                    <FluentAnchor Appearance="@Appearance.Neutral"
-                                  Href="Account/Manage">Manage your profile</FluentAnchor>
-                </FluentStack>
-                <form action="Account/Logout" method="post">
-                    <AntiforgeryToken />
-                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                    <FluentButton Type="ButtonType.Submit" Style="width: 100%;">Logout</FluentButton>
-                </form>
-    </HeaderTemplate>
-    <ChildContent>
-        
-    </ChildContent>
-    <FooterTemplate>
-        
-    </FooterTemplate>
-</FluentProfileMenu>
-
-</Authorized>
-</AuthorizeView>
+    <AuthorizeView>
+        <Authorized>
+            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Color.Neutral" />
+        </Authorized>
+    </AuthorizeView>
 </FluentStack>
+
 @code {
+
     [Parameter] public DesignThemeModes Mode { get; set; }
     [Parameter] public EventCallback<DesignThemeModes> ModeChanged { get; set; }
-
-    private string? currentUrl;
-
-    protected override void OnInitialized()
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.LocationChanged += OnLocationChanged;
-    }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
 
     private async Task ChangeModeAsync()
     {
         Mode = Mode == DesignThemeModes.Dark ? DesignThemeModes.Light : DesignThemeModes.Dark;
         await ModeChanged.InvokeAsync(Mode);
-        Console.WriteLine($"Mode: {Mode}");
+    }
+
+    private async Task OpenUserDialog(string? userName)
+    {
+        await DialogService.ShowPanelAsync<PersonDialog>(new()
+            {
+                Alignment = HorizontalAlignment.Right,
+                Title = $"{userName}",
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false
+            });
     }
 }
