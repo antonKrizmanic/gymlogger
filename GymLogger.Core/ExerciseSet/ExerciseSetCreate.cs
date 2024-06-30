@@ -7,4 +7,5 @@ public class ExerciseSetCreate : IExerciseSetCreate
     public decimal? Weight { get; set; }
     public decimal? Reps { get; set; }
     public decimal? Time { get; set; }
+    public string? Note { get; set; }
 }

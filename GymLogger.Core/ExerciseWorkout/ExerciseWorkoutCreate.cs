@@ -8,5 +8,6 @@ public class ExerciseWorkoutCreate : IExerciseWorkoutCreate
     public decimal? TotalWeight { get; set; }
     public decimal? TotalReps { get; set; }
     public decimal? TotalSets { get; set; }
+    public string? Note { get; set; }
     public ICollection<IExerciseSetCreate> Sets { get; set; }
 }

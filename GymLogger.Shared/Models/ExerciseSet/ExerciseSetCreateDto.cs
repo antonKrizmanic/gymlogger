@@ -6,4 +6,5 @@ public class ExerciseSetCreateDto
     public decimal? Reps { get; set; } = default!;
     public decimal? Weight { get; set; } = default!;
     public decimal? Time { get; set; } = default!;
+    public string? Note { get; set; }
 }

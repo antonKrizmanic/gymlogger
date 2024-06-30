@@ -10,6 +10,7 @@ public class DbExerciseSet
     public decimal? Weight { get; set; }
     public decimal? Reps { get; set; }
     public decimal? Time { get; set; }
+    public string? Note { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

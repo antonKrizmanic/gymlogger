@@ -89,8 +89,8 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
             Description = exercise.Description,
             MuscleGroupId = exercise.MuscleGroupId,
             ExerciseLogType = exercise.ExerciseLogType,
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow,
             BelongsToUserId = exercise.IsPublic ? null : currentUserProvider.GetCurrentUserId()
         };
 

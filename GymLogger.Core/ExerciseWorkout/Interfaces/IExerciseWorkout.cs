@@ -10,5 +10,6 @@ public interface IExerciseWorkout
     decimal? TotalWeight { get; set; }
     decimal? TotalReps { get; set; }
     decimal? TotalSets { get; set; }
+    string? Note { get; set; }
     ICollection<IExerciseSet> Sets { get; set; }
 }

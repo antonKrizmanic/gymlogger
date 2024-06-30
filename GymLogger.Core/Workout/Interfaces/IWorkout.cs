@@ -11,5 +11,4 @@ public interface IWorkout
     decimal? TotalWeight { get; set; }
     decimal? TotalReps { get; set; }
     decimal? TotalSets { get; set; }
-
 }

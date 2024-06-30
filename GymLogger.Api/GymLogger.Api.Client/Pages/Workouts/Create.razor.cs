@@ -53,6 +53,7 @@ public partial class Create : BaseComponent
         this.Model.Exercises = AddedExercises.Select(x => new ExerciseWorkoutCreateDto()
         {
             ExerciseId = x.Exercise.Id.ToString(),
+            Note = x.Note,
             Sets = x.Sets
         }).ToList();
 
@@ -91,7 +92,7 @@ public partial class Create : BaseComponent
         var addedExercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == _exerciseWorkoutModel.ExerciseId);
         if (addedExercise != null)
         {
-            this.AddedExercises.Add(new() { Exercise = addedExercise });
+            this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note });
         }
         this._exerciseWorkoutModel = new ExerciseWorkoutCreateDto();
     }
