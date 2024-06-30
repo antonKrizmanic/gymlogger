@@ -17,7 +17,8 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddHttpServices(this IServiceCollection services)
     {
-        services.AddScoped<IExerciseApiService, ExerciseHttpService>()
+        services
+            .AddScoped<IExerciseApiService, ExerciseHttpService>()
             .AddScoped<IMuscleGroupApiService, MuscleGroupHttpService>()
             .AddScoped<IWorkoutApiService, WorkoutHttpService>();
         return services;

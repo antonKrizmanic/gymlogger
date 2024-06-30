@@ -1,0 +1,39 @@
+﻿@implements IDisposable
+@implements IDialogContentComponent
+@inject NavigationManager NavigationManager
+
+<FluentDialogBody>
+    <FluentNavMenu Expanded="@true">
+        <FluentNavLink Icon="@(new Icons.Regular.Size20.Person())" Href="Account/Manage" Match="NavLinkMatch.All">Manage your profile</FluentNavLink>
+        <form action="Account/Logout" method="post">
+            <AntiforgeryToken/>
+            <input type="hidden" name="ReturnUrl" value="@currentUrl"/>
+            <FluentNavLink Icon="@(new Icons.Regular.Size24.SignOut())">
+                <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Stealth">
+                    Logout
+                </FluentButton>
+            </FluentNavLink>
+        </form>
+    </FluentNavMenu>
+</FluentDialogBody>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+    
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
