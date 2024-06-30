@@ -1,4 +1,4 @@
-﻿@rendermode InteractiveAuto
+﻿@rendermode InteractiveWebAssembly
 
 @using GymLogger.Api.Client.Components.Dialog
 
@@ -18,13 +18,13 @@
 
     <AuthorizeView>
         <Authorized>
-            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Color.Neutral"/>
-
+            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Color.Neutral" />
         </Authorized>
     </AuthorizeView>
 </FluentStack>
+
 @code {
-    
+
     [Parameter] public DesignThemeModes Mode { get; set; }
     [Parameter] public EventCallback<DesignThemeModes> ModeChanged { get; set; }
 
@@ -37,11 +37,11 @@
     private async Task OpenUserDialog(string? userName)
     {
         await DialogService.ShowPanelAsync<PersonDialog>(new()
-        {
-            Alignment = HorizontalAlignment.Right,
-            Title = $"{userName}",
-            PrimaryActionEnabled = false,
-            SecondaryActionEnabled = false
-        });
+            {
+                Alignment = HorizontalAlignment.Right,
+                Title = $"{userName}",
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false
+            });
     }
 }
