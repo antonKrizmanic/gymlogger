@@ -68,14 +68,14 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         {
             Name = workout.Name,
             Description = workout.Description,
-            Date = workout.Date,
+            Date = workout.Date.ToUniversalTime(),
             MuscleGroupId = workout.MuscleGroupId,
             TotalWeight = workout.TotalWeight,
             TotalReps = workout.TotalReps,
             TotalSets = workout.TotalSets,
             BelongsToUserId = currentUserProvider.GetCurrentUserId(),
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         if (workout.Exercises != null)
@@ -88,17 +88,19 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                     TotalReps = exercise.TotalReps,
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
+                    Note = exercise.Note,
                     Sets = exercise.Sets.Select(x => new DbExerciseSet
                     {
                         Reps = x.Reps,
                         Weight = x.Weight,
                         Time = x.Time,
                         Index = x.Index,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        Note = x.Note,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
                     }).ToList(),
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
                 };
 
                 dbEntity.Exercises = dbEntity.Exercises ?? new List<DbExerciseWorkout>();

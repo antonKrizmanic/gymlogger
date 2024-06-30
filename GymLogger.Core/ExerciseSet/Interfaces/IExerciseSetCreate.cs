@@ -5,4 +5,5 @@ public interface IExerciseSetCreate
     decimal? Weight { get; set; }
     decimal? Reps { get; set; }
     decimal? Time { get; set; }
+    string? Note { get; set; }
 }

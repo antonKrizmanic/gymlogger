@@ -33,16 +33,25 @@
                 {
                     <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
                         <FluentCard>
-                            <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                            <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
+                                <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                                @if (item.Exercise != null)
+                                {
+                                    <div>
+                                        <FluentButton OnClick="@(() => OnAddSetClick(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())" />
+                                        <FluentButton OnClick="@(() => RemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())" />
+                                    </div>
+                                }
+                            </FluentStack>
                             @if (item.Sets != null && item.Sets.Any())
                             {
-                                <table style="width:100%;table-layout:fixed;">
+                                <table style="width:100%;table-layout:auto;">
                                     @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight ||
                                    item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
                                     {
                                         <thead>
-                                            <tr>                                                
-                                                <th>Set</th>                                                
+                                            <tr>
+                                                <th>#</th>
                                                 <th>Broj ponavljanja</th>
                                                 <th>Težina (kg)</th>
                                                 <th></th>
@@ -60,12 +69,12 @@
                                             </tr>
                                         </thead>
                                     }
-                                    @foreach(var set in item.Sets)
+                                    @foreach (var set in item.Sets)
                                     {
                                         <tr>
                                             <td>@set.Index</td>
                                             @if (item.Exercise.ExerciseLogType == ExerciseLogType.Weight || item.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
-                                            {                                                
+                                            {
                                                 <td>@set.Reps</td>
                                                 <td>@set.Weight</td>
                                             }
@@ -78,16 +87,12 @@
                                                 <FluentButton OnClick="@(() => OnRemoveSet(item.Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Delete())" />
                                             </td>
                                         </tr>
-                                    }                                    
+                                    }
                                 </table>
                             }
 
 
-                            @if(item.Exercise != null)
-                            {
-                                <FluentButton OnClick="@(() => OnAddSetClick(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())"/>
-                                <FluentButton OnClick="@(() => RemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())"/>
-                            }
+
                         </FluentCard>
                     </FluentGridItem>
                 }

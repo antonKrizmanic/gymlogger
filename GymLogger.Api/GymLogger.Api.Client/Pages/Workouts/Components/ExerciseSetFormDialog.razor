@@ -26,7 +26,10 @@
         {
             <p>Ups, nesto je poslo po krivu</p>
         }
-
+        <FluentTextArea 
+            Style="width:100%"
+            @bind-Value=Content.CreateDto.Note 
+            Label="Napomena" />
     </FluentStack>
 </FluentDialogBody>
 
