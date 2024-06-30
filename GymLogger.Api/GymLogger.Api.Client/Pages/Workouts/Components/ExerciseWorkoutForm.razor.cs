@@ -24,6 +24,4 @@ public partial class ExerciseWorkoutForm : BaseComponent
     {
         this.OnClose.InvokeAsync();
     }
-
-
 }

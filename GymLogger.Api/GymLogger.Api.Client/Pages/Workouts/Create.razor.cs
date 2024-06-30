@@ -89,7 +89,8 @@ public partial class Create : BaseComponent
     {
         this._showAddExerciseForm = false;
         this.Model.Exercises.Add(_exerciseWorkoutModel);
-        var addedExercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == _exerciseWorkoutModel.ExerciseId);
+        // Combobox is using name, don't know how to change that at the moment
+        var addedExercise = this.Exercises.FirstOrDefault(x => x.Name == _exerciseWorkoutModel.ExerciseId);
         if (addedExercise != null)
         {
             this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note });
