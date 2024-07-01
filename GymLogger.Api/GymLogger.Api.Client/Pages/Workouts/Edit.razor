@@ -29,12 +29,8 @@
         </FluentGrid>
         @if (Model.Exercises.Any() && AddedExercises.Any())
         {
-            <ExerciseWorkoutFormTable
-                AddedExercises="AddedExercises"
-                OnEditSet="@OnEditSetAsync"
-                OnRemoveSet="@OnRemoveSet"
-                OnAddSetClick="@OnAddSetClick"
-                RemoveExercise="@RemoveExercise" />
+            <ExerciseWorkoutFormTable @bind-AddedExercises="AddedExercises"
+                                      Exercises="Exercises" />
         }
         @if (!_showAddExerciseForm)
         {
