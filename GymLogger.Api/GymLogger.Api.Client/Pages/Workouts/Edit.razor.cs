@@ -33,12 +33,8 @@ public partial class Edit : BaseComponent
         this.Model = await WorkoutApiService.GetForEditAsync(Id);
         try
         {
-            var result = await this.ExerciseApiService.GetPagedListAsync(new ExercisePagedRequestDto() { Page = 0, PageSize = int.MaxValue, SortColumn = "Name", SortDirection = Common.Enums.SortDirection.Ascending });
-            this.Exercises.Add(new(Guid.Empty, "Select Exercise", Guid.Empty, "", "", Common.Enums.ExerciseLogType.Time, false));
-            foreach (var item in result.Items)
-            {
-                this.Exercises.Add(item);
-            }
+            var results = await this.ExerciseApiService.GetPagedListAsync(new ExercisePagedRequestDto() { Page = 0, PageSize = int.MaxValue, SortColumn = "Name", SortDirection = Common.Enums.SortDirection.Ascending });
+            this.Exercises = results.Items;
 
             // Add exercises from model to added exercises
             foreach (var exercise in this.Model.Exercises)

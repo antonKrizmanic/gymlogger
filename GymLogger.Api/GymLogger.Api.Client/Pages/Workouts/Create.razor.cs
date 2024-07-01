@@ -30,13 +30,8 @@ public partial class Create : BaseComponent
     {
         try
         {
-            var result = await this.ExerciseApiService.GetPagedListAsync(new ExercisePagedRequestDto() { Page = 0, PageSize = int.MaxValue, SortColumn = "Name", SortDirection = Common.Enums.SortDirection.Ascending });
-            this.Exercises.Add(new(Guid.Empty, "Select Exercise", Guid.Empty, "", "", Common.Enums.ExerciseLogType.Time, false));
-            foreach (var item in result.Items)
-            {
-                this.Exercises.Add(item);
-            }
-            Console.WriteLine($"Exercises count: {this.Exercises.Count}");
+            var results = await this.ExerciseApiService.GetPagedListAsync(new ExercisePagedRequestDto() { Page = 0, PageSize = int.MaxValue, SortColumn = "Name", SortDirection = Common.Enums.SortDirection.Ascending });
+            this.Exercises = results.Items;
         }
         catch (Exception ex)
         {
