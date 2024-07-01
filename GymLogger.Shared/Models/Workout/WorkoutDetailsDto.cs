@@ -7,11 +7,12 @@ public record WorkoutDetailsDto(
     string? Description,
     DateTime Date,
     Guid MuscleGroupId,
+    string MuscleGroupName,
     decimal? TotalWeight,
     decimal? TotalReps,
     decimal? TotalSets,
     ICollection<ExerciseWorkoutDto> Exercises)
-    : WorkoutDto(Id, Name, Description, Date, MuscleGroupId, TotalWeight, TotalReps, TotalSets)
+    : WorkoutDto(Id, Name, Description, Date, MuscleGroupId, MuscleGroupName, TotalWeight, TotalReps, TotalSets)
 {
     public ICollection<ExerciseWorkoutDto> Exercises { get; set; } = Exercises;
 }

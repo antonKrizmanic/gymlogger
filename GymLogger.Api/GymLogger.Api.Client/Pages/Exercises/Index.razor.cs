@@ -1,5 +1,6 @@
 ﻿using GymLogger.Api.Client.Components;
 using GymLogger.Api.Client.Components.Dialog;
+using GymLogger.Api.Client.Models;
 using GymLogger.Api.Client.Pages.Exercises.Components;
 using GymLogger.Common.Enums;
 using GymLogger.Shared.Models.Exercise;
@@ -20,7 +21,6 @@ public partial class Index : BaseComponent
     private PagedResponseDto<ExerciseDto> _pagedResponseDto = new();
     private ExercisePagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
 
-    private bool sortMenuOpen = false;
     private bool filterOpen = false;
 
     private string SelectedExerciseLogType
@@ -150,11 +150,10 @@ public partial class Index : BaseComponent
         }
     }
 
-    private async Task OnSortMenuItemClicked(string sortColumn, Common.Enums.SortDirection sortDirection)
+    private async Task OnSortMenuItemClicked(SortEventArgs args)
     {
-        this._pagedRequestDto.SortColumn = sortColumn;
-        this._pagedRequestDto.SortDirection = sortDirection;
-        this.sortMenuOpen = false;
+        this._pagedRequestDto.SortColumn = args.SortColumn;
+        this._pagedRequestDto.SortDirection = args.SortDirection;
         await this.LoadDataAsync();
     }
 

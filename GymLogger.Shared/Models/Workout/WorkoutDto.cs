@@ -5,6 +5,7 @@ public record WorkoutDto(
     string? Description,
     DateTime Date,
     Guid MuscleGroupId,
+    string MuscleGroupName,
     decimal? TotalWeight,
     decimal? TotalReps,
     decimal? TotalSets);

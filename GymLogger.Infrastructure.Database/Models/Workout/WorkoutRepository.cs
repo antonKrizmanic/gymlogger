@@ -31,15 +31,15 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         var isSortDescending = request.SortDirection == SortDirection.Descending;
 
         // Sort the results based on the sort column
-        query = request.SortColumn?.ToLower() switch
+        query = request.SortColumn switch
         {
-            "name" => isSortDescending
+            nameof(IWorkout.Name) => isSortDescending
                 ? query.OrderByDescending(b => b.Name)
                 : query.OrderBy(b => b.Name),
-            "muscleGroupName" => isSortDescending
+            nameof(IWorkout.MuscleGroupName) => isSortDescending
                 ? query.OrderByDescending(b => b.MuscleGroup.Name)
                 : query.OrderBy(b => b.MuscleGroup.Name),
-            "date" => isSortDescending
+            nameof(IWorkout.Date) => isSortDescending
                 ? query.OrderByDescending(b => b.Date)
                 : query.OrderBy(b => b.Date),
             _ => isSortDescending

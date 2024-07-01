@@ -22,6 +22,7 @@
             </PageHeadingButtons>
         </PageHeading>
         <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @Workout.Date.ToString("dd.MM.yyyy")</FluentLabel>
+        <FluentLabel Typo="Typography.Body"><b>Primarna skupina mišića:</b> @Workout.MuscleGroupName</FluentLabel>
         <FluentLabel Typo="Typography.Body"><b>Opis treninga:</b> @Workout.Description</FluentLabel>
         @if (Workout.Exercises.Any())
         {

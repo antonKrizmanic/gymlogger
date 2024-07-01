@@ -1,0 +1,34 @@
+﻿<FluentButton IconEnd="@(new Icons.Regular.Size16.ArrowSort())" id="sortMenu" @onclick="@(() => sortMenuOpen = !sortMenuOpen)">
+    Sortiranje
+</FluentButton>
+
+<FluentMenu Anchor="sortMenu" @bind-Open="sortMenuOpen" VerticalThreshold="170">
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.Name), Common.Enums.SortDirection.Ascending))">
+        Nazivu (uzlazno)
+    </FluentMenuItem>
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.Name), Common.Enums.SortDirection.Descending))">
+        Nazivu (silazno)
+    </FluentMenuItem>
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.MuscleGroupName), Common.Enums.SortDirection.Ascending))">
+        Mišićnoj grupi (uzlazno)
+    </FluentMenuItem>
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.MuscleGroupName), Common.Enums.SortDirection.Descending))">
+        Mišićnoj grupi (silazno)
+    </FluentMenuItem>
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.ExerciseLogType), Common.Enums.SortDirection.Ascending))">
+        Načinu zapisivanja (uzlazno)
+    </FluentMenuItem>
+    <FluentMenuItem OnClick="@((e) => OnSortMenuItemClickedAsync(nameof(ExerciseDto.ExerciseLogType), Common.Enums.SortDirection.Descending))">
+        Načinu zapisivanja (silazno)
+    </FluentMenuItem>
+</FluentMenu>
+
+@code {
+    [Parameter] public EventCallback<SortEventArgs> OnSortChange { get; set; }
+    private bool sortMenuOpen = false;
+
+    private async Task OnSortMenuItemClickedAsync(string sortField, Common.Enums.SortDirection sortDirection)
+    {
+        await this.OnSortChange.InvokeAsync(new(sortField, sortDirection));
+    }
+}
