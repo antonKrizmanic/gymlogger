@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace GymLogger.Infrastructure.Database.Models.Paging;
-public class PagedResult<TInterface> : IPagedResult<TInterface>
+public record PagedResult<TInterface> : IPagedResult<TInterface>
 {
     private readonly IQueryable<TInterface> query;
 

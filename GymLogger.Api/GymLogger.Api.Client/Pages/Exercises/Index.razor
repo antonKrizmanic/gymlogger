@@ -22,43 +22,16 @@
     </PageHeading>
     @if(filterOpen)
     {
-        <FluentCard AreaRestricted="false">
-            <FluentStack Orientation="Orientation.Horizontal" Wrap="true">                
-                <FluentStack Orientation="Orientation.Vertical" Style="width:auto">                    
-                    <FluentSelect @bind-Value="@SelectedMuscleGroupId"
-                                  Label="Grupa mišića"                                  
-                                  Items="@MuscleGroups"
-                                  Style="width:100%;"
-                                  TOption="MuscleGroupDto"
-                                  OptionValue="@((item) => item.Id.ToString())"
-                                  OptionText="@((item) => item.Name)">
-                    </FluentSelect>                    
-                </FluentStack>
-                <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
-                    <FluentSelect 
-                        @bind-Value="@SelectedExerciseLogType" 
-                        Label="Način zapisivanja"
-                                  Style="width:100%;"
-                        TOption="ExerciseLogType">
-                        @foreach (var logType in Enum.GetValues<ExerciseLogType>())
-                        {
-                            var enumDisplay = EnumHelper<ExerciseLogType>.GetDisplayValue(logType);
-                            <FluentOption Value="@logType.ToString()">@enumDisplay</FluentOption>
-                        }
-                    </FluentSelect>                    
-                </FluentStack>                
-            </FluentStack>
-            <FluentStack HorizontalAlignment="HorizontalAlignment.Start" Style="margin-top: 1rem;">
-                <FluentButton Appearance="Appearance.Accent" OnClick="@(() => FilterAsync())">Filtriraj</FluentButton>
-                <FluentButton OnClick="@ClearFilter">Očisti</FluentButton>
-            </FluentStack>
-        </FluentCard>
+        <ExerciseFilter 
+            MuscleGroups="@MuscleGroups"
+            PagedRequestDto="@PagedRequestDto" 
+            OnFilter="@FilterAsync" />
     }    
 
     <GlCardGrid 
         TItem="ExerciseDto"
         PagedResponse="_pagedResponseDto"
-        PagedRequest="_pagedRequestDto"
+        PagedRequest="PagedRequestDto"
         PagedRequestChanged="LoadDataAsync"
         OnDetailsClicked="Details"
         OnEditClicked="EditAsync"
