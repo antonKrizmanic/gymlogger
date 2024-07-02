@@ -12,5 +12,5 @@ public class WorkoutUpdate : IWorkoutUpdate
     public decimal? TotalWeight { get; set; }
     public decimal? TotalReps { get; set; }
     public decimal? TotalSets { get; set; }
-    public ICollection<IExerciseWorkoutUpdate>? Exercises { get; set; }
+    public ICollection<IExerciseWorkoutCreate>? Exercises { get; set; }
 }

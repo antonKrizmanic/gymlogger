@@ -11,5 +11,5 @@ public interface IWorkoutUpdate
     decimal? TotalWeight { get; set; }
     decimal? TotalReps { get; set; }
     decimal? TotalSets { get; set; }
-    ICollection<IExerciseWorkoutUpdate> Exercises { get; set; }
+    ICollection<IExerciseWorkoutCreate> Exercises { get; set; }
 }
