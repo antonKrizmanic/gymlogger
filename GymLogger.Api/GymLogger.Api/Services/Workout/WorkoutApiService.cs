@@ -39,6 +39,14 @@ internal class WorkoutApiService(IWorkoutService service, IMapper mapper) : IWor
         return entity.MapTo<WorkoutDetailsDto>(mapper);
     }
 
+    public async Task<WorkoutUpdateDto> GetForEditAsync(Guid id)
+    {
+        var entity = await service.GetByIdAsync(id) ??
+                     throw new GymLoggerEntityNotFoundException($"No Workout was found for id {id}");
+
+        return entity.MapTo<WorkoutUpdateDto>(mapper);
+    }
+
     public async Task<WorkoutDto> CreateAsync(WorkoutCreateDto dto)
     {
         var workoutCreate = dto.MapTo<IWorkoutCreate>(mapper);

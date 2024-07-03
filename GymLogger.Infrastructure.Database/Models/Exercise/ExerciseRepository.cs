@@ -58,15 +58,15 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
         var isSortDescending = request.SortDirection == SortDirection.Descending;
 
         // Sort the results based on the sort column
-        query = request.SortColumn?.ToLower() switch
+        query = request.SortColumn switch
         {
-            "name" => isSortDescending
+            nameof(IExercise.Name) => isSortDescending
                 ? query.OrderByDescending(b => b.Name)
                 : query.OrderBy(b => b.Name),
-            "muscleGroupName" => isSortDescending
+            nameof(IExercise.MuscleGroupName) => isSortDescending
                 ? query.OrderByDescending(b => b.MuscleGroup.Name)
                 : query.OrderBy(b => b.MuscleGroup.Name),
-            "exerciseLogType" => isSortDescending
+            nameof(IExercise.ExerciseLogType) => isSortDescending
                 ? query.OrderByDescending(b => b.ExerciseLogType)
                 : query.OrderBy(b => b.ExerciseLogType),
             _ => isSortDescending

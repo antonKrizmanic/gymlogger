@@ -1,5 +1,5 @@
 ﻿namespace GymLogger.Shared.Models.Paging;
-public class PagedResponseDto<T>
+public record PagedResponseDto<T>
 {
     public PagingDataResponseDto? PagingData { get; set; }
 

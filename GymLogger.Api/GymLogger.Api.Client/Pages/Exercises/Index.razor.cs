@@ -1,7 +1,7 @@
 ﻿using GymLogger.Api.Client.Components;
 using GymLogger.Api.Client.Components.Dialog;
+using GymLogger.Api.Client.Models;
 using GymLogger.Api.Client.Pages.Exercises.Components;
-using GymLogger.Common.Enums;
 using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
@@ -18,22 +18,11 @@ public partial class Index : BaseComponent
 
     private ICollection<MuscleGroupDto> MuscleGroups { get; set; } = [];
     private PagedResponseDto<ExerciseDto> _pagedResponseDto = new();
-    private ExercisePagedRequestDto _pagedRequestDto = new() { SortColumn = "Name" };
+    public ExercisePagedRequestDto PagedRequestDto = new() { SortColumn = "Name" };
 
-    private bool sortMenuOpen = false;
     private bool filterOpen = false;
 
-    private string SelectedExerciseLogType
-    {
-        get => _pagedRequestDto.ExerciseLogType.ToString();
-        set => _pagedRequestDto.ExerciseLogType = Enum.Parse<ExerciseLogType>(value);
-    }
 
-    private string SelectedMuscleGroupId
-    {
-        get => _pagedRequestDto.MuscleGroupId.ToString();
-        set => _pagedRequestDto.MuscleGroupId = string.IsNullOrEmpty(value) ? Guid.Empty : Guid.Parse(value);
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +37,7 @@ public partial class Index : BaseComponent
 
     private async Task LoadDataAsync()
     {
-        this._pagedResponseDto = await ExerciseHttpService.GetPagedListAsync(this._pagedRequestDto);
+        this._pagedResponseDto = await ExerciseHttpService.GetPagedListAsync(this.PagedRequestDto);
     }
 
     private async Task CreateAsync()
@@ -150,22 +139,15 @@ public partial class Index : BaseComponent
         }
     }
 
-    private async Task OnSortMenuItemClicked(string sortColumn, Common.Enums.SortDirection sortDirection)
+    private async Task OnSortMenuItemClicked(SortEventArgs args)
     {
-        this._pagedRequestDto.SortColumn = sortColumn;
-        this._pagedRequestDto.SortDirection = sortDirection;
-        this.sortMenuOpen = false;
+        this.PagedRequestDto.SortColumn = args.SortColumn;
+        this.PagedRequestDto.SortDirection = args.SortDirection;
         await this.LoadDataAsync();
     }
 
     private async Task FilterAsync()
     {
         await this.LoadDataAsync();
-    }
-
-    private void ClearFilter()
-    {
-        this.SelectedExerciseLogType = ExerciseLogType.Unknown.ToString();
-        this.SelectedMuscleGroupId = Guid.Empty.ToString();
     }
 }

@@ -12,13 +12,13 @@
     <FluentStack VerticalAlignment="VerticalAlignment.Center" Orientation="Orientation.Vertical">
         <p>Podaci o setu</p>
 
-        @if(Content.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight ||
-            Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
+        @if (Content.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight ||
+        Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
         {
             <FluentNumberField @bind-Value="@Content.CreateDto.Reps" Required style="width:100%" Label="Broj ponavljanja" />
             <FluentNumberField @bind-Value="@Content.CreateDto.Weight" Required style="width:100%" Label="Težina" />
         }
-        else if(Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
+        else if (Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
         {
             <FluentNumberField @bind-Value="@Content.CreateDto.Time" Required style="width:100%" Label="Trajanje (sekunde)" />
         }
@@ -26,10 +26,9 @@
         {
             <p>Ups, nesto je poslo po krivu</p>
         }
-        <FluentTextArea 
-            Style="width:100%"
-            @bind-Value=Content.CreateDto.Note 
-            Label="Napomena" />
+        <FluentTextField Style="width:100%"
+                         @bind-Value=Content.CreateDto.Note
+                         Label="Napomena" />
     </FluentStack>
 </FluentDialogBody>
 

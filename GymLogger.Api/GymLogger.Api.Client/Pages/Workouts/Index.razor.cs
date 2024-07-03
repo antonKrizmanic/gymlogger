@@ -1,5 +1,6 @@
 ﻿using GymLogger.Api.Client.Components;
 using GymLogger.Api.Client.Components.Dialog;
+using GymLogger.Api.Client.Models;
 using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Models.Workout;
 using GymLogger.Shared.Services;
@@ -34,7 +35,9 @@ public partial class Index : BaseComponent
     }
 
     private void EditAsync(WorkoutDto dto)
-    { }
+    {
+        base.NavigationManager.NavigateTo($"/workouts/edit/{dto.Id}");
+    }
 
     private async Task DeleteAsync(WorkoutDto dto)
     {
@@ -62,10 +65,10 @@ public partial class Index : BaseComponent
         }
     }
 
-    private async Task OnSortMenuItemClicked(string sortColumn, Common.Enums.SortDirection sortDirection)
+    private async Task OnSortMenuItemClicked(SortEventArgs args)
     {
-        this._pagedRequestDto.SortColumn = sortColumn;
-        this._pagedRequestDto.SortDirection = sortDirection;
+        this._pagedRequestDto.SortColumn = args.SortColumn;
+        this._pagedRequestDto.SortDirection = args.SortDirection;
         this.sortMenuOpen = false;
         await this.LoadDataAsync();
     }

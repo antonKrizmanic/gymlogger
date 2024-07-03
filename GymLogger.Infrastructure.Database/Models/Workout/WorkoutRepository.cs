@@ -31,15 +31,15 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         var isSortDescending = request.SortDirection == SortDirection.Descending;
 
         // Sort the results based on the sort column
-        query = request.SortColumn?.ToLower() switch
+        query = request.SortColumn switch
         {
-            "name" => isSortDescending
+            nameof(IWorkout.Name) => isSortDescending
                 ? query.OrderByDescending(b => b.Name)
                 : query.OrderBy(b => b.Name),
-            "muscleGroupName" => isSortDescending
+            nameof(IWorkout.MuscleGroupName) => isSortDescending
                 ? query.OrderByDescending(b => b.MuscleGroup.Name)
                 : query.OrderBy(b => b.MuscleGroup.Name),
-            "date" => isSortDescending
+            nameof(IWorkout.Date) => isSortDescending
                 ? query.OrderByDescending(b => b.Date)
                 : query.OrderBy(b => b.Date),
             _ => isSortDescending
@@ -126,7 +126,11 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
     {
         ArgumentNullException.ThrowIfNull(workout);
 
-        var dbEntity = await dbContext.Workouts.FindAsync(workout.Id);
+        // Load workout with exercises and sets
+        var dbEntity = await dbContext.Workouts
+            .Include(x => x.Exercises!)
+            .ThenInclude(x => x.Sets!)
+            .FirstOrDefaultAsync(x => x.Id == workout.Id);
 
         if (dbEntity == null)
         {
@@ -135,12 +139,80 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
 
         try
         {
-            // TODO: Exercises and sets
             dbEntity.Name = workout.Name;
             dbEntity.Description = workout.Description;
             dbEntity.MuscleGroupId = workout.MuscleGroupId;
-            dbEntity.Date = workout.Date;
-            dbEntity.UpdatedAt = DateTime.Now;
+            dbEntity.Date = workout.Date.ToUniversalTime();
+            dbEntity.TotalWeight = workout.TotalWeight;
+            dbEntity.TotalReps = workout.TotalReps;
+            dbEntity.TotalSets = workout.TotalSets;
+            dbEntity.UpdatedAt = DateTime.Now.ToUniversalTime();
+
+            // Handle exercises. Add new, update existing, remove deleted
+            var existingExerciseIds = dbEntity.Exercises.Select(e => e.ExerciseId).ToList();
+            var updatedExerciseIds = workout.Exercises.Select(e => e.ExerciseId).ToList();
+
+            // Remove deleted exercises
+            var exercisesToRemove = dbEntity.Exercises.Where(e => !updatedExerciseIds.Contains(e.ExerciseId)).ToList();
+            foreach (var exercise in exercisesToRemove)
+            {
+                dbContext.ExerciseWorkouts.Remove(exercise);
+            }
+
+            // Add new exercises
+            var exercisesToAdd = workout.Exercises.Where(e => !existingExerciseIds.Contains(e.ExerciseId)).ToList();
+            foreach (var exercise in exercisesToAdd)
+            {
+                var dbExercise = new DbExerciseWorkout
+                {
+                    ExerciseId = exercise.ExerciseId,
+                    TotalReps = exercise.TotalReps,
+                    TotalSets = exercise.TotalSets,
+                    TotalWeight = exercise.TotalWeight,
+                    Note = exercise.Note,
+                    Sets = exercise.Sets.Select(x => new DbExerciseSet
+                    {
+                        Reps = x.Reps,
+                        Weight = x.Weight,
+                        Time = x.Time,
+                        Index = x.Index,
+                        Note = x.Note,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    }).ToList(),
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                dbEntity.Exercises.Add(dbExercise);
+            }
+
+            // Update existing exercises
+            var exercisesToUpdate = workout.Exercises.Where(e => existingExerciseIds.Contains(e.ExerciseId)).ToList();
+            foreach (var exercise in exercisesToUpdate)
+            {
+                var dbExercise = dbEntity.Exercises.First(e => e.ExerciseId == exercise.ExerciseId);
+                dbExercise.TotalReps = exercise.TotalReps;
+                dbExercise.TotalSets = exercise.TotalSets;
+                dbExercise.TotalWeight = exercise.TotalWeight;
+                dbExercise.Note = exercise.Note;
+                dbExercise.UpdatedAt = DateTime.UtcNow;
+
+                // Remove all existing sets
+                dbContext.ExerciseSets.RemoveRange(dbExercise.Sets);
+
+                // Add new sets
+                dbExercise.Sets = exercise.Sets.Select(x => new DbExerciseSet
+                {
+                    Reps = x.Reps,
+                    Weight = x.Weight,
+                    Time = x.Time,
+                    Index = x.Index,
+                    Note = x.Note,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                }).ToList();
+            }
 
             await dbContext.SaveChangesAsync();
 
@@ -155,7 +227,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
     public async Task DeleteAsync(Guid id)
     {
         var dbEntity = await dbContext.Workouts
-            .Include(x => x.Exercises)
+            .Include(x => x.Exercises!)
             .ThenInclude(x => x.Sets)
             .FirstOrDefaultAsync(x => x.Id == id);
 

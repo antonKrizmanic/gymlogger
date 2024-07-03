@@ -1,0 +1,120 @@
+﻿@inject IToastService ToastService
+@inject IDialogService DialogService
+
+<FluentGrid Style="width:100%;">
+    @foreach (var item in AddedExercises)
+    {
+        <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
+            <FluentCard>
+                <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
+                    <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                    <FluentLabel Typo="Typography.Body">@item.Exercise.Description</FluentLabel>
+                    @if (item.Exercise != null)
+                    {
+                        <div>
+                            <FluentButton OnClick="@(() => OnAddSetAsync(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())" />
+                            <FluentButton OnClick="@(() => OnRemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())" />
+                        </div>
+                    }
+                </FluentStack>
+                <FluentLabel Typo="Typography.Body">@item.Note</FluentLabel>
+                @if (item.Sets != null && item.Sets.Any())
+                {
+                    <ExerciseSetFormTable Sets="@item.Sets"
+                                          Exercise="@item.Exercise"
+                                          OnEditSet="@OnEditSetAsync"
+                                          OnRemoveSet="@OnRemoveSetAsync" />
+                }
+            </FluentCard>
+        </FluentGridItem>
+    }
+</FluentGrid>
+
+@code {
+    [Parameter] public ICollection<ExerciseSetCreateFormViewModel> AddedExercises { get; set; }
+    [Parameter] public EventCallback<ICollection<ExerciseSetCreateFormViewModel>> AddedExercisesChanged { get; set; }
+    [Parameter] public ICollection<ExerciseDto> Exercises { get; set; }
+
+    private async Task OnAddSetAsync(Guid exerciseId)
+    {
+        var result = await ShowDialogAsync(exerciseId, new() { Id = Guid.NewGuid() });
+        if (!result.Cancelled && result.Data != null)
+        {
+            try
+            {
+                var addedSet = (ExerciseSetFormViewModel)result.Data;
+
+                var addedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == exerciseId.ToString());
+                addedExercise.Sets = addedExercise.Sets ?? [];
+                addedSet.CreateDto.Index = addedExercise.Sets.Count + 1;
+                addedExercise.Sets.Add(addedSet.CreateDto);
+
+                this.ToastService.ShowSuccess("Set uspješno dodan.");
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Dodavanje set nije uspjelo.");
+            }
+        }
+    }
+
+    private async Task OnEditSetAsync(EditSetEventArgs args)
+    {
+        var result = await ShowDialogAsync(args.ExerciseId, args.Set);
+        if (!result.Cancelled && result.Data != null)
+        {
+            try
+            {
+                var editedSet = (ExerciseSetFormViewModel)result.Data;
+
+                var editedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == args.ExerciseId.ToString());
+                var oldSet = editedExercise.Sets.FirstOrDefault(x => x.Id == editedSet.CreateDto.Id);
+                oldSet.Reps = editedSet.CreateDto.Reps;
+                oldSet.Weight = editedSet.CreateDto.Weight;
+                oldSet.Time = editedSet.CreateDto.Time;
+
+                this.ToastService.ShowSuccess("Set uspješno dodan.");
+                await this.AddedExercisesChanged.InvokeAsync(this.AddedExercises);
+            }
+            catch (Exception)
+            {
+                this.ToastService.ShowError("Dodavanje set nije uspjelo.");
+            }
+        }
+    }
+
+    private async Task OnRemoveSetAsync(EditSetEventArgs args)
+    {
+        var exercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id == args.ExerciseId);
+        var set = exercise?.Sets.FirstOrDefault(x => x.Id == args.Set.Id);
+        if (set != null)
+        {
+            exercise?.Sets.Remove(set);
+            await this.AddedExercisesChanged.InvokeAsync(this.AddedExercises);
+        }
+    }
+
+    private void OnRemoveExercise(Guid exerciseId)
+    {
+        var addedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == exerciseId.ToString());
+        if (addedExercise != null)
+        {
+            this.AddedExercises.Remove(addedExercise);
+        }
+    }
+
+    private async Task<DialogResult?> ShowDialogAsync(Guid exerciseId, ExerciseSetCreateDto setCreateDto)
+    {
+        var dto = new ExerciseSetFormViewModel();
+        dto.Exercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == exerciseId.ToString());
+        dto.CreateDto = setCreateDto;
+        var dialog = await DialogService.ShowDialogAsync<ExerciseSetFormDialog>(dto, new DialogParameters()
+            {
+                Title = $"Novi set",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+        return await dialog.Result;
+    }
+}

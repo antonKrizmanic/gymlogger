@@ -1,5 +1,3 @@
 ﻿namespace GymLogger.Api.Client.Models;
 
-public record HttpResponse(string Content, HttpResponseMessage response)
-{
-}
+public record HttpResponse(string Content, HttpResponseMessage Response);
