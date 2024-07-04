@@ -1,29 +1,51 @@
-﻿using GymLogger.Infrastructure.Database.Models.Identity;
+﻿using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.Management.Interfaces;
+using GymLogger.Core.MuscleGroups.Interfaces;
+using GymLogger.Core.Workout.Interfaces;
+using GymLogger.Infrastructure.Database.Management;
+using GymLogger.Infrastructure.Database.Models.Exercise;
+using GymLogger.Infrastructure.Database.Models.Identity;
+using GymLogger.Infrastructure.Database.Models.MuscleGroups;
+using GymLogger.Infrastructure.Database.Models.Workout;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace GymLogger.Infrastructure.Database;
 public static class InfrastructureDatabaseServicesExtensions
 {
+    public static IServiceCollection RegisterInfrastructureDbServices(this IServiceCollection services)
+    {
+        services.AddTransient<IDatabaseSeedService, DatabaseSeedService>()
+            .AddTransient<IDatabaseManagementService, DatabaseManagementService>();
+        return services;
+    }
+
+    public static IServiceCollection RegisterInfrastructureDbRepositories(this IServiceCollection services)
+    {
+        services
+            .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>()
+            .AddTransient<IExerciseRepository, ExerciseRepository>()
+            .AddTransient<IWorkoutRepository, WorkoutRepository>();
+        return services;
+    }
+
     public static IServiceCollection AddInfrastructureDatabase(this IServiceCollection services,
         IConfiguration configuration, bool isProduction, bool isTestEnv = false)
     {
-        //TODO: Add registration of repositories here
-
         var connectionStringKey = isProduction ? "ProductionConnection" : "DefaultConnection";
         var connectionString = configuration.GetConnectionString(connectionStringKey);
         services.AddDbContext<GymLoggerDbContext>(
-            options => options.UseSqlServer(connectionString),
-            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped);
+            options => options
+                .UseNpgsql(connectionString)
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                .EnableSensitiveDataLogging(),
+            isTestEnv ? ServiceLifetime.Transient : ServiceLifetime.Scoped)
+            ;
         services.AddDatabaseDeveloperPageExceptionFilter();
-        
+
         services.AddIdentityCore<DbApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
@@ -33,7 +55,7 @@ public static class InfrastructureDatabaseServicesExtensions
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
-            })            
+            })
             .AddEntityFrameworkStores<GymLoggerDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();

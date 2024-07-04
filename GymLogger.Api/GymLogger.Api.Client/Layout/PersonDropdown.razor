@@ -1,0 +1,47 @@
+﻿@rendermode InteractiveWebAssembly
+
+@using GymLogger.Api.Client.Components.Dialog
+
+@inject IDialogService DialogService
+
+<FluentDesignTheme StorageName="theme" @bind-Mode="@Mode" />
+
+<FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" VerticalAlignment="VerticalAlignment.Center" HorizontalGap="16">
+    @if (Mode == DesignThemeModes.Dark)
+    {
+        <FluentIcon Value="@(new Icons.Regular.Size24.Lightbulb())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+    }
+    else
+    {
+        <FluentIcon Value="@(new Icons.Regular.Size24.DarkTheme())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+    }
+
+    <AuthorizeView>
+        <Authorized>
+            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Color.Neutral" />
+        </Authorized>
+    </AuthorizeView>
+</FluentStack>
+
+@code {
+
+    [Parameter] public DesignThemeModes Mode { get; set; }
+    [Parameter] public EventCallback<DesignThemeModes> ModeChanged { get; set; }
+
+    private async Task ChangeModeAsync()
+    {
+        Mode = Mode == DesignThemeModes.Dark ? DesignThemeModes.Light : DesignThemeModes.Dark;
+        await ModeChanged.InvokeAsync(Mode);
+    }
+
+    private async Task OpenUserDialog(string? userName)
+    {
+        await DialogService.ShowPanelAsync<PersonDialog>(new()
+            {
+                Alignment = HorizontalAlignment.Right,
+                Title = $"{userName}",
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false
+            });
+    }
+}

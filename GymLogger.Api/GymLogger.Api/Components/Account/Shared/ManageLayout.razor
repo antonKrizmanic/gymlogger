@@ -1,18 +1,43 @@
 ﻿@inherits LayoutComponentBase
-@layout AccountLayout
 
-<h1>Manage your account</h1>
+@layout GymLogger.Api.Components.Layout.MainLayout
+@inject NavigationManager NavigationManager
 
-<div class="manage">
-    <h2>Change your account settings</h2>
-    <hr />
-    <FluentGrid>
-        <FluentGridItem sm="3">
-            <ManageNavMenu />
-        </FluentGridItem>
+@if (HttpContext is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h1>Manage your account</h1>
 
-        <FluentGridItem sm="9">
-            @Body
-        </FluentGridItem>
-    </FluentGrid>
-</div>
+    <div class="manage">
+        <h2>Change your account settings</h2>
+        <hr />
+        <FluentGrid>
+            <FluentGridItem sm="3">
+                <ManageNavMenu />
+            </FluentGridItem>
+
+            <FluentGridItem sm="9">
+                @Body
+            </FluentGridItem>
+        </FluentGrid>
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (HttpContext is null)
+        {
+            // If this code runs, we're currently rendering in interactive mode, so there is no HttpContext.
+            // The identity pages need to set cookies, so they require an HttpContext. To achieve this we
+            // must transition back from interactive mode to a server-rendered page.
+            NavigationManager.Refresh(forceReload: true);
+        }
+    }
+}

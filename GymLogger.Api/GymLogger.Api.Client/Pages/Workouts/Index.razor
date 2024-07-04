@@ -1,0 +1,74 @@
+﻿@page "/Workouts"
+@inherits BaseComponent
+@attribute [Authorize]
+@rendermode @(new InteractiveAutoRenderMode(prerender: false))
+
+<FluentStack Orientation="Orientation.Vertical">
+    <PageHeading>
+        <ChildContent>
+            Treninzi
+        </ChildContent>
+        <PageHeadingButtons>
+            <FluentAnchor Href="/Workouts/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
+                Dodaj novi trening
+            </FluentAnchor>
+
+            <FluentButton IconEnd="@(new Icons.Regular.Size16.Filter())" OnClick="@(() => filterOpen = !filterOpen)">
+                Filtriraj
+            </FluentButton>
+            <WorkoutSortMenu
+                OnSortChange="OnSortMenuItemClicked"/>
+            
+        </PageHeadingButtons>
+    </PageHeading>
+    @if (filterOpen)
+    {
+        <FluentCard AreaRestricted="false">
+            <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+                @* <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+                    <FluentSelect @bind-Value="@SelectedMuscleGroupId"
+                                  Label="Grupa mišića"
+                                  Items="@MuscleGroups"
+                                  Style="width:100%;"
+                                  TOption="MuscleGroupDto"
+                                  OptionValue="@((item) => item.Id.ToString())"
+                                  OptionText="@((item) => item.Name)">
+                    </FluentSelect>
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+                    <FluentSelect @bind-Value="@SelectedExerciseLogType"
+                                  Label="Način zapisivanja"
+                                  Style="width:100%;"
+                                  TOption="ExerciseLogType">
+                        @foreach (var logType in Enum.GetValues<ExerciseLogType>())
+                        {
+                            var enumDisplay = EnumHelper<ExerciseLogType>.GetDisplayValue(logType);
+                            <FluentOption Value="@logType.ToString()">@enumDisplay</FluentOption>
+                        }
+                    </FluentSelect>
+                </FluentStack> *@
+            </FluentStack>
+            <FluentStack HorizontalAlignment="HorizontalAlignment.Start" Style="margin-top: 1rem;">
+                @* <FluentButton Appearance="Appearance.Accent" OnClick="@(() => FilterAsync())">Filtriraj</FluentButton>
+                <FluentButton OnClick="@ClearFilter">Očisti</FluentButton> *@
+            </FluentStack>
+        </FluentCard>
+    }
+
+    <GlCardGrid TItem="WorkoutDto"
+                PagedResponse="_pagedResponseDto"
+                PagedRequest="_pagedRequestDto"
+                PagedRequestChanged="LoadDataAsync"
+                OnDetailsClicked="Details"
+                OnEditClicked="EditAsync"
+                OnDeleteClicked="DeleteAsync">
+        <ItemTemplate>
+            <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @context.Date.ToString("dd.MM.yyyy")</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Broj serija:</b> @context.TotalSets.ToFixedString()</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Broj ponavljanja:</b> @context.TotalReps.ToFixedString()</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Ukupna težina:</b> @context.TotalWeight.ToFixedString()</FluentLabel>
+        </ItemTemplate>
+    </GlCardGrid>
+</FluentStack>

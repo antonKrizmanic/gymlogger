@@ -1,0 +1,49 @@
+﻿@page "/Exercises"
+@inherits BaseComponent
+@attribute [Authorize]
+@rendermode @(new InteractiveAutoRenderMode(prerender: false))
+
+<FluentStack Orientation="Orientation.Vertical">
+    <PageHeading>
+        <ChildContent>
+            Vježbe
+        </ChildContent>
+        <PageHeadingButtons>
+            <FluentButton OnClick="@(() => CreateAsync())" IconEnd="@(new Icons.Regular.Size16.Add())">
+                Dodaj novu vježbu
+            </FluentButton>
+            
+            <FluentButton IconEnd="@(new Icons.Regular.Size16.Filter())" OnClick="@(() => filterOpen = !filterOpen)">
+                Filtriraj
+            </FluentButton>
+            <ExerciseSortMenu
+                OnSortChange="OnSortMenuItemClicked"/>
+        </PageHeadingButtons>
+    </PageHeading>
+    @if(filterOpen)
+    {
+        <ExerciseFilter 
+            MuscleGroups="@MuscleGroups"
+            PagedRequestDto="@PagedRequestDto" 
+            OnFilter="@FilterAsync" />
+    }    
+
+    <GlCardGrid 
+        TItem="ExerciseDto"
+        PagedResponse="_pagedResponseDto"
+        PagedRequest="PagedRequestDto"
+        PagedRequestChanged="LoadDataAsync"
+        OnDetailsClicked="Details"
+        OnEditClicked="EditAsync"
+        OnDeleteClicked="DeleteAsync">
+        <ItemTemplate>                
+            <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Mišićna grupa:</b> @context.MuscleGroupName</FluentLabel>
+            @{
+                var desc = EnumHelper<ExerciseLogType>.GetDisplayValue(context.ExerciseLogType);
+            }
+            <FluentLabel Typo="Typography.Body"><b>Način zapisivanja:</b> @desc</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>                           
+        </ItemTemplate>
+    </GlCardGrid>
+</FluentStack>

@@ -116,3 +116,4 @@ ServiceFabricBackup/
 *.rptproj.rsuser
 *- [Bb]ackup.rdl
 /GymLogger.Api/GymLogger.Api/Logs
+/.idea/.idea.GymLogger/.idea

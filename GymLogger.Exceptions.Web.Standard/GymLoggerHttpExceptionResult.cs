@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,7 +38,7 @@ namespace GymLogger.Exceptions.Web
 
             // Log result
             var factory = context.HttpContext.RequestServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-            factory.CreateLogger<GymLoggerHttpException>().Log(
+            factory?.CreateLogger<GymLoggerHttpException>().Log(
                 LogLevel.Information,
                 new EventId(1, "GymLoggerHttpException"),
                 "Executing GymLoggerHttpException, setting HTTP status code {StatusCode}",

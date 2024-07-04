@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace GymLogger.Infrastructure.Http;
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddInfrastructureHttp(this IServiceCollection services)
+    public static IServiceCollection RegisterInfrastructureHttpServices(this IServiceCollection services)
     {
-        services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+        services.AddTransient<ICurrentUserProvider, CurrentUserProvider>();
 
         return services;
     }

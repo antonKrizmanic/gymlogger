@@ -21,6 +21,9 @@
                 case GymLoggerEntityNotFoundException _:
                     httpCode = (int)System.Net.HttpStatusCode.NotFound;
                     break;
+                case GymLoggerException _:
+                    httpCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    break;
             }
 
             return new GymLoggerHttpException(

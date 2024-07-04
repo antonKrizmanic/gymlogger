@@ -1,52 +1,30 @@
-using GymLogger.Api;
-using GymLogger.Api.Components;
 using GymLogger.Api.Components.Account;
+using GymLogger.Api.Configuration;
 using GymLogger.Application;
-using GymLogger.Exceptions;
 using GymLogger.Exceptions.Web;
 using GymLogger.Infrastructure.Database;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Http;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
-builder.Services.AddFluentUIComponents();
+builder.Services
+    .AddCustomRazorComponents()
+    .AddCustomAuthentication()
+    .AddCustomAuoMapper()
+    .AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
+    .RegisterInfrastructureDbRepositories()
+    .RegisterInfrastructureDbServices()
+    .RegisterInfrastructureHttpServices()
+    .AddApplication()
+    .AddCustomSerilog(builder.Configuration)
+    .AddCustomSwagger()
+    .AddApiServices();
 
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<IdentityUserAccessor>();
-builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
-
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddIdentityCookies();
-
-builder.Services.AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
-    .AddInfrastructureHttp()
-    .AddApplication();
-
-builder.Services.AddSerilog((services, lc) => lc
-    .ReadFrom.Configuration(builder.Configuration));
-
-builder.Services.AddAutoMapper(
-    typeof(ApiMapperProfile).Assembly,
-    typeof(ApplicationMapperProfile).Assembly,
-    typeof(InfrastructureDatabaseMapperProfile).Assembly);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// TODO: Move to a separate extension method and IdentityNoOpEmailSender to a separate project
 builder.Services.AddSingleton<IEmailSender<DbApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
@@ -80,18 +58,14 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseMinimalApi();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(GymLogger.Api.Client._Imports).Assembly);
+app.UseCustomComponents();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+app.UseCustomSwagger();
 
-app.UseSwagger();
-app.UseSwaggerUI();
 
-app.MapGet("/test", () => { throw new GymLoggerEntityNotFoundException("Not found"); });
 
 app.Run();

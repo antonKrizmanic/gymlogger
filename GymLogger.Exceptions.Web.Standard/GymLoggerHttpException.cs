@@ -6,7 +6,7 @@
         public string Error { get; set; }
         public string Message { get; set; }
         public int StatusCode { get; set; }
-        public GymLoggerException Exception { get; set; }
+        public GymLoggerException? Exception { get; set; }
         public GymLoggerHttpException(string error, int httpCode, string errorDescription)
         {
             this.Message = errorDescription;

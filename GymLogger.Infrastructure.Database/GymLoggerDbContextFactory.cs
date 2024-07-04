@@ -1,21 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace GymLogger.Infrastructure.Database
 {
-    public class GymLoggerDbContextFactory : IDesignTimeDbContextFactory<GymLoggerDbContext>
+    public class GymLoggerDbContextMigrationFactory : IDesignTimeDbContextFactory<GymLoggerDbContext>
     {
         public GymLoggerDbContext CreateDbContext(string[] args)
-        {            
+        {
             var builder = new DbContextOptionsBuilder<GymLoggerDbContext>();
 
-            var connectionString = "Server=localhost;Database=GymLoggerDb;Trusted_Connection=True;Encrypt=False;MultipleActiveResultSets=true";
+            var connectionString = "Server=localhost;Database=GymLoggerDb;Port=5432;User Id=postgres;Password=postgres;";
 
-            builder.UseSqlServer(connectionString);
+            builder.UseNpgsql(connectionString);
 
-            return new GymLoggerDbContext(builder.Options, null);
+            return new GymLoggerDbContext(builder.Options, null, null);
         }
     }
 }

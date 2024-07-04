@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GymLogger.Exceptions
 {
@@ -19,7 +17,7 @@ namespace GymLogger.Exceptions
         {
         }
 
-        public GymLoggerForbiddenException(string message, string key = null, Exception innerException = null)
+        public GymLoggerForbiddenException(string message, string? key = null, Exception? innerException = null)
             : base(message, key, innerException)
         {
         }
