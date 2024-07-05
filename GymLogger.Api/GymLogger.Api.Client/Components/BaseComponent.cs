@@ -7,5 +7,5 @@ public abstract class BaseComponent : ComponentBase
 {
     [Inject] protected NavigationManager NavigationManager { get; set; }
     [Inject] public required IDialogService DialogService { get; set; }
-    //[Inject] public required IToastService ToastService { get; set; }
+    [Inject] public required IToastService ToastService { get; set; }
 }
