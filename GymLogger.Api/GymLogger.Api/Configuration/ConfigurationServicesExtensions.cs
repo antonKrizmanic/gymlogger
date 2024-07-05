@@ -14,7 +14,6 @@ public static class ConfigurationServicesExtensions
     public static IServiceCollection AddCustomRazorComponents(this IServiceCollection services)
     {
         services.AddRazorComponents()
-            .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
         services.AddFluentUIComponents();
 
@@ -28,6 +27,7 @@ public static class ConfigurationServicesExtensions
         services.AddScoped<IdentityRedirectManager>();
         services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
+        services.AddAuthorization();
         services.AddAuthentication(options =>
             {
                 options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -78,7 +78,6 @@ public static class ConfigurationServicesExtensions
     public static IEndpointRouteBuilder UseCustomComponents(this IEndpointRouteBuilder app)
     {
         app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(GymLogger.Api.Client._Imports).Assembly);
 
