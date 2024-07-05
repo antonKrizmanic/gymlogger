@@ -28,7 +28,7 @@
         {
             <FluentGrid Style="width:100%;">
 
-                @foreach (var exercise in Workout.Exercises)
+                @foreach (var exercise in Workout.Exercises.OrderBy(x => x.Index))
                 {
                     <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
                         <FluentCard>
