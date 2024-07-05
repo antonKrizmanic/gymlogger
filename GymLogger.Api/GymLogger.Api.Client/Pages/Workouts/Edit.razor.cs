@@ -59,18 +59,19 @@ public partial class Edit : BaseComponent
         {
             ExerciseId = x.Exercise.Id.ToString(),
             Note = x.Note,
-            Sets = x.Sets
+            Sets = x.Sets,
+            Index = x.Index
         }).ToList();
 
         try
         {
             await this.WorkoutApiService.UpdateAsync(this.Model);
-            //this.ToastService.ShowSuccess("Trening uspješno dodan.");
+            this.ToastService.ShowSuccess("Trening uspješno dodan.");
             this.NavigationManager.NavigateTo("/workouts");
         }
         catch (Exception)
         {
-            //this.ToastService.ShowError("Dodavanje treninga nije uspjelo.");
+            this.ToastService.ShowError("Dodavanje treninga nije uspjelo.");
         }
     }
 
@@ -98,7 +99,8 @@ public partial class Edit : BaseComponent
         var addedExercise = this.Exercises.FirstOrDefault(x => x.Name == _exerciseWorkoutModel.ExerciseId);
         if (addedExercise != null)
         {
-            this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note });
+            var index = this.AddedExercises.Count + 1;
+            this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note, Index = index});
         }
         this._exerciseWorkoutModel = new ExerciseWorkoutCreateDto();
     }

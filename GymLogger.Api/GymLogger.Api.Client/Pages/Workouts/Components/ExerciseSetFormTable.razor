@@ -7,7 +7,7 @@
                 <th>#</th>
                 <th>Ponavljanja x Težina(kg)</th>
                 <th>Napomena</th>
-                <th></th>
+                <th style="min-width: 110px;"></th>
             </tr>
 
         </thead>
@@ -19,11 +19,11 @@
                 <th>Set</th>
                 <th>Vrijeme (s)</th>
                 <th>Napomena</th>
-                <th></th>
+                <th style="min-width: 110px;"></th>
             </tr>
         </thead>
     }
-    @foreach (var set in Sets)
+    @foreach (var set in Sets.OrderBy(x =>x.Index))
     {
         <tr>
             <td>@set.Index</td>
@@ -38,8 +38,9 @@
                 <td>@set.Note</td>
             }
             <td>
-                <FluentButton OnClick="@(() => OnEditSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Edit())" />
-                <FluentButton OnClick="@(() => OnRemoveSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                <FluentButton OnClick="@(async () => await OnCopySet.InvokeAsync(new(Exercise.Id, set)))" IconEnd="@(new Icons.Regular.Size16.ArrowRepeatAll())" />
+                <FluentButton OnClick="@(() => OnEditSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Edit())"/>
+                <FluentButton OnClick="@(() => OnRemoveSetAsync(Exercise.Id, set))" IconEnd="@(new Icons.Regular.Size16.Delete())"/>
             </td>
         </tr>
     }
@@ -51,6 +52,7 @@
 
     [Parameter] public EventCallback<EditSetEventArgs> OnEditSet { get; set; }
     [Parameter] public EventCallback<EditSetEventArgs> OnRemoveSet { get; set; }
+    [Parameter] public EventCallback<EditSetEventArgs> OnCopySet { get; set; }
 
     private async Task OnEditSetAsync(Guid exerciseId, ExerciseSetCreateDto set)
     {

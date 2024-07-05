@@ -85,6 +85,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                 var dbExercise = new DbExerciseWorkout
                 {
                     ExerciseId = exercise.ExerciseId,
+                    Index = exercise.Index,
                     TotalReps = exercise.TotalReps,
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
@@ -166,6 +167,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                 var dbExercise = new DbExerciseWorkout
                 {
                     ExerciseId = exercise.ExerciseId,
+                    Index = exercise.Index,
                     TotalReps = exercise.TotalReps,
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
@@ -192,6 +194,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
             foreach (var exercise in exercisesToUpdate)
             {
                 var dbExercise = dbEntity.Exercises.First(e => e.ExerciseId == exercise.ExerciseId);
+                dbExercise.Index = exercise.Index;
                 dbExercise.TotalReps = exercise.TotalReps;
                 dbExercise.TotalSets = exercise.TotalSets;
                 dbExercise.TotalWeight = exercise.TotalWeight;

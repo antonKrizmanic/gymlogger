@@ -57,11 +57,11 @@ public partial class Index : BaseComponent
             {
                 await ExerciseHttpService.CreateAsync((ExerciseCreateDto)result.Data);
                 await this.LoadDataAsync();
-                //this.ToastService.ShowSuccess("Vježba uspješno dodana.");
+                this.ToastService.ShowSuccess("Vježba uspješno dodana.");
             }
             catch (Exception)
             {
-                //this.ToastService.ShowError("Dodavanje vježbe nije uspjelo.");
+                this.ToastService.ShowError("Dodavanje vježbe nije uspjelo.");
             }
         }
     }
@@ -105,11 +105,11 @@ public partial class Index : BaseComponent
             {
                 await ExerciseHttpService.UpdateAsync(editDto);
                 await this.LoadDataAsync();
-                //this.ToastService.ShowSuccess("Vježba uspješno izmjenjena.");
+                this.ToastService.ShowSuccess("Vježba uspješno izmjenjena.");
             }
             catch (Exception)
             {
-                //this.ToastService.ShowError("Izmjena vježbe nije uspjela.");
+                this.ToastService.ShowError("Izmjena vježbe nije uspjela.");
             }
         }
     }
@@ -130,11 +130,11 @@ public partial class Index : BaseComponent
             {
                 await ExerciseHttpService.DeleteAsync(item.Id);
                 await this.LoadDataAsync();
-                //this.ToastService.ShowSuccess("Vježba uspješno obrisana.");
+                this.ToastService.ShowSuccess("Vježba uspješno obrisana.");
             }
             catch (Exception)
             {
-                //this.ToastService.ShowError("Brisanje vježbe nije uspjelo.");
+                this.ToastService.ShowError("Brisanje vježbe nije uspjelo.");
             }
         }
     }

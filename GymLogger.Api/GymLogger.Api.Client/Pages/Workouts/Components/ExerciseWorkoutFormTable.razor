@@ -2,13 +2,12 @@
 @inject IDialogService DialogService
 
 <FluentGrid Style="width:100%;">
-    @foreach (var item in AddedExercises)
+    @foreach (var item in AddedExercises.OrderBy(x => x.Index))
     {
         <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
             <FluentCard>
                 <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
                     <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
-                    <FluentLabel Typo="Typography.Body">@item.Exercise.Description</FluentLabel>
                     @if (item.Exercise != null)
                     {
                         <div>
@@ -17,11 +16,13 @@
                         </div>
                     }
                 </FluentStack>
+                <FluentLabel Typo="Typography.Body">@item.Exercise.Description</FluentLabel>
                 <FluentLabel Typo="Typography.Body">@item.Note</FluentLabel>
                 @if (item.Sets != null && item.Sets.Any())
                 {
                     <ExerciseSetFormTable Sets="@item.Sets"
                                           Exercise="@item.Exercise"
+                                          OnCopySet="@OnCopySet"
                                           OnEditSet="@OnEditSetAsync"
                                           OnRemoveSet="@OnRemoveSetAsync" />
                 }
@@ -58,6 +59,28 @@
         }
     }
 
+    private async Task OnCopySet(EditSetEventArgs args)
+    {
+        try
+        {
+            var addedExercise = this.AddedExercises.FirstOrDefault(x => x.Exercise.Id.ToString() == args.ExerciseId.ToString());
+            var set = new ExerciseSetCreateDto()
+            {
+                Id = Guid.NewGuid(),
+                Index = addedExercise.Sets.Count + 1,
+                Note = args.Set.Note,
+                Reps = args.Set.Reps,
+                Time = args.Set.Time,
+                Weight = args.Set.Weight
+            };
+            addedExercise.Sets.Add(set);
+            this.ToastService.ShowSuccess("Set je uspješno kopiran.");
+        }
+        catch (Exception ex)
+        {
+            this.ToastService.ShowError("Kopiranje sets nije uspjelo.");
+        }
+    }
     private async Task OnEditSetAsync(EditSetEventArgs args)
     {
         var result = await ShowDialogAsync(args.ExerciseId, args.Set);
