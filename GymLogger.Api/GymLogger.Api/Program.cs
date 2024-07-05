@@ -61,7 +61,6 @@ app.UseAntiforgery();
 app.UseMinimalApi();
 
 app.UseCustomComponents();
-
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 app.UseCustomSwagger();
