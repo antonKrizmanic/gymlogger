@@ -7,5 +7,6 @@ public class ExerciseSetCreateFormViewModel
 {
     public List<ExerciseSetCreateDto> Sets { get; set; } = [];
     public ExerciseDto Exercise { get; set; }
+    public int Index { get; set; }
     public string? Note { get; set; }
 }

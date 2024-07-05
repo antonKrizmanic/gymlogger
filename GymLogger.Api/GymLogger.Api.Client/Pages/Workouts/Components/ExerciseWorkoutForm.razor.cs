@@ -10,7 +10,6 @@ public partial class ExerciseWorkoutForm : BaseComponent
     [Parameter] public required ExerciseWorkoutCreateDto Model { get; set; }
     [Parameter] public EventCallback<ExerciseWorkoutCreateDto> OnSave { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
-    //[Inject] private IExerciseApiService ExerciseApiService { get; set; } = default!;
 
     [Parameter] public required ICollection<ExerciseDto> Exercises { get; set; }
 
