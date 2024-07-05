@@ -52,12 +52,12 @@ public partial class Create : BaseComponent
         try
         {
             await this.WorkoutApiService.CreateAsync(this.Model);
-            this.ToastService.ShowSuccess("Trening uspješno dodan.");
+            //this.ToastService.ShowSuccess("Trening uspješno dodan.");
             this.NavigationManager.NavigateTo("/workouts");
         }
         catch (Exception)
         {
-            this.ToastService.ShowError("Dodavanje treninga nije uspjelo.");
+            //this.ToastService.ShowError("Dodavanje treninga nije uspjelo.");
         }
     }
 
