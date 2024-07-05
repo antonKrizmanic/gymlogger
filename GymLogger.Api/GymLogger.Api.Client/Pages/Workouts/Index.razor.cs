@@ -55,11 +55,11 @@ public partial class Index : BaseComponent
             {
                 await WorkoutApiService.DeleteAsync(dto.Id);
                 await this.LoadDataAsync();
-                //base.ToastService.ShowSuccess("Trening uspješno obrisan.");
+                base.ToastService.ShowSuccess("Trening uspješno obrisan.");
             }
             catch (Exception)
             {
-                //base.ToastService.ShowError("Trening nije obrisan");
+                base.ToastService.ShowError("Trening nije obrisan");
                 throw;
             }
         }
