@@ -2,7 +2,7 @@
 @inject IDialogService DialogService
 
 <FluentGrid Style="width:100%;">
-    @foreach (var item in AddedExercises)
+    @foreach (var item in AddedExercises.OrderBy(x => x.Index))
     {
         <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
             <FluentCard>
