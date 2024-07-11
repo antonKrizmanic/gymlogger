@@ -43,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var set in exercise.Sets)
+                                    @foreach (var set in exercise.Sets.OrderBy(x => x.Index))
                                     {
                                         <tr>
                                             <td>@set.Index</td>
