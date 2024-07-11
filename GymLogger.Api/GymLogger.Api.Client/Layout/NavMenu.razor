@@ -1,20 +1,21 @@
-﻿@* @rendermode InteractiveWebAssembly *@
-
-@implements IDisposable
-
+﻿@implements IDisposable
 @inject NavigationManager NavigationManager
 
 <div class="navmenu">
     <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon" />
     <label for="navmenu-toggle" class="navmenu-icon"><FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" /></label>
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
-        <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">            
+        <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <AuthorizeView>
                 <Authorized>
-                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>                    
-                    <FluentNavLink Href="exercises">Vježbe</FluentNavLink>                    
-                    <FluentNavLink Href="workouts">Treninzi</FluentNavLink>
-                </Authorized>                
+                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
+                    <FluentNavLink Href="exercises">Vježbe</FluentNavLink>
+                    <FluentNavLink Href="workouts">Treninzi</FluentNavLink>                    
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />                        
+                    </form>
+                </Authorized>
             </AuthorizeView>
         </FluentNavMenu>
     </nav>
@@ -22,13 +23,12 @@
 
 @code {
     private bool expanded = true;
-
-    private string? currentUrl;
+    private string? currentUrl;    
 
     protected override void OnInitialized()
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.LocationChanged += OnLocationChanged;
+        NavigationManager.LocationChanged += OnLocationChanged;        
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
@@ -38,7 +38,7 @@
     }
 
     public void Dispose()
-    {
+    {        
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
