@@ -26,18 +26,9 @@
                 <FluentValidationMessage For="@(() => Model.Name)" />
             </FluentGridItem>
         </FluentGrid>
-        @if (Model.Exercises.Any() && AddedExercises.Any())
-        {
-            <ExerciseWorkoutFormTable @bind-AddedExercises="AddedExercises"
-                                      Exercises="Exercises" />
-        }
         @if (!_showAddExerciseForm)
         {
-            <FluentButton OnClick="OnAddExerciseClick" IconEnd="@(new Icons.Filled.Size16.Add())">Dodaj vježbu</FluentButton>
-            <FluentStack>
-                <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Spremi trening</FluentButton>
-                <FluentButton OnClick="@Cancel">Odustani</FluentButton>
-            </FluentStack>
+            <FluentButton OnClick="OnAddExerciseClick" IconEnd="@(new Icons.Filled.Size16.Add())">Dodaj vježbu</FluentButton>            
         }
         else
         {
@@ -45,6 +36,19 @@
                                  Exercises="Exercises"
                                  OnClose="OnAddExerciseFormClose"
                                  OnSave="OnAddExerciseFormSave" />
+        }
+
+        @if (Model.Exercises.Any() && AddedExercises.Any())
+        {
+            <ExerciseWorkoutFormTable @bind-AddedExercises="AddedExercises"
+                                      Exercises="Exercises" />
+        }
+        @if (!_showAddExerciseForm)
+        {
+            <FluentStack>
+                <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Spremi trening</FluentButton>
+                <FluentButton OnClick="@Cancel">Odustani</FluentButton>
+            </FluentStack>
         }
     </FluentStack>
 </EditForm>

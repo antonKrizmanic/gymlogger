@@ -10,7 +10,7 @@
                     <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
                     @if (item.Exercise != null)
                     {
-                        <div>
+                        <div style="min-width:68px;">
                             <FluentButton OnClick="@(() => OnAddSetAsync(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())" />
                             <FluentButton OnClick="@(() => OnRemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())" />
                         </div>
