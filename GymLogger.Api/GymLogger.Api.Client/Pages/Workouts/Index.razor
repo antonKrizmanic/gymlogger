@@ -1,7 +1,8 @@
 ﻿@page "/Workouts"
 @inherits BaseComponent
 @attribute [Authorize]
-@* @rendermode @(new InteractiveAutoRenderMode(prerender: false)) *@
+
+<PageTitle>GymLogger - Workout</PageTitle>
 
 <FluentStack Orientation="Orientation.Vertical">
     <PageHeading>
@@ -12,13 +13,10 @@
             <FluentAnchor Href="/Workouts/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
                 Dodaj novi trening
             </FluentAnchor>
-
             <FluentButton IconEnd="@(new Icons.Regular.Size16.Filter())" OnClick="@(() => filterOpen = !filterOpen)">
                 Filtriraj
             </FluentButton>
-            <WorkoutSortMenu
-                OnSortChange="OnSortMenuItemClicked"/>
-            
+            <WorkoutSortMenu OnSortChange="OnSortMenuItemClicked"/>            
         </PageHeadingButtons>
     </PageHeading>
     @if (filterOpen)

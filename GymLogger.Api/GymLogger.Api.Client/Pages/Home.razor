@@ -1,9 +1,9 @@
 ﻿@page "/"
 @attribute [Authorize]
 
-<PageTitle>Naslovnica</PageTitle>
+<PageTitle>GymLogger - Home</PageTitle>
 
 <AuthorizeView>
-    <h1>Pozdrav @context.User.Identity?.Name!!</h1>
+    <h1>Hello @context.User.Identity?.Name!!</h1>
 </AuthorizeView>
-Dobrodošao u svoj gym logging aplikaciju.
+Welcome to GymLogger
