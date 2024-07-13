@@ -27,6 +27,16 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         {
             query = query.Where(b => b.Name.Contains(request.Search));
         }
+        
+        if(request.MuscleGroupId != Guid.Empty)
+        {
+            query = query.Where(b => b.MuscleGroupId == request.MuscleGroupId);
+        }
+        
+        if(request.WorkoutDate != null)
+        {
+            query = query.Where(b => b.Date.Date.Date == request.WorkoutDate.Value.ToUniversalTime().AddDays(1).Date);
+        }
 
         var isSortDescending = request.SortDirection == SortDirection.Descending;
 
