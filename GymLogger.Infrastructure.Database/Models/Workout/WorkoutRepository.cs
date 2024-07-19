@@ -100,7 +100,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
                     Note = exercise.Note,
-                    BelongsTo = dbEntity.BelongsToUserId,
+                    BelongsToUserId = dbEntity.BelongsToUserId,
                     Sets = exercise.Sets.Select(x => new DbExerciseSet
                     {
                         Reps = x.Reps,
@@ -183,7 +183,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
                     Note = exercise.Note,
-                    BelongsTo = dbEntity.BelongsToUserId,
+                    BelongsToUserId = dbEntity.BelongsToUserId,
                     Sets = exercise.Sets.Select(x => new DbExerciseSet
                     {
                         Reps = x.Reps,

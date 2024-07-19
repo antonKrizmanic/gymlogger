@@ -7,6 +7,6 @@ namespace GymLogger.Api.Client.HttpServices.ExerciseWorkout;
 
 internal class ExerciseWorkoutHttpService(IHttpClientFactory httpClientFactory) : BaseHttpService(httpClientFactory, ApiRoutes.ExerciseWorkout), IExerciseWorkoutApiService
 {
-    public async Task<ExerciseWorkoutDto?> GetLatestForCurrentUser(Guid exerciseId, Guid? workoutId = null) =>
+    public async Task<ExerciseWorkoutDto?> GetLatestForCurrentUserAsync(Guid exerciseId, Guid? workoutId = null) =>
         await base.HttpClient.GetFromJsonAsync($"{base.ApiRoute}/GetLatest/{exerciseId}/{workoutId}", Context.ExerciseWorkoutDto);
 }

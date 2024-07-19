@@ -3,5 +3,5 @@
 namespace GymLogger.Shared.Services;
 public interface IExerciseWorkoutApiService
 {
-    Task<ExerciseWorkoutDto?> GetLatestForCurrentUser(Guid exerciseId, Guid? workoutId);
+    Task<ExerciseWorkoutDto?> GetLatestForCurrentUserAsync(Guid exerciseId, Guid? workoutId);
 }

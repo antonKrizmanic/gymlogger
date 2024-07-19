@@ -3,6 +3,6 @@
 namespace GymLogger.Application.ExerciseWorkout;
 internal class ExerciseWorkoutService(IExerciseWorkoutRepository repository) : IExerciseWorkoutService
 {
-    public Task<IExerciseWorkout?> GetLatestForCurrentUserAsync(Guid exerciseId, Guid? workoutId) =>
-        repository.GetLatestForCurrentUserAsync(exerciseId, workoutId);
+    public async Task<IExerciseWorkout?> GetLatestForCurrentUserAsync(Guid exerciseId, Guid? workoutId) =>
+        await repository.GetLatestForCurrentUserAsync(exerciseId, workoutId);
 }

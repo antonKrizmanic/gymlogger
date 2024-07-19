@@ -8,7 +8,7 @@ namespace GymLogger.Api.Services.ExerciseWorkout;
 
 internal class ExerciseWorkoutApiService(IExerciseWorkoutService service, IMapper mapper) : IExerciseWorkoutApiService
 {
-    public async Task<ExerciseWorkoutDto?> GetLatestForCurrentUser(Guid exerciseId, Guid? workoutId)
+    public async Task<ExerciseWorkoutDto?> GetLatestForCurrentUserAsync(Guid exerciseId, Guid? workoutId)
     {
         var entity = await service.GetLatestForCurrentUserAsync(exerciseId, workoutId);
 

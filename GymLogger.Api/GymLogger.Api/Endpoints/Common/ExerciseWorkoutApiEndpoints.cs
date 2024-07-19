@@ -12,9 +12,9 @@ public static class ExerciseWorkoutApiEndpoints
     {
         var group = app.MapGroup(apiUrl);
 
-        group.MapGet("/GetLatest/{id}/{workoutId}", async ([FromRoute] Guid id, [FromRoute] Guid workoutId, IExerciseWorkoutApiService apiService) =>
+        group.MapGet("/GetLatest/{id}/{workoutId?}", async ([FromRoute] Guid id, [FromRoute] Guid? workoutId, IExerciseWorkoutApiService apiService) =>
         {
-            return await apiService.GetLatestForCurrentUser(id, workoutId);
+            return await apiService.GetLatestForCurrentUserAsync(id, workoutId);
         })
             .Produces<PagedResponseDto<ExerciseWorkoutDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
