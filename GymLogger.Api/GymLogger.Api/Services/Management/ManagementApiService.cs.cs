@@ -2,7 +2,7 @@
 
 namespace GymLogger.Api.Services.Management;
 
-public class ManagementApiService(IManagementService managementService, Serilog.ILogger logger) : IManagementApiService
+internal class ManagementApiService(IManagementService managementService, Serilog.ILogger logger) : IManagementApiService
 {
     public async Task<bool> AssertMigrationsAsync(CancellationToken cancellationToken = default)
     {

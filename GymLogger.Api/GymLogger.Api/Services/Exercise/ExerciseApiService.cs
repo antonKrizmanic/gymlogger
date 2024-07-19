@@ -8,7 +8,7 @@ using GymLogger.Shared.Services;
 
 namespace GymLogger.Api.Services.Exercise;
 
-public class ExerciseApiService(IExerciseService service, IMapper mapper) : IExerciseApiService
+internal class ExerciseApiService(IExerciseService service, IMapper mapper) : IExerciseApiService
 {
     public async Task<ExerciseDto> GetAsync(Guid id)
     {

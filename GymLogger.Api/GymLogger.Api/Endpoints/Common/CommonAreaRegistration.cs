@@ -10,6 +10,7 @@ public static class CommonAreaRegistration
             .MapApplicationManagerApiEndpoints(ApiRoutes.ApplicationManagement, "ApplicationManagement")
             .MapMuscleGroupApiEndpoints(ApiRoutes.MuscleGroup, "MuscleGroup")
             .MapExerciseApiEndpoints(ApiRoutes.Exercise, "Exercise")
-            .MapWorkoutApiEndpoints(ApiRoutes.Workout, "Workout");
+            .MapWorkoutApiEndpoints(ApiRoutes.Workout, "Workout")
+            .MapExerciseWorkoutApiEndpoints(ApiRoutes.ExerciseWorkout, "ExerciseWorkout");
     }
 }

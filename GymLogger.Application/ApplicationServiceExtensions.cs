@@ -1,8 +1,10 @@
 ﻿using GymLogger.Application.Exercise;
+using GymLogger.Application.ExerciseWorkout;
 using GymLogger.Application.Management;
 using GymLogger.Application.MuscleGroups;
 using GymLogger.Application.Workout;
 using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Core.Management.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Workout.Interfaces;
@@ -16,7 +18,8 @@ public static class ApplicationServiceExtensions
         services.AddTransient<IMuscleGroupService, MuscleGroupService>()
             .AddTransient<IManagementService, ManagementService>()
             .AddTransient<IExerciseService, ExerciseService>()
-            .AddTransient<IWorkoutService, WorkoutService>();
+            .AddTransient<IWorkoutService, WorkoutService>()
+            .AddTransient<IExerciseWorkoutService, ExerciseWorkoutService>();
 
         return services;
     }

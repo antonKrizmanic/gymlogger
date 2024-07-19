@@ -1,0 +1,24 @@
+﻿<FluentCard AreaRestricted="false">
+    <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+        <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+            <FluentSelect @bind-Value="@SelectedMuscleGroupId"
+                          Label="Grupa mišića"
+                          Items="@MuscleGroups"
+                          Style="width:100%;"
+                          TOption="MuscleGroupDto"
+                          OptionValue="@((item) => item.Id.ToString())"
+                          OptionText="@((item) => item.Name)">
+            </FluentSelect>
+        </FluentStack>
+        <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+            <FluentDatePicker @bind-Value="PagedRequestDto.WorkoutDate" Label="Datum treninga"  Style="width:100%;"/>
+        </FluentStack>
+    </FluentStack>
+    <FluentStack HorizontalAlignment="HorizontalAlignment.Start" Style="margin-top: 1rem;">
+        <FluentButton Appearance="Appearance.Accent" OnClick="@(() => OnFilter.InvokeAsync(PagedRequestDto))">Filtriraj</FluentButton>
+        <FluentButton OnClick="@ClearFilter">Očisti</FluentButton>
+    </FluentStack>
+</FluentCard>
+@code {
+    
+}
