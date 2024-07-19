@@ -42,7 +42,7 @@ public partial class Edit : BaseComponent
                 var addedExercise = this.Exercises.FirstOrDefault(x => x.Id.ToString() == exercise.ExerciseId);
                 if (addedExercise != null)
                 {
-                    this.AddedExercises.Add(new() { Exercise = addedExercise, Note = exercise.Note, Sets = exercise.Sets.ToList() });
+                    this.AddedExercises.Add(new() { Exercise = addedExercise, Note = exercise.Note, Sets = exercise.Sets.ToList(), Index = exercise.Index });
                 }
             }
         }
@@ -100,7 +100,7 @@ public partial class Edit : BaseComponent
         if (addedExercise != null)
         {
             var index = this.AddedExercises.Count + 1;
-            this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note, Index = index});
+            this.AddedExercises.Add(new() { Exercise = addedExercise, Note = _exerciseWorkoutModel.Note, Index = index });
         }
         this._exerciseWorkoutModel = new ExerciseWorkoutCreateDto();
     }

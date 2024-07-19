@@ -7,7 +7,7 @@
         <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
             <FluentCard>
                 <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
-                    <FluentLabel Typo="Typography.PaneHeader">@item.Exercise.Name</FluentLabel>
+                    <FluentLabel Typo="Typography.PaneHeader">@item.Index<span>.</span> @item.Exercise.Name</FluentLabel>
                     @if (item.Exercise != null)
                     {
                         <div style="min-width:68px;">
