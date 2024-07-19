@@ -1,9 +1,10 @@
-﻿using GymLogger.Infrastructure.Database.Models.Exercise;
+﻿using GymLogger.Core.User.Interfaces;
+using GymLogger.Infrastructure.Database.Models.Exercise;
 using GymLogger.Infrastructure.Database.Models.ExerciseSet;
 using GymLogger.Infrastructure.Database.Models.Workout;
 
 namespace GymLogger.Infrastructure.Database.Models.ExerciseWorkout;
-public class DbExerciseWorkout
+public class DbExerciseWorkout : IBelongsToUser
 {
     public Guid Id { get; set; }
     public Guid WorkoutId { get; set; }
@@ -15,8 +16,10 @@ public class DbExerciseWorkout
     public decimal? TotalSets { get; set; }
     public string? Note { get; set; }
     public int Index { get; set; }
+    public string? BelongsToUserId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
     public virtual ICollection<DbExerciseSet>? Sets { get; set; }
+
 }

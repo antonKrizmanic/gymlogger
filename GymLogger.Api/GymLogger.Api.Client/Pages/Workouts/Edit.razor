@@ -42,7 +42,8 @@
         @if (Model.Exercises.Any() && AddedExercises.Any())
         {
             <ExerciseWorkoutFormTable @bind-AddedExercises="AddedExercises"
-                                      Exercises="Exercises" />
+                                      Exercises="Exercises"
+                                      WorkoutId="@Model.Id"/>
         }
         @if (!_showAddExerciseForm)
         {

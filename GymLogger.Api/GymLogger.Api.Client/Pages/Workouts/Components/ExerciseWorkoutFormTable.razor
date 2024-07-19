@@ -5,33 +5,21 @@
     @foreach (var item in AddedExercises.OrderBy(x => x.Index))
     {
         <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
-            <FluentCard>
-                <FluentStack Orientation="Orientation.Horizontal" Style="justify-content:space-between">
-                    <FluentLabel Typo="Typography.PaneHeader">@item.Index<span>.</span> @item.Exercise.Name</FluentLabel>
-                    @if (item.Exercise != null)
-                    {
-                        <div style="min-width:68px;">
-                            <FluentButton OnClick="@(() => OnAddSetAsync(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Add())" />
-                            <FluentButton OnClick="@(() => OnRemoveExercise(item.Exercise.Id))" IconEnd="@(new Icons.Filled.Size16.Delete())" />
-                        </div>
-                    }
-                </FluentStack>
-                <FluentLabel Typo="Typography.Body">@item.Exercise.Description</FluentLabel>
-                <FluentLabel Typo="Typography.Body">@item.Note</FluentLabel>
-                @if (item.Sets != null && item.Sets.Any())
-                {
-                    <ExerciseSetFormTable Sets="@item.Sets"
-                                          Exercise="@item.Exercise"
-                                          OnCopySet="@OnCopySet"
-                                          OnEditSet="@OnEditSetAsync"
-                                          OnRemoveSet="@OnRemoveSetAsync" />
-                }
-            </FluentCard>
+            
+                <ExerciseWorkoutFormItem WorkoutId="WorkoutId"
+                    Item="item"
+                    OnAddSet="OnAddSetAsync"
+                    OnCopySet="OnCopySet"
+                    OnEditSet="OnEditSetAsync"
+                    OnRemoveSet="OnRemoveSetAsync"
+                    OnRemoveExercise="OnRemoveExercise"/>
+            
         </FluentGridItem>
     }
 </FluentGrid>
 
 @code {
+    [Parameter] public Guid? WorkoutId { get; set; }
     [Parameter] public ICollection<ExerciseSetCreateFormViewModel> AddedExercises { get; set; }
     [Parameter] public EventCallback<ICollection<ExerciseSetCreateFormViewModel>> AddedExercisesChanged { get; set; }
     [Parameter] public ICollection<ExerciseDto> Exercises { get; set; }

@@ -34,34 +34,8 @@
                 {
                     <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
                         <FluentCard>
-                            <FluentLabel Typo="Typography.PaneHeader">@exercise.Index<span>.</span> @exercise.ExerciseName</FluentLabel>
-                            <FluentLabel Typo="Typography.Body">@exercise.Note</FluentLabel>
-                            <table style="width:100%;table-layout:auto;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Ponavljanja/Vrijeme</th>
-                                        <th>Napomena</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var set in exercise.Sets.OrderBy(x => x.Index))
-                                    {
-                                        <tr>
-                                            <td>@set.Index</td>
-                                            @if (set is { Reps: not null, Weight: not null })
-                                            {
-                                                <td>@set.Reps.ToFixedString() x @set.Weight.ToFixedString() (kg)</td>
-                                            }
-                                            else if (set.Time.HasValue)
-                                            {
-                                                <td>@set.Time.ToFixedString() (s)</td>
-                                            }
-                                            <td>@set.Note</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                            <ExerciseWorkoutItem 
+                                Exercise="exercise"/>
                         </FluentCard>
                     </FluentGridItem>
                 }
