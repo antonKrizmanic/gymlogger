@@ -15,6 +15,7 @@ public class DbExerciseWorkout
     public decimal? TotalSets { get; set; }
     public string? Note { get; set; }
     public int Index { get; set; }
+    public string? BelongsTo { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

@@ -1,9 +1,11 @@
 ﻿using GymLogger.Core.Exercise.Interfaces;
+using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Core.Management.Interfaces;
 using GymLogger.Core.MuscleGroups.Interfaces;
 using GymLogger.Core.Workout.Interfaces;
 using GymLogger.Infrastructure.Database.Management;
 using GymLogger.Infrastructure.Database.Models.Exercise;
+using GymLogger.Infrastructure.Database.Models.ExerciseWorkout;
 using GymLogger.Infrastructure.Database.Models.Identity;
 using GymLogger.Infrastructure.Database.Models.MuscleGroups;
 using GymLogger.Infrastructure.Database.Models.Workout;
@@ -28,7 +30,8 @@ public static class InfrastructureDatabaseServicesExtensions
         services
             .AddTransient<IMuscleGroupsRepository, MuscleGroupsRepository>()
             .AddTransient<IExerciseRepository, ExerciseRepository>()
-            .AddTransient<IWorkoutRepository, WorkoutRepository>();
+            .AddTransient<IWorkoutRepository, WorkoutRepository>()
+            .AddTransient<IExerciseWorkoutRepository, ExerciseWorkoutRepository>();
         return services;
     }
 

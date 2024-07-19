@@ -7,4 +7,5 @@ public static class ApiRoutes
     public const string MuscleGroup = Root + "/MuscleGroup";
     public const string Exercise = Root + "/exercise";
     public const string Workout = Root + "/workout";
+    public const string ExerciseWorkout = Root + "/exerciseWorkout";
 }

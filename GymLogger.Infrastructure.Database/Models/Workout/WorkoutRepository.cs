@@ -27,13 +27,13 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
         {
             query = query.Where(b => b.Name.Contains(request.Search));
         }
-        
-        if(request.MuscleGroupId != Guid.Empty)
+
+        if (request.MuscleGroupId != Guid.Empty)
         {
             query = query.Where(b => b.MuscleGroupId == request.MuscleGroupId);
         }
-        
-        if(request.WorkoutDate != null)
+
+        if (request.WorkoutDate != null)
         {
             query = query.Where(b => b.Date.Date.Date == request.WorkoutDate.Value.ToUniversalTime().AddDays(1).Date);
         }
@@ -100,6 +100,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
                     Note = exercise.Note,
+                    BelongsTo = dbEntity.BelongsToUserId,
                     Sets = exercise.Sets.Select(x => new DbExerciseSet
                     {
                         Reps = x.Reps,
@@ -182,6 +183,7 @@ internal class WorkoutRepository(GymLoggerDbContext dbContext, ICurrentUserProvi
                     TotalSets = exercise.TotalSets,
                     TotalWeight = exercise.TotalWeight,
                     Note = exercise.Note,
+                    BelongsTo = dbEntity.BelongsToUserId,
                     Sets = exercise.Sets.Select(x => new DbExerciseSet
                     {
                         Reps = x.Reps,
