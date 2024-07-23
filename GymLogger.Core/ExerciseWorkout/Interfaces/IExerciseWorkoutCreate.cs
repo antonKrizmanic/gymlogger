@@ -9,5 +9,5 @@ public interface IExerciseWorkoutCreate
     decimal? TotalSets { get; set; }
     string? Note { get; set; }
     int Index { get; set; }
-    ICollection<IExerciseSetCreate> Sets { get; set; }
+    ICollection<IExerciseSetCreate>? Sets { get; set; }
 }

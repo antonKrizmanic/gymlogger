@@ -10,5 +10,5 @@ public class ExerciseWorkoutCreate : IExerciseWorkoutCreate
     public decimal? TotalSets { get; set; }
     public string? Note { get; set; }
     public int Index { get; set; }
-    public ICollection<IExerciseSetCreate> Sets { get; set; }
+    public ICollection<IExerciseSetCreate>? Sets { get; set; }
 }
