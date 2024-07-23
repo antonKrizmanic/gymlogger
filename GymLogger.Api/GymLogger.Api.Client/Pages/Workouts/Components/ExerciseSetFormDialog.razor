@@ -16,11 +16,15 @@
         Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
         {
             <CustomNumberField @bind-Value="@Content.CreateDto.Reps" Label="Broj ponavljanja" />
+            <FluentValidationMessage For="() => Content.CreateDto.Reps" />
+            
             <CustomNumberField @bind-Value="@Content.CreateDto.Weight" Label="Težina" />
+            <FluentValidationMessage For="() => Content.CreateDto.Weight" />
         }
         else if (Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
         {
             <CustomNumberField @bind-Value="@Content.CreateDto.Time" Label="Trajanje (sekunde)" />
+            <FluentValidationMessage For="() => Content.CreateDto.Time" />
         }
         else
         {
