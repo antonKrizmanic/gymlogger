@@ -15,12 +15,12 @@
         @if (Content.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight ||
         Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
         {
-            <FluentNumberField @bind-Value="@Content.CreateDto.Reps" Required style="width:100%" Label="Broj ponavljanja" />
-            <FluentNumberField @bind-Value="@Content.CreateDto.Weight" Required style="width:100%" Label="Težina" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Reps" Label="Broj ponavljanja" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Weight" Label="Težina" />
         }
         else if (Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
         {
-            <FluentNumberField @bind-Value="@Content.CreateDto.Time" Required style="width:100%" Label="Trajanje (sekunde)" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Time" Label="Trajanje (sekunde)" />
         }
         else
         {
