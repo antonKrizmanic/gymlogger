@@ -13,19 +13,19 @@
             </ChildContent>
             <PageHeadingButtons>
                 <FluentAnchor Href="/Workouts" IconStart="@(new Icons.Regular.Size16.ArrowLeft())">
-                    Natrag
+                    Back
                 </FluentAnchor>
                 @{
                     var defailHref = $"/Workouts/Edit/{Id.ToString()}";
                 }
                 <FluentAnchor Href="@defailHref" IconEnd="@(new Icons.Regular.Size16.Edit())">
-                    Uredi
+                    Edit
                 </FluentAnchor>
             </PageHeadingButtons>
         </PageHeading>
-        <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @Workout.Date.ToString("dd.MM.yyyy")</FluentLabel>
-        <FluentLabel Typo="Typography.Body"><b>Primarna skupina mišića:</b> @Workout.MuscleGroupName</FluentLabel>
-        <FluentLabel Typo="Typography.Body"><b>Opis treninga:</b> @Workout.Description</FluentLabel>
+        <FluentLabel Typo="Typography.Body"><b>Date:</b> @Workout.Date.ToString("dd.MM.yyyy")</FluentLabel>
+        <FluentLabel Typo="Typography.Body"><b>Primary muscle group:</b> @Workout.MuscleGroupName</FluentLabel>
+        <FluentLabel Typo="Typography.Body"><b>Description:</b> @Workout.Description</FluentLabel>
         @if (Workout.Exercises.Any())
         {
             <FluentGrid Style="width:100%;">

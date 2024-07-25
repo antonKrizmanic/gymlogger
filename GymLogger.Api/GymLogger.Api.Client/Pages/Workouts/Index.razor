@@ -7,14 +7,14 @@
 <FluentStack Orientation="Orientation.Vertical">
     <PageHeading>
         <ChildContent>
-            Treninzi
+            Workouts
         </ChildContent>
         <PageHeadingButtons>
             <FluentAnchor Href="/Workouts/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
-                Dodaj novi trening
+                Add
             </FluentAnchor>
             <FluentButton IconEnd="@(new Icons.Regular.Size16.Filter())" OnClick="@(() => filterOpen = !filterOpen)">
-                Filtriraj
+                Filter
             </FluentButton>
             <WorkoutSortMenu OnSortChange="OnSortMenuItemClicked"/>            
         </PageHeadingButtons>
@@ -36,11 +36,11 @@
                 OnDeleteClicked="DeleteAsync">
         <ItemTemplate>
             <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
-            <FluentLabel Typo="Typography.Body"><b>Datum treninga:</b> @context.Date.ToString("dd.MM.yyyy")</FluentLabel>            
-            <FluentLabel Typo="Typography.Body"><b>Opis:</b> @context.Description</FluentLabel>            
-            <FluentLabel Typo="Typography.Body"><b>Broj serija:</b> @context.TotalSets.ToFixedString()</FluentLabel>
-            <FluentLabel Typo="Typography.Body"><b>Broj ponavljanja:</b> @context.TotalReps.ToFixedString()</FluentLabel>            
-            <FluentLabel Typo="Typography.Body"><b>Ukupna težina:</b> @context.TotalWeight.ToFixedString()</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Date:</b> @context.Date.ToString("dd.MM.yyyy")</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Description:</b> @context.Description</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Total series:</b> @context.TotalSets.ToFixedString()</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Total reps:</b> @context.TotalReps.ToFixedString()</FluentLabel>            
+            <FluentLabel Typo="Typography.Body"><b>Total weights:</b> @context.TotalWeight.ToFixedKg()</FluentLabel>
         </ItemTemplate>
     </GlCardGrid>
 </FluentStack>

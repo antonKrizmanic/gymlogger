@@ -10,33 +10,31 @@
 
 <FluentDialogBody>
     <FluentStack VerticalAlignment="VerticalAlignment.Center" Orientation="Orientation.Vertical">
-        <p>Podaci o setu</p>
-
         @if (Content.Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight ||
         Content.Exercise.ExerciseLogType == ExerciseLogType.Weight)
         {
-            <CustomNumberField @bind-Value="@Content.CreateDto.Reps" Label="Broj ponavljanja" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Reps" Label="Reps" />
             <FluentValidationMessage For="() => Content.CreateDto.Reps" />
             
-            <CustomNumberField @bind-Value="@Content.CreateDto.Weight" Label="Težina" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Weight" Label="Weight (kg)" />
             <FluentValidationMessage For="() => Content.CreateDto.Weight" />
         }
         else if (Content.Exercise.ExerciseLogType == ExerciseLogType.Time)
         {
-            <CustomNumberField @bind-Value="@Content.CreateDto.Time" Label="Trajanje (sekunde)" />
+            <CustomNumberField @bind-Value="@Content.CreateDto.Time" Label="Time (s)" />
             <FluentValidationMessage For="() => Content.CreateDto.Time" />
         }
         else
         {
-            <p>Ups, nesto je poslo po krivu</p>
+            <p>Ups, something went wrong</p>
         }
         <FluentTextField Style="width:100%"
                          @bind-Value=Content.CreateDto.Note
-                         Label="Napomena" />
+                         Label="Note" />
     </FluentStack>
 </FluentDialogBody>
 
 <FluentDialogFooter>
-    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync">Dodaj set</FluentButton>
-    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Odustani</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@SaveAsync">Save</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
 </FluentDialogFooter>

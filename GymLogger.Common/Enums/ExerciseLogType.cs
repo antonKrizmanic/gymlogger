@@ -7,13 +7,13 @@ namespace GymLogger.Common.Enums
         [Display(Name = "")]
         Unknown = 0,
 
-        [Display(Name = "Vježba s utezima")]
+        [Display(Name = "Weight")]
         Weight = 1,
 
-        [Display(Name = "Vježba uz asistenciju")]
+        [Display(Name = "Negative weight")]
         NegativeWeight = 2,
 
-        [Display(Name = "Vrijeme")]
+        [Display(Name = "Time")]
         Time = 3,
     }
 }

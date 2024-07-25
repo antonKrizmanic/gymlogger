@@ -121,7 +121,7 @@
         dto.CreateDto = setCreateDto;
         var dialog = await DialogService.ShowDialogAsync<ExerciseSetFormDialog>(dto, new DialogParameters()
             {
-                Title = $"Novi set",
+                Title = $"Set info",
                 PreventDismissOnOverlayClick = true,
                 PreventScroll = true,
             });

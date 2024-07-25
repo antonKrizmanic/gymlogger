@@ -2,7 +2,7 @@
     <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
         <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
             <FluentSelect @bind-Value="@SelectedMuscleGroupId"
-                          Label="Grupa mišića"
+                          Label="Muscle group"
                           Items="@MuscleGroups"
                           Style="width:100%;"
                           TOption="MuscleGroupDto"
@@ -12,7 +12,7 @@
         </FluentStack>
         <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
             <FluentSelect @bind-Value="@SelectedExerciseLogType"
-                          Label="Način zapisivanja"
+                          Label="Log type"
                           Style="width:100%;"
                           TOption="ExerciseLogType">
                 @foreach (var logType in Enum.GetValues<ExerciseLogType>())
@@ -24,8 +24,8 @@
         </FluentStack>
     </FluentStack>
     <FluentStack HorizontalAlignment="HorizontalAlignment.Start" Style="margin-top: 1rem;">
-        <FluentButton Appearance="Appearance.Accent" OnClick="@(() => OnFilter.InvokeAsync(PagedRequestDto))">Filtriraj</FluentButton>
-        <FluentButton OnClick="@ClearFilter">Očisti</FluentButton>
+        <FluentButton Appearance="Appearance.Accent" OnClick="@(() => OnFilter.InvokeAsync(PagedRequestDto))">Filter</FluentButton>
+        <FluentButton OnClick="@ClearFilter">Reset</FluentButton>
     </FluentStack>
 </FluentCard>
 
