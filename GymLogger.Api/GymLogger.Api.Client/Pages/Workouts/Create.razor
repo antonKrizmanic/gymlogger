@@ -4,7 +4,7 @@
 
 <PageTitle>GymLogger - Workout</PageTitle>
 
-<FluentLabel Typo="Typography.PageTitle">Novi trening</FluentLabel>
+<FluentLabel Typo="Typography.PageTitle">New workout</FluentLabel>
 
 <EditForm OnValidSubmit="SaveAsync" Model="Model">
     <FluentStack Orientation="Orientation.Vertical">
@@ -13,32 +13,21 @@
 
         <FluentGrid Style="width:100%;">
             <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
-                <FluentTextField @bind-Value="Model.Name" Required Label="Naziv treninga" Style="width:100%;" />
+                <FluentTextField @bind-Value="Model.Name" Required Label="Name" Style="width:100%;" />
                 <FluentValidationMessage For="@(() => Model.Name)" />
             </FluentGridItem>
 
             <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
-                <FluentTextField @bind-Value="Model.Description" Label="Opis treninga" Style="width:100%;" />
+                <FluentTextField @bind-Value="Model.Description" Label="Description" Style="width:100%;" />
                 <FluentValidationMessage For="@(() => Model.Description)" />
             </FluentGridItem>
 
             <FluentGridItem xs="12" sm="12" md="6" lg="4" xl="3">
-                <FluentDatePicker @bind-Value="Model.Date" Label="Datum treninga" Style="width:100%;" />
+                <FluentDatePicker @bind-Value="Model.Date" Label="Date" Style="width:100%;" />
                 <FluentValidationMessage For="@(() => Model.Name)" />
             </FluentGridItem>
         </FluentGrid>
-        @if (!_showAddExerciseForm)
-        {
-            <FluentButton OnClick="OnAddExerciseClick" IconEnd="@(new Icons.Filled.Size16.Add())">Dodaj vježbu</FluentButton>            
-        }
-        else
-        {
-            <ExerciseWorkoutForm Model="_exerciseWorkoutModel"
-                                 Exercises="Exercises"
-                                 OnClose="OnAddExerciseFormClose"
-                                 OnSave="OnAddExerciseFormSave" />
-        }
-
+        
         @if (Model.Exercises.Any() && AddedExercises.Any())
         {
             <ExerciseWorkoutFormTable @bind-AddedExercises="AddedExercises"
@@ -46,10 +35,18 @@
         }
         @if (!_showAddExerciseForm)
         {
+            <FluentButton OnClick="OnAddExerciseClick" IconEnd="@(new Icons.Filled.Size16.Add())">Add exercise</FluentButton>            
             <FluentStack>
-                <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Spremi trening</FluentButton>
-                <FluentButton OnClick="@Cancel">Odustani</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Save</FluentButton>
+                <FluentButton OnClick="@Cancel">Cancel</FluentButton>
             </FluentStack>
         }
+        else
+        {
+            <ExerciseWorkoutForm Model="_exerciseWorkoutModel"
+                                 Exercises="Exercises"
+                                 OnClose="OnAddExerciseFormClose"
+                                 OnSave="OnAddExerciseFormSave" />
+        }        
     </FluentStack>
 </EditForm>

@@ -5,5 +5,8 @@
 
 <AuthorizeView>
     <h1>Hello @context.User.Identity?.Name!!</h1>
+    <FluentLabel Typo="@Typography.Body">Welocm to your Gym Logger</FluentLabel>
+    <FluentAnchor Href="/Workouts/Create" IconEnd="@(new Icons.Regular.Size16.Add())">
+        Add Workout
+    </FluentAnchor>
 </AuthorizeView>
-Welcome to GymLogger

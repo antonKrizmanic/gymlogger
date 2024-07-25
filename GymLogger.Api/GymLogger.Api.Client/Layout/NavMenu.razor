@@ -8,9 +8,9 @@
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <AuthorizeView>
                 <Authorized>
-                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
-                    <FluentNavLink Href="exercises">Exercises</FluentNavLink>
+                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>                    
                     <FluentNavLink Href="workouts">Workouts</FluentNavLink>                    
+                    <FluentNavLink Href="exercises">Exercises</FluentNavLink>
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />                        

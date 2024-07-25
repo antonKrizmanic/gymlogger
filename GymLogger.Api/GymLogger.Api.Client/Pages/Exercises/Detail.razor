@@ -3,9 +3,35 @@
 
 <PageTitle>GymLogger - Exercise</PageTitle>
 
-<h3>Detail</h3>
-<p>TODO :)</p>
-
-@code {
-
+@if(Exercise != null)
+{
+    <FluentStack Orientation="Orientation.Vertical">
+        <PageHeading>
+            <ChildContent>
+                @Exercise.Name
+            </ChildContent>
+            <PageHeadingButtons>
+                <FluentAnchor Href="/Exercises" IconStart="@(new Icons.Regular.Size16.ArrowLeft())">
+                    Back
+                </FluentAnchor>
+                @{
+                    var editHref = $"/Exercises/Edit/{Id.ToString()}";
+                }
+                <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Edit())">
+                    Edit
+                </FluentAnchor>
+            </PageHeadingButtons>
+        </PageHeading>        
+        <FluentLabel Typo="Typography.Body"><b>Primary muscle group:</b> @Exercise.MuscleGroupName</FluentLabel>        
+        @{
+            var enumDisplay = EnumHelper<ExerciseLogType>.GetDisplayValue(Exercise.ExerciseLogType);
+        }
+        <FluentLabel Typo="Typography.Body"><b>Exercise log type:</b> @enumDisplay</FluentLabel>
+        @{
+            var publicExercise = Exercise.IsPublic ? "Yes" : "No";
+        }
+        <FluentLabel Typo="Typography.Body"><b>Public exercise:</b> @publicExercise</FluentLabel>
+        <FluentLabel Typo="Typography.Body"><b>Exercise description:</b> @Exercise.Description</FluentLabel>
+        
+    </FluentStack>
 }

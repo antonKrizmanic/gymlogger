@@ -6,4 +6,14 @@ public static class DecimalExtensions
     {
         return value.HasValue ? value.Value.ToString("0.##") : string.Empty;
     }
+
+    public static string ToFixedKg(this decimal? value)
+    {
+        return value.HasValue ? value.Value.ToString("0.## kg") : string.Empty;
+    }
+
+    public static string ToFixedTime(this decimal? value)
+    {
+        return value.HasValue ? value.Value.ToString("0.## s") : string.Empty;
+    }
 }

@@ -6,7 +6,7 @@
         <FluentCard AreaRestricted="false">
             <FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
                 <FluentCombobox @bind-Value="@Model.ExerciseId"
-                                Label="Vježba"
+                                Label="Exercise"
                                 style="width:100%"
                                 Height="300px"
                                 Items="@Exercises"
@@ -17,10 +17,10 @@
                 </FluentCombobox>
                 <FluentTextField Style="width:100%"
                                  @bind-Value=Model.Note
-                                 Label="Napomena" />
+                                 Label="Note" />
                 <FluentStack Orientation="Orientation.Horizontal">
-                    <FluentButton OnClick="SaveAsync" Appearance="Appearance.Accent">Dodaj vježbu</FluentButton>
-                    <FluentButton OnClick="Close">Odustani</FluentButton>
+                    <FluentButton OnClick="SaveAsync" Appearance="Appearance.Accent">Save</FluentButton>
+                    <FluentButton OnClick="Close">Cancel</FluentButton>
                 </FluentStack>
             </FluentStack>
         </FluentCard>
