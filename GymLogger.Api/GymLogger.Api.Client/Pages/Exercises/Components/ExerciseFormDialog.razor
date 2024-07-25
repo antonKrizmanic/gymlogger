@@ -15,12 +15,12 @@
             <DataAnnotationsValidator />
             <FluentValidationSummary />
 
-            <FluentTextField @bind-Value="@Content.Name" Required style="width:100%" Label="Naziv vježbe" />
+            <FluentTextField @bind-Value="@Content.Name" Required style="width:100%" Label="Name" />
             <FluentValidationMessage For="@(() => Content.Name)" />
 
             <FluentSelect 
                 @bind-Value="@SelectedMuscleGroupId" 
-                Label="Grupa mišića" 
+                Label="Muscle group" 
                 style="width:100%" 
                 Items="@MuscleGroups"
                 TOption="MuscleGroupDto"                 
@@ -37,14 +37,14 @@
             </FluentSelect>
             <FluentValidationMessage For="@(() => Content.ExerciseLogType)" />
 
-            <FluentSwitch @bind-Value=Content.IsPublic Label="Učini vježbu dostupnu drugim korisnicima" />
+            <FluentSwitch @bind-Value=Content.IsPublic Label="Public exercise" />
 
-            <FluentTextArea @bind-Value="@Content.Description" style="width:100%">Opis:</FluentTextArea>
+            <FluentTextArea @bind-Value="@Content.Description" style="width:100%">Description:</FluentTextArea>
         </FluentStack>
     </FluentDialogBody>
 
     <FluentDialogFooter>
-        <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Spremi</FluentButton>
-        <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Odustani</FluentButton>
+        <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit">Save</FluentButton>
+        <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
     </FluentDialogFooter>
 </EditForm>

@@ -5,8 +5,8 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Ponavljanja x Težina(kg)</th>
-                <th>Napomena</th>
+                <th>Reps x Weight(kg)</th>
+                <th>Note</th>
                 <th style="min-width: 110px;"></th>
             </tr>
 
@@ -16,9 +16,9 @@
     {
         <thead>
             <tr>
-                <th>Set</th>
-                <th>Vrijeme (s)</th>
-                <th>Napomena</th>
+                <th>#</th>
+                <th>Time (s)</th>
+                <th>Note</th>
                 <th style="min-width: 110px;"></th>
             </tr>
         </thead>
@@ -26,15 +26,15 @@
     @foreach (var set in Sets.OrderBy(x =>x.Index))
     {
         <tr>
-            <td>@set.Index</td>
+            <td>@set.Index<span>.</span></td>
             @if (Exercise.ExerciseLogType == ExerciseLogType.Weight || Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
             {
-                <td>@set.Reps.ToFixedString() x @set.Weight.ToFixedString()</td>
+                <td>@set.Reps.ToFixedString() x @set.Weight.ToFixedKg()</td>
                 <td>@set.Note</td>
             }
             else if (Exercise.ExerciseLogType == ExerciseLogType.Time)
             {
-                <td>@set.Time.ToFixedString()</td>
+                <td>@set.Time.ToFixedTime()</td>
                 <td>@set.Note</td>
             }
             <td>
