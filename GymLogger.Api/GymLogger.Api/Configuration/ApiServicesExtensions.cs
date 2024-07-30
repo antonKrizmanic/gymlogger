@@ -1,4 +1,5 @@
-﻿using GymLogger.Api.Services.Exercise;
+﻿using GymLogger.Api.Services.Dashboard;
+using GymLogger.Api.Services.Exercise;
 using GymLogger.Api.Services.ExerciseWorkout;
 using GymLogger.Api.Services.Management;
 using GymLogger.Api.Services.MuscleGroups;
@@ -11,7 +12,9 @@ public static class ApiServicesExtensions
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
-        services.AddTransient<IManagementApiService, ManagementApiService>()
+        services
+            .AddTransient<IDashboardApiService, DashboardApiService>()
+            .AddTransient<IManagementApiService, ManagementApiService>()
             .AddTransient<IMuscleGroupApiService, MuscleGroupApiService>()
             .AddTransient<IExerciseApiService, ExerciseApiService>()
             .AddTransient<IWorkoutApiService, WorkoutApiService>()

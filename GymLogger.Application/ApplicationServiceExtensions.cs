@@ -1,8 +1,10 @@
-﻿using GymLogger.Application.Exercise;
+﻿using GymLogger.Application.Dashboard;
+using GymLogger.Application.Exercise;
 using GymLogger.Application.ExerciseWorkout;
 using GymLogger.Application.Management;
 using GymLogger.Application.MuscleGroups;
 using GymLogger.Application.Workout;
+using GymLogger.Core.Dashboards.Interfaces;
 using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Core.Management.Interfaces;
@@ -15,7 +17,9 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddTransient<IMuscleGroupService, MuscleGroupService>()
+        services
+            .AddTransient<IDashboardService, DashboardService>()
+            .AddTransient<IMuscleGroupService, MuscleGroupService>()
             .AddTransient<IManagementService, ManagementService>()
             .AddTransient<IExerciseService, ExerciseService>()
             .AddTransient<IWorkoutService, WorkoutService>()
