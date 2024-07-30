@@ -32,18 +32,18 @@ internal class DashboardRepository(GymLoggerDbContext context, IMapper mapper, I
         // Workouts this week
         var dayOfWeek = (int)DateTime.Today.DayOfWeek;
         var daysUntilMonday = (dayOfWeek + 6) % 7;
-        var mondayDate = DateTime.Today.AddDays(-daysUntilMonday);
+        var mondayDate = DateTime.Today.AddDays(-daysUntilMonday).ToUniversalTime();
 
         dashboard.WorkoutsThisWeek = context.Workouts
             .Count(w => w.Date >= mondayDate);
 
         // Workouts this month
-        var firstDayOfMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+        var firstDayOfMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToUniversalTime();
         dashboard.WorkoutsThisMonth = context.Workouts
             .Count(w => w.Date >= firstDayOfMonth);
 
         // Workouts this year
-        var firstDayOfYear = new DateTime(DateTime.Today.Year, 1, 1);
+        var firstDayOfYear = new DateTime(DateTime.Today.Year, 1, 1).ToUniversalTime();
         dashboard.WorkoutsThisYear = context.Workouts
             .Count(w => w.Date >= firstDayOfYear);
 
@@ -84,19 +84,20 @@ internal class DashboardRepository(GymLoggerDbContext context, IMapper mapper, I
         {
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
             var workoutsForDate = context.Workouts
-                .Where(w => w.Date == currentDate.ToDateTime(new TimeOnly(0, 0, 0)))
+                .Where(w => w.Date >= currentDate.ToDateTime(new TimeOnly(0, 0, 0)).ToUniversalTime() &&
+                    w.Date <= currentDate.ToDateTime(new TimeOnly(23, 59, 59)).ToUniversalTime())
                 .SelectMany(w => w.Exercises)
                 .SelectMany(ew => ew.Sets)
                 .ToList();
 
             var weight = workoutsForDate.Sum(s => s.Weight * s.Reps);
-            var series = workoutsForDate.Sum(s => s.Reps);
+            var reps = workoutsForDate.Sum(s => s.ExerciseWorkout.TotalSets);
             workoutsByDate.Add(new DashboardDateItem
             {
                 Date = currentDate,
                 Weight = weight,
-                Series = series,
-                Reps = workoutsForDate.Count
+                Series = workoutsForDate.Count,
+                Reps = reps
             });
         }
 

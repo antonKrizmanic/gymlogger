@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GymLogger.Core.Dashboards.Interfaces;
 using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.ExerciseSet;
@@ -10,6 +11,7 @@ using GymLogger.Core.Paging;
 using GymLogger.Core.Paging.Interfaces;
 using GymLogger.Core.Workout;
 using GymLogger.Core.Workout.Interfaces;
+using GymLogger.Shared.Models.Dashboard;
 using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.ExerciseSet;
 using GymLogger.Shared.Models.ExerciseWorkout;
@@ -27,6 +29,7 @@ public class ApiMapperProfile : Profile
         MapMuscleGroupModels();
         MapExerciseModels();
         MapWorkoutModels();
+        MapDashboardModels();
     }
 
     private void MapPagingModels()
@@ -81,5 +84,11 @@ public class ApiMapperProfile : Profile
 
         this.CreateMap<ExerciseSetCreateDto, ExerciseSetCreate>();
         this.CreateMap<ExerciseSetCreateDto, IExerciseSetCreate>().As<ExerciseSetCreate>();
+    }
+
+    private void MapDashboardModels()
+    {
+        this.CreateMap<IDashboard, DashboardDto>();
+        this.CreateMap<IDashboardDateItem, DashboardDateItemDto>();
     }
 }

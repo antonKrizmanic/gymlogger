@@ -7,6 +7,7 @@ public static class CommonAreaRegistration
     public static WebApplication UseApplicationManagerApi(this WebApplication app)
     {
         return app
+            .MapDashboardApiEndpoints(ApiRoutes.Dashboard, "Dashboard")
             .MapApplicationManagerApiEndpoints(ApiRoutes.ApplicationManagement, "ApplicationManagement")
             .MapMuscleGroupApiEndpoints(ApiRoutes.MuscleGroup, "MuscleGroup")
             .MapExerciseApiEndpoints(ApiRoutes.Exercise, "Exercise")
