@@ -8,7 +8,6 @@ namespace GymLogger.Api.Client.Pages;
 public partial class Home : BaseComponent
 {
     [Inject] private IDashboardApiService DashboardApiService { get; set; } = null!;
-
     private DashboardDto? Dashboard { get; set; }
 
     protected override async Task OnInitializedAsync()

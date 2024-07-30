@@ -4,6 +4,7 @@ namespace GymLogger.Core.Dashboards.Interfaces;
 public interface IDashboard
 {
     IWorkout? LastWorkout { get; set; }
+    string? FavoriteMuscleGroupName { get; set; }
     int WorkoutsCount { get; set; }
     int WorkoutsThisWeek { get; set; }
     int WorkoutsThisMonth { get; set; }

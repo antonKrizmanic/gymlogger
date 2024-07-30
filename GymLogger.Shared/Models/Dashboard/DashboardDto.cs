@@ -4,6 +4,7 @@ namespace GymLogger.Shared.Models.Dashboard;
 public class DashboardDto
 {
     public WorkoutDto? LastWorkout { get; set; }
+    public string? FavoriteMuscleGroupName { get; set; }
     public int WorkoutsCount { get; set; }
     public int WorkoutsThisWeek { get; set; }
     public int WorkoutsThisMonth { get; set; }

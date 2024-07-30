@@ -26,6 +26,14 @@ internal class DashboardRepository(GymLoggerDbContext context, IMapper mapper, I
             .FirstOrDefaultAsync();
         dashboard.LastWorkout = lastWorkout;
 
+        // Get favorite muslce group name (max count in workouts)
+        var favoriteMuscleGroup = await context.Workouts
+            .GroupBy(w => w.MuscleGroup.Name)
+            .OrderByDescending(g => g.Count())
+            .Select(g => g.Key)
+            .FirstOrDefaultAsync();
+        dashboard.FavoriteMuscleGroupName = favoriteMuscleGroup;
+
         // Workouts count
         dashboard.WorkoutsCount = context.Workouts.Count();
 
@@ -91,7 +99,7 @@ internal class DashboardRepository(GymLoggerDbContext context, IMapper mapper, I
                 .ToList();
 
             var weight = workoutsForDate.Sum(s => s.Weight * s.Reps);
-            var reps = workoutsForDate.Sum(s => s.ExerciseWorkout.TotalSets);
+            var reps = workoutsForDate.Sum(s => s.Reps);
             workoutsByDate.Add(new DashboardDateItem
             {
                 Date = currentDate,
