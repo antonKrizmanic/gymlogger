@@ -3,19 +3,19 @@
 
 <FluentDesignTheme StorageName="theme" @bind-Mode="@Mode" />
 
-<FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" VerticalAlignment="VerticalAlignment.Center" HorizontalGap="16">
+<FluentStack Orientation="Microsoft.FluentUI.AspNetCore.Components.Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" VerticalAlignment="VerticalAlignment.Center" HorizontalGap="16">
     @if (Mode == DesignThemeModes.Dark)
     {
-        <FluentIcon Value="@(new Icons.Regular.Size24.Lightbulb())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+        <FluentIcon Value="@(new Icons.Regular.Size24.Lightbulb())" OnClick="@ChangeModeAsync" Color="Microsoft.FluentUI.AspNetCore.Components.Color.Neutral" />
     }
     else
     {
-        <FluentIcon Value="@(new Icons.Regular.Size24.DarkTheme())" OnClick="@ChangeModeAsync" Color="Color.Neutral" />
+        <FluentIcon Value="@(new Icons.Regular.Size24.DarkTheme())" OnClick="@ChangeModeAsync" Color="Microsoft.FluentUI.AspNetCore.Components.Color.Neutral" />
     }
 
     <AuthorizeView>
         <Authorized>
-            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Color.Neutral" />
+            <FluentIcon Value="@(new Icons.Regular.Size24.Person())" OnClick="@(() => OpenUserDialog(context.User.Identity?.Name))" Color="Microsoft.FluentUI.AspNetCore.Components.Color.Neutral" />
         </Authorized>
     </AuthorizeView>
 </FluentStack>

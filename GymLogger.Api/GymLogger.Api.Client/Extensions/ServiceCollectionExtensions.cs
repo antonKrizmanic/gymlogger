@@ -1,4 +1,5 @@
 ﻿using GymLogger.Api.Client.HttpServices.Auth;
+using GymLogger.Api.Client.HttpServices.Dashboard;
 using GymLogger.Api.Client.HttpServices.Exercise;
 using GymLogger.Api.Client.HttpServices.ExerciseWorkout;
 using GymLogger.Api.Client.HttpServices.MuscleGroup;
@@ -20,6 +21,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddHttpServices(this IServiceCollection services)
     {
         services
+            .AddScoped<IDashboardApiService, DashboardHttpService>()
             .AddScoped<IAuthHttpService, AuthHttpService>()
             .AddScoped<IExerciseApiService, ExerciseHttpService>()
             .AddScoped<IMuscleGroupApiService, MuscleGroupHttpService>()

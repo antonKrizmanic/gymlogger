@@ -1,6 +1,6 @@
 ﻿<FluentCard AreaRestricted="false">
-    <FluentStack Orientation="Orientation.Horizontal" Wrap="true">
-        <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+    <FluentStack Orientation="Microsoft.FluentUI.AspNetCore.Components.Orientation.Horizontal" Wrap="true">
+        <FluentStack Orientation="Microsoft.FluentUI.AspNetCore.Components.Orientation.Vertical" Style="width:auto">
             <FluentSelect @bind-Value="@SelectedMuscleGroupId"
                           Label="Muscle group"
                           Items="@MuscleGroups"
@@ -10,7 +10,7 @@
                           OptionText="@((item) => item.Name)">
             </FluentSelect>
         </FluentStack>
-        <FluentStack Orientation="Orientation.Vertical" Style="width:auto">
+        <FluentStack Orientation="Microsoft.FluentUI.AspNetCore.Components.Orientation.Vertical" Style="width:auto">
             <FluentDatePicker @bind-Value="PagedRequestDto.WorkoutDate" Label="Date"  Style="width:100%;"/>
         </FluentStack>
     </FluentStack>

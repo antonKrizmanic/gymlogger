@@ -1,4 +1,5 @@
-﻿using GymLogger.Shared.Models.Exercise;
+﻿using GymLogger.Shared.Models.Dashboard;
+using GymLogger.Shared.Models.Exercise;
 using GymLogger.Shared.Models.MuscleGroups;
 using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Models.Workout;
@@ -20,6 +21,8 @@ namespace GymLogger.Shared.SourceGeneration;
 
 [JsonSerializable(typeof(MuscleGroupDto))]
 [JsonSerializable(typeof(PagedResponseDto<MuscleGroupDto>))]
+
+[JsonSerializable(typeof(DashboardDto))]
 public partial class JsonSourceGenerationContext : JsonSerializerContext
 {
 

@@ -3,12 +3,12 @@
 
 <div class="navmenu">
     <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon" />
-    <label for="navmenu-toggle" class="navmenu-icon"><FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill" /></label>
+    <label for="navmenu-toggle" class="navmenu-icon"><FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Microsoft.FluentUI.AspNetCore.Components.Color.Fill" /></label>
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <AuthorizeView>
                 <Authorized>
-                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>                    
+                    <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Microsoft.FluentUI.AspNetCore.Components.Color.Accent">Home</FluentNavLink>
                     <FluentNavLink Href="workouts">Workouts</FluentNavLink>                    
                     <FluentNavLink Href="exercises">Exercises</FluentNavLink>
                     <form action="Account/Logout" method="post">
