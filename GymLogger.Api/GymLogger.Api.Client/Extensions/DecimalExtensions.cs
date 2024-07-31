@@ -17,3 +17,16 @@ public static class DecimalExtensions
         return value.HasValue ? value.Value.ToString("0.## s") : string.Empty;
     }
 }
+
+public static class DateExtensions
+{
+    public static string ToShortDateString(this DateTime? value)
+    {
+        return value.HasValue ? value.Value.ToShortDateString() : string.Empty;
+    }
+
+    public static string ToCroDate(this DateOnly value)
+    {
+        return value.ToString("dd.MM.yyyy");
+    }
+}
