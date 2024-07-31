@@ -63,42 +63,45 @@
                 <FluentLabel Typo="Typography.Body"><b>Weights in this year</b>: @Dashboard?.WeightThisYear.ToFixedKg()</FluentLabel>
             </FluentCard>
         </FluentGridItem>
+        @if(Dashboard?.WorkoutsByDate != null && Dashboard.WorkoutsByDate.Any())
+        {
+            <FluentGridItem xs="12">
+                <ApexChart TItem="DashboardDateItemDto"
+                           Title="Series in current month">
+                    <ApexPointSeries TItem="DashboardDateItemDto"
+                                     Items="Dashboard?.WorkoutsByDate"
+                                     Name="Sets"
+                                     SeriesType="SeriesType.Area"
+                                     XValue="e => e.Date.ToCroDate()"
+                                     YValue="e=> decimal.Parse(e.Series.ToFixedString())" />
+                </ApexChart>
+            </FluentGridItem>
 
-        <FluentGridItem xs="12">
-            <ApexChart TItem="DashboardDateItemDto"
-                       Title="Reps in current month">
-                <ApexPointSeries TItem="DashboardDateItemDto"
-                                 Items="Dashboard?.WorkoutsByDate"
-                                 Name="Reps"
-                                 SeriesType="SeriesType.Area"
-                                 XValue="e => e.Date"
-                                 YValue="e=> e.Reps" />
-            </ApexChart>
-        </FluentGridItem>
+            <FluentGridItem xs="12">
+                <ApexChart TItem="DashboardDateItemDto"
+                           Title="Reps in current month">
+                    <ApexPointSeries TItem="DashboardDateItemDto"
+                                     Items="Dashboard?.WorkoutsByDate"
+                                     Name="Reps"
+                                     SeriesType="SeriesType.Area"
+                                     XValue="e => e.Date.ToCroDate()"
+                                     YValue="e=> decimal.Parse(e.Reps.ToFixedString())" />
+                </ApexChart>
+            </FluentGridItem>
 
-        <FluentGridItem xs="12">
-            <ApexChart TItem="DashboardDateItemDto"
-                       Title="Series in current month">
-                <ApexPointSeries TItem="DashboardDateItemDto"
-                                 Items="Dashboard?.WorkoutsByDate"
-                                 Name="Sets"
-                                 SeriesType="SeriesType.Area"
-                                 XValue="e => e.Date"
-                                 YValue="e=> e.Series" />
-            </ApexChart>
-        </FluentGridItem>
-
-        <FluentGridItem xs="12">
-            <ApexChart TItem="DashboardDateItemDto"
-                       Title="Weights in current month">
-                <ApexPointSeries TItem="DashboardDateItemDto"
-                                 Items="Dashboard?.WorkoutsByDate"
-                                 Name="Weight"
-                                 SeriesType="SeriesType.Area"
-                                 XValue="e => e.Date"
-                                 YValue="e=> e.Weight" />                
-            </ApexChart>
-        </FluentGridItem>
+            <FluentGridItem xs="12">
+                <ApexChart TItem="DashboardDateItemDto"
+                           Title="Weights in current month">
+                    <ApexPointSeries TItem="DashboardDateItemDto"
+                                     Items="Dashboard?.WorkoutsByDate"
+                                     Name="Weight"
+                                     SeriesType="SeriesType.Area"
+                                     XValue="e => e.Date.ToCroDate()"
+                                     YValue="e=> decimal.Parse(e.Weight.ToFixedKg())" />
+                </ApexChart>
+            </FluentGridItem>
+        }
+        
     </FluentGrid>
 </AuthorizeView>
 
