@@ -8,5 +8,4 @@ public interface IExerciseCreate
     Guid MuscleGroupId { get; set; }
     string? Description { get; set; }
     ExerciseLogType ExerciseLogType { get; set; }
-    bool IsPublic { get; set; }
 }

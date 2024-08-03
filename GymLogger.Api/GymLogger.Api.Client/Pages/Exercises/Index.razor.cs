@@ -79,7 +79,6 @@ public partial class Index : BaseComponent
             Name = dto.Name,
             MuscleGroupId = dto.MuscleGroupId,
             ExerciseLogType = dto.ExerciseLogType,
-            IsPublic = dto.IsPublic
         };
 
         var dialog = await DialogService.ShowDialogAsync<ExerciseFormDialog>(createDto, new DialogParameters()
@@ -99,7 +98,6 @@ public partial class Index : BaseComponent
                 Name = ((ExerciseCreateDto)result.Data).Name,
                 MuscleGroupId = ((ExerciseCreateDto)result.Data).MuscleGroupId,
                 ExerciseLogType = ((ExerciseCreateDto)result.Data).ExerciseLogType,
-                IsPublic = ((ExerciseCreateDto)result.Data).IsPublic
             };
             try
             {
