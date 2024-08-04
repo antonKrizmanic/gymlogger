@@ -2,6 +2,7 @@
 using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.ExerciseWorkout.Interfaces;
 using GymLogger.Shared.Models.ExerciseWorkout;
+using GymLogger.Shared.Models.Paging;
 using GymLogger.Shared.Services;
 
 namespace GymLogger.Api.Services.ExerciseWorkout;
@@ -18,5 +19,27 @@ internal class ExerciseWorkoutApiService(IExerciseWorkoutService service, IMappe
         }
 
         return entity.MapTo<ExerciseWorkoutDto>(mapper);
+    }
+
+    public async Task<PagedResponseDto<ExerciseWorkoutDetailDto>> GetPagedListAsync(ExerciseWorkoutPagedRequestDto pagedRequestDto)
+    {
+        var pagedRequest = pagedRequestDto.MapTo<IExerciseWorkoutPagedRequest>(mapper);
+        var pagedMuscleGroups = service.GetPagedAsync(pagedRequest);
+
+        var totalItems = await pagedMuscleGroups.TotalCountAsync();
+        var pagedItems = await pagedMuscleGroups.GetPageAsync(pagedRequestDto.Page, pagedRequestDto.PageSize);
+
+        return new PagedResponseDto<ExerciseWorkoutDetailDto>
+        {
+            PagingData = new PagingDataResponseDto
+            {
+                Page = pagedRequestDto.Page,
+                PageSize = pagedRequestDto.PageSize,
+                SortColumn = pagedRequestDto.SortColumn,
+                SortDirection = pagedRequestDto.SortDirection,
+                TotalItems = totalItems
+            },
+            Items = pagedItems.MapTo<ICollection<ExerciseWorkoutDetailDto>>(mapper),
+        };
     }
 }

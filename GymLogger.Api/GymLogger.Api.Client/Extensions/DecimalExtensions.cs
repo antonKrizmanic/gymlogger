@@ -20,9 +20,14 @@ public static class DecimalExtensions
 
 public static class DateExtensions
 {
-    public static string ToShortDateString(this DateTime? value)
+    public static string ToCroDate(this DateTime? value)
     {
-        return value.HasValue ? value.Value.ToShortDateString() : string.Empty;
+        return value.HasValue ? value.Value.ToString("dd.MM.yyyy") : string.Empty;
+    }
+
+    public static string ToCroDate(this DateTime value)
+    {
+        return value.ToString("dd.MM.yyyy");
     }
 
     public static string ToCroDate(this DateOnly value)

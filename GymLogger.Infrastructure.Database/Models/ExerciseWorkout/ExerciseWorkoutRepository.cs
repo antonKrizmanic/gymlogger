@@ -2,6 +2,8 @@
 using AutoMapper.QueryableExtensions;
 using GymLogger.Application.User.Interfaces;
 using GymLogger.Core.ExerciseWorkout.Interfaces;
+using GymLogger.Core.Paging.Interfaces;
+using GymLogger.Infrastructure.Database.Models.Paging;
 using GymLogger.Infrastructure.Database.Models.Workout;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -40,5 +42,47 @@ internal class ExerciseWorkoutRepository(GymLoggerDbContext dbContext, ICurrentU
             .OrderByDescending(x => x.CreatedAt)
             .ProjectTo<IExerciseWorkout>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
+    }
+
+    public IPagedResult<IExerciseWorkoutDetail> GetPagedAsync(IExerciseWorkoutPagedRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var query = dbContext.ExerciseWorkouts
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (request.ExerciseId != Guid.Empty)
+        {
+            query = query.Where(b => b.ExerciseId == request.ExerciseId);
+        }
+
+        if (request.WorkoutId != Guid.Empty)
+        {
+            query = query.Where(b => b.WorkoutId == request.WorkoutId);
+        }
+
+        //var isSortDescending = request.SortDirection == SortDirection.Descending;
+
+        //// Sort the results based on the sort column
+        //query = request.SortColumn switch
+        //{
+        //    nameof(IExercise.Name) => isSortDescending
+        //        ? query.OrderByDescending(b => b.Name)
+        //        : query.OrderBy(b => b.Name),
+        //    nameof(IExercise.MuscleGroupName) => isSortDescending
+        //        ? query.OrderByDescending(b => b.MuscleGroup.Name)
+        //        : query.OrderBy(b => b.MuscleGroup.Name),
+        //    nameof(IExercise.ExerciseLogType) => isSortDescending
+        //        ? query.OrderByDescending(b => b.ExerciseLogType)
+        //        : query.OrderBy(b => b.ExerciseLogType),
+        //    _ => isSortDescending
+        //        ? query.OrderByDescending(b => b.CreatedAt)
+        //    : query.OrderBy(b => b.CreatedAt)
+        //};
+
+        var projectQuery = query.ProjectTo<IExerciseWorkoutDetail>(mapper.ConfigurationProvider);
+
+        return new PagedResult<IExerciseWorkoutDetail>(projectQuery);
     }
 }

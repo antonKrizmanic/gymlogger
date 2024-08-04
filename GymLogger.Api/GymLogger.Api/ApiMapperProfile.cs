@@ -65,6 +65,8 @@ public class ApiMapperProfile : Profile
         this.CreateMap<IWorkoutDetails, WorkoutDetailsDto>();
         this.CreateMap<IExerciseWorkout, ExerciseWorkoutDto>();
         this.CreateMap<ExerciseWorkout, ExerciseWorkoutDto>();
+        this.CreateMap<IExerciseWorkoutDetail, ExerciseWorkoutDetailDto>();
+
         this.CreateMap<IExerciseSet, ExerciseSetDto>();
 
         this.CreateMap<WorkoutCreateDto, WorkoutCreate>();
@@ -81,6 +83,9 @@ public class ApiMapperProfile : Profile
 
         this.CreateMap<IExerciseWorkout, ExerciseWorkoutCreateDto>();
         this.CreateMap<IExerciseSet, ExerciseSetCreateDto>();
+
+        this.CreateMap<ExerciseWorkoutPagedRequestDto, ExerciseWorkoutPagedRequest>();
+        this.CreateMap<ExerciseWorkoutPagedRequestDto, IExerciseWorkoutPagedRequest>().As<ExerciseWorkoutPagedRequest>();
 
         this.CreateMap<ExerciseSetCreateDto, ExerciseSetCreate>();
         this.CreateMap<ExerciseSetCreateDto, IExerciseSetCreate>().As<ExerciseSetCreate>();

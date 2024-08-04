@@ -17,9 +17,12 @@
                 @{
                     var editHref = $"/Exercises/Edit/{Id.ToString()}";
                 }
-                <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Edit())">
-                    Edit
-                </FluentAnchor>
+                @if(!Exercise.IsPublic)
+                {                    
+                    <FluentAnchor Href="@editHref" IconEnd="@(new Icons.Regular.Size16.Edit())">
+                        Edit
+                    </FluentAnchor>
+                }
             </PageHeadingButtons>
         </PageHeading>        
         <FluentLabel Typo="Typography.Body"><b>Primary muscle group:</b> @Exercise.MuscleGroupName</FluentLabel>        
@@ -32,6 +35,60 @@
         }
         <FluentLabel Typo="Typography.Body"><b>Public exercise:</b> @publicExercise</FluentLabel>
         <FluentLabel Typo="Typography.Body"><b>Exercise description:</b> @Exercise.Description</FluentLabel>
-        
+
+        @if(ExerciseWorkouts != null && ExerciseWorkouts.Any())
+        {
+            <FluentLabel Typo="Typography.Body"><b>PR:</b> @ExerciseWorkouts.Max(x => x.Sets.Max(y => y.Weight)).ToFixedKg()</FluentLabel>
+            <FluentLabel Typo="Typography.Body"><b>Max weights:</b> @ExerciseWorkouts.Max(x => x.TotalWeight).ToFixedKg()</FluentLabel>
+
+
+            <FluentAccordion Style="width:100%;">
+                @foreach (var item in ExerciseWorkouts)
+                {
+                    <FluentAccordionItem Heading="@item.WorkoutDate.ToCroDate()" Style="width:100%;">
+                        <table style="width:100%;table-layout:auto;">
+                            @if (Exercise.ExerciseLogType == ExerciseLogType.Weight ||
+                           Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Reps x Weight(kg)</th>
+                                        <th>Note</th>
+                                    </tr>
+
+                                </thead>
+                            }
+                            else if (Exercise.ExerciseLogType == ExerciseLogType.Time)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Time (s)</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                            }
+                            @foreach (var set in item.Sets.OrderBy(x => x.Index))
+                            {
+                                <tr>
+                                    <td>@set.Index<span>.</span></td>
+                                    @if (Exercise.ExerciseLogType == ExerciseLogType.Weight || Exercise.ExerciseLogType == ExerciseLogType.NegativeWeight)
+                                    {
+                                        <td>@set.Reps.ToFixedString() x @set.Weight.ToFixedKg()</td>
+                                        <td>@set.Note</td>
+                                    }
+                                    else if (Exercise.ExerciseLogType == ExerciseLogType.Time)
+                                    {
+                                        <td>@set.Time.ToFixedTime()</td>
+                                        <td>@set.Note</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </FluentAccordionItem>
+                }
+            </FluentAccordion>
+        }
     </FluentStack>
 }

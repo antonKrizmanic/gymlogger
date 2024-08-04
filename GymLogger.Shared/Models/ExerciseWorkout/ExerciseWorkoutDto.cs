@@ -13,3 +13,8 @@ public class ExerciseWorkoutDto
     public int Index { get; set; }
     public ICollection<ExerciseSetDto> Sets { get; set; } = [];
 }
+
+public class ExerciseWorkoutDetailDto : ExerciseWorkoutDto
+{
+    public DateTime WorkoutDate { get; set; }
+}
