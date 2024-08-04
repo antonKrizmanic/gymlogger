@@ -34,9 +34,7 @@
         PagedResponse="_pagedResponseDto"
         PagedRequest="PagedRequestDto"
         PagedRequestChanged="LoadDataAsync"
-        OnDetailsClicked="Details"
-        OnEditClicked="EditAsync"
-        OnDeleteClicked="DeleteAsync">
+        ShowActionButtons="false">
         <ItemTemplate>                
             <FluentLabel Typo="Typography.PaneHeader">@context.Name</FluentLabel>
             <FluentLabel Typo="Typography.Body"><b>Muslce group:</b> @context.MuscleGroupName</FluentLabel>
@@ -45,6 +43,18 @@
             }
             <FluentLabel Typo="Typography.Body"><b>Log type:</b> @desc</FluentLabel>
             <FluentLabel Typo="Typography.Body"><b>Description:</b> @context.Description</FluentLabel>                           
+
+            @if (!context.IsPublic)
+            {
+                <FluentStack HorizontalAlignment="HorizontalAlignment.End">
+                        <FluentButton OnClick="@(() => Details(context))"
+                                      IconEnd="@(new Icons.Regular.Size16.Search())" />
+                        <FluentButton OnClick="@(() => EditAsync(context))"
+                                      IconEnd="@(new Icons.Regular.Size16.Edit())" />
+                        <FluentButton OnClick="@(() => DeleteAsync(context))"
+                                      IconEnd="@(new Icons.Regular.Size16.Delete())" />
+                </FluentStack>
+            }
         </ItemTemplate>
     </GlCardGrid>
 </FluentStack>
