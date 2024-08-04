@@ -44,17 +44,17 @@
             <FluentLabel Typo="Typography.Body"><b>Log type:</b> @desc</FluentLabel>
             <FluentLabel Typo="Typography.Body"><b>Description:</b> @context.Description</FluentLabel>                           
 
-            @if (!context.IsPublic)
-            {
-                <FluentStack HorizontalAlignment="HorizontalAlignment.End">
+            <FluentStack HorizontalAlignment="HorizontalAlignment.End">
                         <FluentButton OnClick="@(() => Details(context))"
                                       IconEnd="@(new Icons.Regular.Size16.Search())" />
-                        <FluentButton OnClick="@(() => EditAsync(context))"
-                                      IconEnd="@(new Icons.Regular.Size16.Edit())" />
-                        <FluentButton OnClick="@(() => DeleteAsync(context))"
-                                      IconEnd="@(new Icons.Regular.Size16.Delete())" />
-                </FluentStack>
+            @if (!context.IsPublic)
+            {                
+                <FluentButton OnClick="@(() => EditAsync(context))"
+                                IconEnd="@(new Icons.Regular.Size16.Edit())" />
+                <FluentButton OnClick="@(() => DeleteAsync(context))"
+                                IconEnd="@(new Icons.Regular.Size16.Delete())" />                
             }
+            </FluentStack>
         </ItemTemplate>
     </GlCardGrid>
 </FluentStack>
