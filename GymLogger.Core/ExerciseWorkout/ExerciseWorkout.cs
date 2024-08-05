@@ -15,3 +15,8 @@ public class ExerciseWorkout : IExerciseWorkout
     public int Index { get; set; }
     public ICollection<IExerciseSet>? Sets { get; set; }
 }
+
+public class ExerciseWorkoutDetail : ExerciseWorkout, IExerciseWorkoutDetail
+{
+    public DateTime WorkoutDate { get; set; }
+}

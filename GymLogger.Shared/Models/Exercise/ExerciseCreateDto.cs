@@ -15,6 +15,4 @@ public class ExerciseCreateDto
 
     [EnumValidation(typeof(ExerciseLogType), allowZero: false, ErrorMessage = "Select on of options")]
     public ExerciseLogType ExerciseLogType { get; set; }
-
-    public bool IsPublic { get; set; }
 }

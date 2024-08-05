@@ -91,7 +91,7 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
             ExerciseLogType = exercise.ExerciseLogType,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
-            BelongsToUserId = exercise.IsPublic ? null : currentUserProvider.GetCurrentUserId()
+            BelongsToUserId = currentUserProvider.GetCurrentUserId()
         };
 
         try
@@ -125,7 +125,6 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
             dbEntity.Description = exercise.Description;
             dbEntity.MuscleGroupId = exercise.MuscleGroupId;
             dbEntity.ExerciseLogType = exercise.ExerciseLogType;
-            dbEntity.BelongsToUserId = exercise.IsPublic ? null : currentUserProvider.GetCurrentUserId();
             dbEntity.UpdatedAt = DateTime.Now;
 
             await dbContext.SaveChangesAsync();

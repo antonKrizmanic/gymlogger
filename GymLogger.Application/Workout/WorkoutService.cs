@@ -52,7 +52,7 @@ internal class WorkoutService(IWorkoutRepository repository, IExerciseRepository
         {
             exercise.TotalReps = exercise.Sets.Sum(x => x.Reps);
             exercise.TotalSets = exercise.Sets.Count;
-            exercise.TotalWeight = exercise.Sets.Sum(x => x.Weight);
+            exercise.TotalWeight = exercise.Sets.Sum(x => x.Weight * x.Reps);
         }
 
         workout.MuscleGroupId = muscleGroupId;

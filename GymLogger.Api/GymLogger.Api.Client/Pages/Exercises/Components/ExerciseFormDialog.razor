@@ -36,9 +36,6 @@
                 }
             </FluentSelect>
             <FluentValidationMessage For="@(() => Content.ExerciseLogType)" />
-
-            <FluentSwitch @bind-Value=Content.IsPublic Label="Public exercise" />
-
             <FluentTextArea @bind-Value="@Content.Description" style="width:100%">Description:</FluentTextArea>
         </FluentStack>
     </FluentDialogBody>

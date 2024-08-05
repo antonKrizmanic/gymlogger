@@ -14,3 +14,8 @@ public interface IExerciseWorkout
     int Index { get; set; }
     ICollection<IExerciseSet>? Sets { get; set; }
 }
+
+public interface IExerciseWorkoutDetail : IExerciseWorkout
+{
+    DateTime WorkoutDate { get; set; }
+}
