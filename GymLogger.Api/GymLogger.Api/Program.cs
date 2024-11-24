@@ -56,7 +56,7 @@ app.UseGymLoggerHttpExceptionMiddleware();
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+app.MapStaticAssets();
 app.UseAntiforgery();
 app.UseMinimalApi();
 
