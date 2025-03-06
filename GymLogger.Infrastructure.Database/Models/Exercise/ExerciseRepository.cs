@@ -125,7 +125,7 @@ internal class ExerciseRepository(GymLoggerDbContext dbContext, ICurrentUserProv
             dbEntity.Description = exercise.Description;
             dbEntity.MuscleGroupId = exercise.MuscleGroupId;
             dbEntity.ExerciseLogType = exercise.ExerciseLogType;
-            dbEntity.UpdatedAt = DateTime.Now;
+            dbEntity.UpdatedAt = DateTime.UtcNow;
 
             await dbContext.SaveChangesAsync();
 
