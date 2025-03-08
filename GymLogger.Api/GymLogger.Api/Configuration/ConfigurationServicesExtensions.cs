@@ -79,7 +79,7 @@ public static class ConfigurationServicesExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy",
-                builder => builder.WithOrigins("https://localhost:5001", "http://localhost:5000", "https://localhost:3000", "https://gymlogger-pink.vercel.app")
+                builder => builder.WithOrigins("https://localhost:5001", "http://localhost:5000", "https://localhost:3000", "https://gymlogger-pink.vercel.app", "https://192.168.1.65:3000")
                     .SetIsOriginAllowedToAllowWildcardSubdomains()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
