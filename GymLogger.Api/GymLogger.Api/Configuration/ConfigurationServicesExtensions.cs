@@ -34,6 +34,12 @@ public static class ConfigurationServicesExtensions
                 options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
         .AddIdentityCookies();
+        
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
 
         return services;
     }
