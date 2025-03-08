@@ -37,7 +37,7 @@ public static class ConfigurationServicesExtensions
         
         services.ConfigureApplicationCookie(options =>
         {
-            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SameSite = SameSiteMode.Lax;
             options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         });
 
