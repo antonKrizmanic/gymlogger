@@ -64,6 +64,7 @@ public static class InfrastructureDatabaseServicesExtensions
             })
             .AddEntityFrameworkStores<GymLoggerDbContext>()
             .AddSignInManager()
+            .AddApiEndpoints()
             .AddDefaultTokenProviders();
 
         return services;

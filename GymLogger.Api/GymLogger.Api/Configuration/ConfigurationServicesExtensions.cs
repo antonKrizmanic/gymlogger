@@ -63,6 +63,22 @@ public static class ConfigurationServicesExtensions
         return services;
     }
 
+    public static IServiceCollection AddCustomCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder.WithOrigins("https://localhost:5001", "http://localhost:5000", "https://localhost:3000", "https://gymlogger-pink.vercel.app")
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .Build());
+        });
+
+        return services;
+    }
+
     public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
     {
         app.UseSwagger();

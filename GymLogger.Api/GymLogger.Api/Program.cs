@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services
     .AddCustomRazorComponents()
+    .AddCustomCors()
     .AddCustomAuthentication()
     .AddCustomAuoMapper()
     .AddInfrastructureDatabase(builder.Configuration, builder.Environment.IsProduction())
@@ -61,6 +62,11 @@ app.UseAntiforgery();
 app.UseMinimalApi();
 
 app.UseCustomComponents();
+app.UseRouting();
+app.UseCors("CorsPolicy");
+
+app.UseAuthorization();
+app.MapIdentityApi<DbApplicationUser>();
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 app.UseCustomSwagger();

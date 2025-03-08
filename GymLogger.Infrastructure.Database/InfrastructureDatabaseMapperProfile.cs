@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GymLogger.Core.CodeExtensions;
 using GymLogger.Core.Exercise;
 using GymLogger.Core.Exercise.Interfaces;
 using GymLogger.Core.ExerciseSet;
@@ -47,7 +48,8 @@ public class InfrastructureDatabaseMapperProfile : Profile
         this.CreateMap<DbWorkout, WorkoutDetails>();
         this.CreateMap<DbWorkout, IWorkoutDetails>().As<WorkoutDetails>();
 
-        this.CreateMap<DbExerciseWorkout, ExerciseWorkout>();
+        this.CreateMap<DbExerciseWorkout, ExerciseWorkout>()
+            .MapProperty(dest => dest.ExerciseLogType, src => src.Exercise.ExerciseLogType);
         this.CreateMap<DbExerciseWorkout, IExerciseWorkout>().As<ExerciseWorkout>();
 
         this.CreateMap<DbExerciseWorkout, ExerciseWorkoutDetail>();
