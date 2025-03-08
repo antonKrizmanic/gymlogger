@@ -52,7 +52,8 @@ public class InfrastructureDatabaseMapperProfile : Profile
             .MapProperty(dest => dest.ExerciseLogType, src => src.Exercise.ExerciseLogType);
         this.CreateMap<DbExerciseWorkout, IExerciseWorkout>().As<ExerciseWorkout>();
 
-        this.CreateMap<DbExerciseWorkout, ExerciseWorkoutDetail>();
+        this.CreateMap<DbExerciseWorkout, ExerciseWorkoutDetail>()
+            .MapProperty(dest => dest.ExerciseLogType, src => src.Exercise.ExerciseLogType);
         this.CreateMap<DbExerciseWorkout, IExerciseWorkoutDetail>().As<ExerciseWorkoutDetail>();
 
         this.CreateMap<DbExerciseSet, ExerciseSet>();
