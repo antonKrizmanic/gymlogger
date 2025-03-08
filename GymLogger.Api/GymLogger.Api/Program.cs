@@ -66,7 +66,7 @@ app.UseRouting();
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
-app.MapIdentityApi<DbApplicationUser>();
+app.MapGroup("/api").MapIdentityApi<DbApplicationUser>();
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 app.UseCustomSwagger();
