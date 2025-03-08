@@ -28,12 +28,17 @@ public static class ConfigurationServicesExtensions
         services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
         services.AddAuthorization();
-        services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = IdentityConstants.ApplicationScheme;
-                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            })
-        .AddIdentityCookies();
+        // services.AddAuthentication(options =>
+        //     {
+        //         options.DefaultScheme = IdentityConstants.ApplicationScheme;
+        //         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        //     })
+        // .AddIdentityCookies();
+        services
+            .AddAuthentication()
+            .AddBearerToken(IdentityConstants.BearerScheme);
+        services.AddAuthorizationBuilder();
+
         
         services.ConfigureApplicationCookie(options =>
         {
