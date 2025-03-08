@@ -1,4 +1,5 @@
-﻿using GymLogger.Core.ExerciseSet.Interfaces;
+﻿using GymLogger.Common.Enums;
+using GymLogger.Core.ExerciseSet.Interfaces;
 using GymLogger.Core.ExerciseWorkout.Interfaces;
 
 namespace GymLogger.Core.ExerciseWorkout;
@@ -14,6 +15,7 @@ public class ExerciseWorkout : IExerciseWorkout
     public string? Note { get; set; }
     public int Index { get; set; }
     public ICollection<IExerciseSet>? Sets { get; set; }
+    public ExerciseLogType ExerciseLogType { get; set; }
 }
 
 public class ExerciseWorkoutDetail : ExerciseWorkout, IExerciseWorkoutDetail
