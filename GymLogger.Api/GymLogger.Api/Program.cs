@@ -58,11 +58,12 @@ app.UseGymLoggerHttpExceptionMiddleware();
 app.UseHttpsRedirection();
 
 app.MapStaticAssets();
+app.UseRouting();
 app.UseAntiforgery();
 app.UseMinimalApi();
 
 app.UseCustomComponents();
-app.UseRouting();
+
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
