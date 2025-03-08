@@ -49,15 +49,16 @@ internal class ExerciseWorkoutRepository(GymLoggerDbContext dbContext, ICurrentU
         ArgumentNullException.ThrowIfNull(request);
 
         var query = dbContext.ExerciseWorkouts
+            .Include(x => x.Exercise)
             .AsNoTracking()
             .AsQueryable();
 
-        if (request.ExerciseId != Guid.Empty)
+        if (request.ExerciseId != Guid.Empty && request.ExerciseId != null)
         {
             query = query.Where(b => b.ExerciseId == request.ExerciseId);
         }
 
-        if (request.WorkoutId != Guid.Empty)
+        if (request.WorkoutId != Guid.Empty && request.WorkoutId != null)
         {
             query = query.Where(b => b.WorkoutId == request.WorkoutId);
         }

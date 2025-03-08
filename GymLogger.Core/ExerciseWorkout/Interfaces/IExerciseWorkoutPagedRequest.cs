@@ -3,6 +3,6 @@
 namespace GymLogger.Core.ExerciseWorkout.Interfaces;
 public interface IExerciseWorkoutPagedRequest : IPagedRequest
 {
-    Guid ExerciseId { get; set; }
-    Guid WorkoutId { get; set; }
+    Guid? ExerciseId { get; set; }
+    Guid? WorkoutId { get; set; }
 }
