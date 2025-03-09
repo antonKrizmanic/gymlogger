@@ -2,7 +2,7 @@
 
   [![CI](https://github.com/antonKrizmanic/gymlogger/actions/workflows/buildAction.yaml/badge.svg)](https://github.com/antonKrizmanic/gymlogger/actions/workflows/buildAction.yaml)    
 
-GymLogger is a web application for tracking workouts, primarily focused on gym exercises. The application is built using a Clean Architecture approach, ensuring separation of concerns, maintainability, and testability.
+GymLogger is a web API for tracking workouts, primarily focused on gym exercises. The application is built using a Clean Architecture approach, ensuring separation of concerns, maintainability, and testability.
 
 ## 📖 Table of contents
 - 🚀 [Technologies](#-technologies)
@@ -19,15 +19,12 @@ GymLogger is a web application for tracking workouts, primarily focused on gym e
 - [AutoMapper](https://automapper.org/) - convention-based object-object mapper
 - [PostgreSQL](https://www.bing.com/search?pglt=41&q=postgresql&cvid=3fbb17f0468943b08e8c4d44b664ec1a&gs_lcrp=EgZjaHJvbWUqBggBEC4YQDIGCAAQRRg7MgYIARAuGEAyBggCEEUYOTIGCAMQRRg7MgYIBBBFGDsyBggFEEUYPDIGCAYQRRg8MgYIBxBFGDwyBggIEEUYPNIBCDIyNjlqMGoxqAIAsAIA&FORM=ANNTA1&DAF0=1&PC=U531) - powerful, object-relational database system
 - [Serilog](https://serilog.net/) - simple .NET logging with fully-structured events
-- [xUnit](https://xunit.net/), [FluentAssertions](https://fluentassertions.com/) and [Moq](https://github.com/moq)
-- [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0) - allows for building interactive web UIs using C# instead of JavaScript.
-- [Fluent UI](https://www.fluentui-blazor.net/) provides a set of accessible, reusable, and high-quality components for creating web applications.
+- [xUnit](https://xunit.net/)
+- [Moq](https://github.com/moq)
   
 ## 🏛️ Architecture
 
 The solution is structured into several projects:
-
-- **GymLogger.Client**: This is the client-side of the application, built using [Blazor WebAssembly](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-5.0). It contains the user interface and components for the application.
 
 - **GymLogger.Server (GymLogger.Api)**: This is the server-side of the application, built using [ASP.NET Core Web API](https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0). It contains the controllers and endpoints for the API.
 
@@ -46,7 +43,7 @@ To get started with the GymLogger application, you will need to have .NET 8 or l
 Once you have these prerequisites, you can clone the repository and start the application.
 
 ## 🛠️ Prerequisites
-- .NET 8
+- .NET 9
 - PostgreSQL
 - IDE (Visual Studio or JetBrains Rider), or Text editor (Visual Studio Code)
 
