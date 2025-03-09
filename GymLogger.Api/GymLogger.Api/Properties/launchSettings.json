@@ -12,7 +12,7 @@
     "GymLogger.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "api-docs",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

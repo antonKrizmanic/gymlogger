@@ -1,4 +1,3 @@
-using GymLogger.Api.Components.Account;
 using GymLogger.Api.Configuration;
 using GymLogger.Application;
 using GymLogger.Exceptions.Web;
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddCustomRazorComponents()
     .AddCustomCors()
     .AddCustomAuthentication()
     .AddCustomAuoMapper()
@@ -23,10 +21,11 @@ builder.Services
     .AddApplication()
     .AddCustomSerilog(builder.Configuration)
     .AddCustomSwagger()
-    .AddApiServices();
+    .AddApiServices()
+    .AddAntiforgery();
 
 // TODO: Move to a separate extension method and IdentityNoOpEmailSender to a separate project
-builder.Services.AddSingleton<IEmailSender<DbApplicationUser>, IdentityNoOpEmailSender>();
+// builder.Services.AddSingleton<IEmailSender<DbApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
 
@@ -62,16 +61,12 @@ app.UseRouting();
 app.UseAntiforgery();
 app.UseMinimalApi();
 
-app.UseCustomComponents();
 
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 app.MapGroup("/api").MapIdentityApi<DbApplicationUser>();
-// Add additional endpoints required by the Identity /Account Razor components.
-app.MapAdditionalIdentityEndpoints();
+
 app.UseCustomSwagger();
-
-
 
 app.Run();

@@ -1,39 +1,15 @@
-﻿using GymLogger.Api.Components;
-using GymLogger.Api.Components.Account;
-using GymLogger.Application;
+﻿using GymLogger.Application;
 using GymLogger.Infrastructure.Database;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.FluentUI.AspNetCore.Components;
 using Serilog;
 
 namespace GymLogger.Api.Configuration;
 
 public static class ConfigurationServicesExtensions
 {
-    public static IServiceCollection AddCustomRazorComponents(this IServiceCollection services)
-    {
-        services.AddRazorComponents()
-            .AddInteractiveWebAssemblyComponents();
-        services.AddFluentUIComponents();
-
-        return services;
-    }
-
     public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
     {
-        services.AddCascadingAuthenticationState();
-        services.AddScoped<IdentityUserAccessor>();
-        services.AddScoped<IdentityRedirectManager>();
-        services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
-
         services.AddAuthorization();
-        // services.AddAuthentication(options =>
-        //     {
-        //         options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        //         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        //     })
-        // .AddIdentityCookies();
         services
             .AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);
@@ -98,15 +74,6 @@ public static class ConfigurationServicesExtensions
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             options.RoutePrefix = "api-docs";
         });
-
-        return app;
-    }
-
-    public static IEndpointRouteBuilder UseCustomComponents(this IEndpointRouteBuilder app)
-    {
-        app.MapRazorComponents<App>()
-            .AddInteractiveWebAssemblyRenderMode()
-            .AddAdditionalAssemblies(typeof(GymLogger.Api.Client._Imports).Assembly);
 
         return app;
     }
