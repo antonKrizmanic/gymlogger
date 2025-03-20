@@ -52,6 +52,6 @@
 #         uses: azure/webapps-deploy@v3
 #         with:
 #           app-name: 'GymLogger'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_392BB1FEFC0F4B12A7FEDE64174DB6CD }}
-          package: .
+          # slot-name: 'Production'
+          # publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_392BB1FEFC0F4B12A7FEDE64174DB6CD }}
+          # package: .
